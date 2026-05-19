@@ -5,24 +5,55 @@
 =============================================================
 
   CREATE TABLE IF NOT EXISTS solicitudes (
-    id                uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
-    servicio          text        NOT NULL,
-    nombre_cliente    text,
-    empresa           text,
-    telefono          text,
-    email             text,
+    id                  uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+    servicio            text        NOT NULL,
+    -- shared
+    nombre_cliente      text,
+    empresa             text,
+    telefono            text,
+    email               text,
+    mensaje             text,
+    fecha_solicitud     timestamptz DEFAULT now(),
+    estado              text        DEFAULT 'pendiente',
+    -- branding only
     descripcion_negocio text,
-    estilo_preferido  text,
-    tipo_evento       text,
-    nombres_evento    text,
-    fecha_evento      date,
-    hora_evento       time,
-    lugar_evento      text,
-    colores_preferidos text,
-    vestimenta        text,
-    mensaje           text,
-    fecha_solicitud   timestamptz DEFAULT now(),
-    estado            text        DEFAULT 'pendiente'
+    estilo_preferido    text,
+    -- invitacion: protagonistas
+    nombre_novia        text,
+    nombre_novio        text,
+    foto_novia          text,
+    foto_novio          text,
+    -- invitacion: padres
+    padres_novia        text,
+    padres_novio        text,
+    -- invitacion: evento
+    tipo_evento         text,
+    nombres_evento      text,
+    fecha_evento        date,
+    hora_evento         time,
+    lugar_ceremonia     text,
+    lugar_recepcion     text,
+    foto_lugar          text,
+    -- invitacion: contacto
+    whatsapp_novia      text,
+    whatsapp_novio      text,
+    -- invitacion: musica
+    cancion_titulo      text,
+    -- invitacion: vestimenta y estilo
+    codigo_vestimenta   text,
+    link_pinterest      text,
+    colores_preferidos  text,
+    -- invitacion: regalo
+    banco_nombre        text,
+    banco_tipo_cuenta   text,
+    banco_numero        text,
+    banco_titular       text,
+    banco_cedula        text,
+    banco_email         text,
+    -- invitacion: extras
+    hashtag             text,
+    mensaje_invitados   text,
+    numero_pases        text
   );
 
   -- Enable Row Level Security (anon can insert only)
@@ -165,6 +196,29 @@ input[type="date"],input[type="time"]{cursor:pointer}
 .submit-btn.loading .btn-text{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── FORM GROUP TITLE ── */
+.form-group-title{
+  font-family:var(--serif);font-size:1.25rem;font-style:italic;
+  color:var(--dark);margin:2.2rem 0 1.2rem;
+  padding-bottom:.5rem;border-bottom:1px solid rgba(67,79,41,.15);
+  display:flex;align-items:center;gap:.5rem;
+}
+.form-group-title:first-child{margin-top:0}
+
+/* ── INFO BOX ── */
+.info-box{
+  background:rgba(67,79,41,.08);border:1.5px solid rgba(67,79,41,.2);
+  border-radius:10px;padding:1.1rem 1.4rem;
+  font-size:.86rem;color:var(--oliva);line-height:1.75;
+  margin-bottom:1.6rem;
+}
+
+/* ── FIELD NOTE ── */
+.field-note{
+  font-size:.78rem;color:var(--oliva);margin-top:.35rem;
+  font-style:italic;opacity:.8;
+}
+
 /* ── ERROR ── */
 .form-error{
   font-size:.82rem;color:#b94a48;margin-top:.3rem;display:none;
@@ -291,10 +345,12 @@ footer p{font-size:.72rem;color:rgba(248,249,232,.3);letter-spacing:.12em;text-t
 
     <!-- INVITACIÓN PANEL -->
     <div class="form-panel" id="panel-invitacion">
+
+      <!-- Contacto -->
       <div class="form-row">
         <div>
-          <label for="i-nombre">Nombre completo *</label>
-          <input type="text" id="i-nombre" name="nombre_cliente" placeholder="Tu nombre" autocomplete="name"/>
+          <label for="i-nombre">Tu nombre completo *</label>
+          <input type="text" id="i-nombre" name="nombre_cliente" placeholder="Quien está llenando el formulario" autocomplete="name"/>
           <p class="form-error" id="err-i-nombre">Por favor ingresa tu nombre.</p>
         </div>
         <div>
@@ -307,6 +363,45 @@ footer p{font-size:.72rem;color:rgba(248,249,232,.3);letter-spacing:.12em;text-t
         <label for="i-email">Correo electrónico</label>
         <input type="email" id="i-email" name="email" placeholder="hola@correo.com" autocomplete="email"/>
       </div>
+
+      <!-- GROUP 1: Los protagonistas -->
+      <p class="form-group-title">💍 Los protagonistas</p>
+      <div class="form-row">
+        <div>
+          <label for="i-novia">Nombre de la novia *</label>
+          <input type="text" id="i-novia" name="nombre_novia" placeholder="Nombre completo de la novia"/>
+          <p class="form-error" id="err-i-novia">Por favor ingresa el nombre de la novia.</p>
+        </div>
+        <div>
+          <label for="i-novio">Nombre del novio *</label>
+          <input type="text" id="i-novio" name="nombre_novio" placeholder="Nombre completo del novio"/>
+          <p class="form-error" id="err-i-novio">Por favor ingresa el nombre del novio.</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="i-foto-novia">Foto de la novia</label>
+          <input type="text" id="i-foto-novia" name="foto_novia" placeholder="Link de foto de la novia (Google Drive, etc)"/>
+        </div>
+        <div>
+          <label for="i-foto-novio">Foto del novio</label>
+          <input type="text" id="i-foto-novio" name="foto_novio" placeholder="Link de foto del novio (Google Drive, etc)"/>
+        </div>
+      </div>
+
+      <!-- GROUP 2: Padres -->
+      <p class="form-group-title">👨‍👩‍👧 Padres</p>
+      <div class="form-group">
+        <label for="i-padres-novia">Padres de la novia</label>
+        <textarea id="i-padres-novia" name="padres_novia" style="min-height:72px" placeholder="Nombres de los padres de la novia, separados por coma"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="i-padres-novio">Padres del novio</label>
+        <textarea id="i-padres-novio" name="padres_novio" style="min-height:72px" placeholder="Nombres de los padres del novio, separados por coma"></textarea>
+      </div>
+
+      <!-- GROUP 3: El evento -->
+      <p class="form-group-title">📅 El evento</p>
       <div class="form-group">
         <label for="i-tipo">Tipo de evento *</label>
         <select id="i-tipo" name="tipo_evento">
@@ -322,11 +417,6 @@ footer p{font-size:.72rem;color:rgba(248,249,232,.3);letter-spacing:.12em;text-t
         </select>
         <p class="form-error" id="err-i-tipo">Por favor selecciona el tipo de evento.</p>
       </div>
-      <div class="form-group">
-        <label for="i-nombres">Nombre(s) que aparecerán en la invitación *</label>
-        <input type="text" id="i-nombres" name="nombres_evento" placeholder="Ej. María &amp; Juan, o Valentina Rodríguez"/>
-        <p class="form-error" id="err-i-nombres">Por favor ingresa los nombres del evento.</p>
-      </div>
       <div class="form-row">
         <div>
           <label for="i-fecha">Fecha del evento</label>
@@ -338,21 +428,107 @@ footer p{font-size:.72rem;color:rgba(248,249,232,.3);letter-spacing:.12em;text-t
         </div>
       </div>
       <div class="form-group">
-        <label for="i-lugar">Lugar del evento</label>
-        <input type="text" id="i-lugar" name="lugar_evento" placeholder="Ej. Salón Los Jardines, Santiago"/>
+        <label for="i-lugar-ceremonia">Lugar de la ceremonia</label>
+        <input type="text" id="i-lugar-ceremonia" name="lugar_ceremonia" placeholder="Nombre y dirección de la iglesia o ceremonia"/>
+      </div>
+      <div class="form-group">
+        <label for="i-lugar-recepcion">Lugar de la recepción</label>
+        <input type="text" id="i-lugar-recepcion" name="lugar_recepcion" placeholder="Nombre y dirección del salón de recepción"/>
+      </div>
+      <div class="form-group">
+        <label for="i-foto-lugar">Foto del salón</label>
+        <input type="text" id="i-foto-lugar" name="foto_lugar" placeholder="Link de foto del salón (Google Drive, etc)"/>
+      </div>
+
+      <!-- GROUP 4: Contacto el día del evento -->
+      <p class="form-group-title">📱 Contacto el día del evento</p>
+      <div class="form-row">
+        <div>
+          <label for="i-wa-novia">WhatsApp de la novia</label>
+          <input type="text" id="i-wa-novia" name="whatsapp_novia" placeholder="Número de WhatsApp de la novia"/>
+        </div>
+        <div>
+          <label for="i-wa-novio">WhatsApp del novio</label>
+          <input type="text" id="i-wa-novio" name="whatsapp_novio" placeholder="Número de WhatsApp del novio"/>
+        </div>
+      </div>
+
+      <!-- GROUP 5: Música -->
+      <p class="form-group-title">🎵 Música</p>
+      <div class="form-group">
+        <label for="i-cancion">Canción de fondo</label>
+        <input type="text" id="i-cancion" name="cancion_titulo" placeholder="Título y artista de la canción de fondo"/>
+        <p class="field-note">Si es una canción personalizada, la coordinamos por WhatsApp.</p>
+      </div>
+
+      <!-- GROUP 6: Vestimenta y estilo -->
+      <p class="form-group-title">👗 Vestimenta y estilo</p>
+      <div class="form-group">
+        <label for="i-vestimenta">Código de vestimenta</label>
+        <input type="text" id="i-vestimenta" name="codigo_vestimenta" placeholder="Ej: Etiqueta tropical, Formal, Semi-formal"/>
+      </div>
+      <div class="form-group">
+        <label for="i-pinterest">Tablero de Pinterest</label>
+        <input type="text" id="i-pinterest" name="link_pinterest" placeholder="Link de tablero de Pinterest con inspiración (opcional)"/>
       </div>
       <div class="form-group">
         <label for="i-colores">Colores o paleta preferida</label>
         <input type="text" id="i-colores" name="colores_preferidos" placeholder="Ej. Verde oliva, blanco roto y dorado"/>
       </div>
+
+      <!-- GROUP 7: Detalles del regalo -->
+      <p class="form-group-title">🎁 Detalles del regalo</p>
+      <div class="form-row">
+        <div>
+          <label for="i-banco-nombre">Nombre del banco</label>
+          <input type="text" id="i-banco-nombre" name="banco_nombre" placeholder="Nombre del banco"/>
+        </div>
+        <div>
+          <label for="i-banco-tipo">Tipo de cuenta</label>
+          <input type="text" id="i-banco-tipo" name="banco_tipo_cuenta" placeholder="Ej: Cuenta corriente, Cuenta en dólares"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="i-banco-numero">Número de cuenta</label>
+          <input type="text" id="i-banco-numero" name="banco_numero" placeholder="Número de cuenta"/>
+        </div>
+        <div>
+          <label for="i-banco-titular">Titular de la cuenta</label>
+          <input type="text" id="i-banco-titular" name="banco_titular" placeholder="Nombre del titular"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="i-banco-cedula">Cédula del titular</label>
+          <input type="text" id="i-banco-cedula" name="banco_cedula" placeholder="Cédula del titular"/>
+        </div>
+        <div>
+          <label for="i-banco-email">Email de la cuenta</label>
+          <input type="text" id="i-banco-email" name="banco_email" placeholder="Email asociado a la cuenta (opcional)"/>
+        </div>
+      </div>
+
+      <!-- GROUP 8: Extras -->
+      <p class="form-group-title">✨ Extras</p>
       <div class="form-group">
-        <label for="i-vestimenta">Código de vestimenta (opcional)</label>
-        <input type="text" id="i-vestimenta" name="vestimenta" placeholder="Ej. Formal, cocktail, casual elegante…"/>
+        <label for="i-hashtag">Hashtag del evento</label>
+        <input type="text" id="i-hashtag" name="hashtag" placeholder="Ej: #Katherine&amp;KaMing2026"/>
       </div>
       <div class="form-group">
-        <label for="i-mensaje">¿Algo más que quieras contarnos?</label>
-        <textarea id="i-mensaje" name="mensaje" placeholder="Detalles adicionales, inspiración, referencias, presupuesto estimado…"></textarea>
+        <label for="i-mensaje-inv">Mensaje especial para los invitados</label>
+        <textarea id="i-mensaje-inv" name="mensaje_invitados" placeholder="Mensaje especial para los invitados"></textarea>
       </div>
+      <div class="form-group">
+        <label for="i-pases">Número de pases por invitado</label>
+        <input type="number" id="i-pases" name="numero_pases" min="1" max="10" placeholder="Número de pases por invitado (Ej: 2)"/>
+      </div>
+
+      <!-- Info box -->
+      <div class="info-box">
+        📸 <strong>Fotos:</strong> Al finalizar este formulario te compartiremos un link de Google Drive donde podrás subir todas las fotos para tu invitación.
+      </div>
+
     </div>
 
     <!-- Submit -->
@@ -419,8 +595,9 @@ function validateInvitacion() {
   let ok = true;
   if (!val('i-nombre'))   { showErr('err-i-nombre');  ok = false; }
   if (!val('i-telefono')) { showErr('err-i-telefono'); ok = false; }
-  if (!val('i-tipo') || document.getElementById('i-tipo').value === '') { showErr('err-i-tipo'); ok = false; }
-  if (!val('i-nombres'))  { showErr('err-i-nombres'); ok = false; }
+  if (!val('i-novia'))    { showErr('err-i-novia');   ok = false; }
+  if (!val('i-novio'))    { showErr('err-i-novio');   ok = false; }
+  if (!document.getElementById('i-tipo').value) { showErr('err-i-tipo'); ok = false; }
   return ok;
 }
 
@@ -450,17 +627,36 @@ document.getElementById('cotizar-form').addEventListener('submit', async (e) => 
     payload.estilo_preferido   = document.getElementById('b-estilo').value || null;
     payload.mensaje            = val('b-mensaje');
   } else {
-    payload.nombre_cliente    = val('i-nombre');
-    payload.telefono          = val('i-telefono');
-    payload.email             = val('i-email');
-    payload.tipo_evento       = document.getElementById('i-tipo').value || null;
-    payload.nombres_evento    = val('i-nombres');
-    payload.fecha_evento      = document.getElementById('i-fecha').value || null;
-    payload.hora_evento       = document.getElementById('i-hora').value || null;
-    payload.lugar_evento      = val('i-lugar');
+    payload.nombre_cliente     = val('i-nombre');
+    payload.telefono           = val('i-telefono');
+    payload.email              = val('i-email');
+    payload.nombre_novia       = val('i-novia');
+    payload.nombre_novio       = val('i-novio');
+    payload.foto_novia         = val('i-foto-novia');
+    payload.foto_novio         = val('i-foto-novio');
+    payload.padres_novia       = val('i-padres-novia');
+    payload.padres_novio       = val('i-padres-novio');
+    payload.tipo_evento        = document.getElementById('i-tipo').value || null;
+    payload.fecha_evento       = document.getElementById('i-fecha').value || null;
+    payload.hora_evento        = document.getElementById('i-hora').value || null;
+    payload.lugar_ceremonia    = val('i-lugar-ceremonia');
+    payload.lugar_recepcion    = val('i-lugar-recepcion');
+    payload.foto_lugar         = val('i-foto-lugar');
+    payload.whatsapp_novia     = val('i-wa-novia');
+    payload.whatsapp_novio     = val('i-wa-novio');
+    payload.cancion_titulo     = val('i-cancion');
+    payload.codigo_vestimenta  = val('i-vestimenta');
+    payload.link_pinterest     = val('i-pinterest');
     payload.colores_preferidos = val('i-colores');
-    payload.vestimenta        = val('i-vestimenta');
-    payload.mensaje           = val('i-mensaje');
+    payload.banco_nombre       = val('i-banco-nombre');
+    payload.banco_tipo_cuenta  = val('i-banco-tipo');
+    payload.banco_numero       = val('i-banco-numero');
+    payload.banco_titular      = val('i-banco-titular');
+    payload.banco_cedula       = val('i-banco-cedula');
+    payload.banco_email        = val('i-banco-email');
+    payload.hashtag            = val('i-hashtag');
+    payload.mensaje_invitados  = val('i-mensaje-inv');
+    payload.numero_pases       = val('i-pases') || null;
   }
 
   const { error } = await sb.from('solicitudes').insert(payload);
