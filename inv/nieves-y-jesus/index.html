@@ -76,34 +76,40 @@ body{
 #hero{
   min-height:100svh;position:relative;
   display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-end;
-  padding:3rem 1.5rem 4rem;text-align:center;overflow:hidden;
+  align-items:center;justify-content:space-between;
+  padding:0 1.5rem 4rem;text-align:center;overflow:hidden;
 }
 .hero-bg{
   position:absolute;inset:0;
-  background:url('/inv/nieves-y-jesus/fotos/foto-01.jpg') center/cover no-repeat;
+  background:url('./fotos/foto-01.jpg') center/cover no-repeat;
 }
 .hero-bg::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(42,42,62,.85) 0%,rgba(42,42,62,.3) 45%,rgba(42,42,62,.1) 100%);
+  background:linear-gradient(to top,rgba(42,42,62,.88) 0%,rgba(42,42,62,.15) 40%,rgba(42,42,62,.25) 100%);
 }
-.hero-content{position:relative;z-index:1}
+.hero-content{position:relative;z-index:1;width:100%}
+.hero-top{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:2.5rem;
+}
 .hero-monogram{
-  font-family:var(--script);font-size:4rem;
-  color:rgba(255,255,255,.7);display:block;margin-bottom:1rem;
-  text-shadow:0 2px 20px rgba(0,0,0,.3);
+  font-family:var(--script);font-size:clamp(4rem,15vw,7rem);
+  color:rgba(255,255,255,.85);display:block;
+  text-shadow:0 2px 30px rgba(0,0,0,.4);
+  line-height:1;
 }
 .hero-names{
   font-family:var(--cinzel);
-  font-size:clamp(2.5rem,10vw,4.5rem);
-  font-weight:600;letter-spacing:.08em;
-  color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4);line-height:1.1;
+  font-size:clamp(2.2rem,8vw,5rem);
+  font-weight:600;letter-spacing:.12em;
+  color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.5);line-height:1.1;
 }
-.hero-amp{color:rgba(255,255,255,.75)}
+.hero-amp{color:rgba(255,255,255,.8);font-weight:400}
 .hero-tagline{
-  font-family:var(--script);font-size:clamp(1.3rem,5vw,2rem);
-  color:rgba(255,255,255,.8);margin-top:.8rem;
-  text-shadow:0 1px 12px rgba(0,0,0,.3);
+  font-family:var(--script);font-size:clamp(1.4rem,5vw,2.2rem);
+  color:rgba(255,255,255,.85);margin-top:.6rem;
+  text-shadow:0 1px 15px rgba(0,0,0,.4);
 }
 
 /* ── SECTIONS ── */
@@ -165,7 +171,7 @@ section.lav{background:var(--lav);color:var(--white)}
 }
 .garden-bg{
   position:absolute;inset:0;
-  background:url('/inv/nieves-y-jesus/fotos/foto-02.jpg') center top/cover no-repeat;
+  background:url('./fotos/foto-02.jpg') center top/cover no-repeat;
 }
 .garden-bg::after{
   content:'';position:absolute;inset:0;
@@ -216,7 +222,7 @@ section.lav{background:var(--lav);color:var(--white)}
 }
 .venue-bg{
   position:absolute;inset:0;
-  background:url('/inv/nieves-y-jesus/fotos/foto-07.jpg') center/cover no-repeat;
+  background:url('./fotos/foto-07.jpg') center/cover no-repeat;
 }
 .venue-bg::after{content:'';position:absolute;inset:0;background:rgba(42,42,62,.62)}
 .venue-inner{
@@ -419,7 +425,7 @@ footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
 
 <!-- Audio -->
 <audio id="audio" loop>
-  <source src="/inv/nieves-y-jesus/cancion.mp3" type="audio/mpeg"/>
+  <source src="./cancion.mp3" type="audio/mpeg"/>
 </audio>
 
 <!-- Music button -->
@@ -437,10 +443,14 @@ footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
 <!-- ░░ HERO ░░ -->
 <section id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-content reveal">
-    <span class="hero-monogram">NJ</span>
-    <h1 class="hero-names">Nieves <span class="hero-amp">&</span> Jesús</h1>
-    <p class="hero-tagline">La vita è bella; ¡nos casamos!</p>
+  <div class="hero-content">
+    <div class="hero-top reveal">
+      <span class="hero-monogram">NJ</span>
+    </div>
+    <div class="reveal" style="margin-top:auto">
+      <h1 class="hero-names">Nieves <span class="hero-amp">&</span> Jesús</h1>
+      <p class="hero-tagline">La vita è bella; ¡nos casamos!</p>
+    </div>
   </div>
 </section>
 
@@ -505,10 +515,10 @@ footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
 
 <!-- ░░ GALLERY 2-COL ░░ -->
 <div class="gallery-2">
-  <img src="/inv/nieves-y-jesus/fotos/foto-03.jpg" class="tall" alt="Nieves y Jesús"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-04.jpg" class="tall" alt="Nieves"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-11.jpg" class="tall" alt="Juntos"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-12.jpg" class="tall" alt="Amor"/>
+  <img src="./fotos/foto-03.jpg" class="tall" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-04.jpg" class="tall" alt="Nieves"/>
+  <img src="./fotos/foto-11.jpg" class="tall" alt="Juntos"/>
+  <img src="./fotos/foto-12.jpg" class="tall" alt="Amor"/>
 </div>
 
 <!-- ░░ PADRES ░░ -->
@@ -603,8 +613,8 @@ footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
 <section id="regalo" class="lav">
   <div class="regalo-inner">
     <div class="regalo-photos reveal">
-      <img src="/inv/nieves-y-jesus/fotos/foto-08.jpg" alt="Nieves y Jesús"/>
-      <img src="/inv/nieves-y-jesus/fotos/foto-09.jpg" style="margin-top:4px" alt="Nieves y Jesús"/>
+      <img src="./fotos/foto-08.jpg" alt="Nieves y Jesús"/>
+      <img src="./fotos/foto-09.jpg" style="margin-top:4px" alt="Nieves y Jesús"/>
     </div>
     <div class="regalo-text reveal reveal-1">
       <h3 class="regalo-h">Contar con tu presencia es nuestro mejor regalo.</h3>
@@ -708,16 +718,16 @@ footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
 
 <!-- ░░ GALLERY 3-COL ░░ -->
 <div class="gallery-3">
-  <img src="/inv/nieves-y-jesus/fotos/foto-05.jpg" alt="Nieves y Jesús"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-10.jpg" alt="Nieves y Jesús"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-06.jpg" alt="Nieves y Jesús"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-13.jpg" alt="Nieves y Jesús"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-02.jpg" alt="Nieves y Jesús" style="object-position:center top"/>
-  <img src="/inv/nieves-y-jesus/fotos/foto-03.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-05.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-10.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-06.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-13.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-02.jpg" alt="Nieves y Jesús" style="object-position:center top"/>
+  <img src="./fotos/foto-03.jpg" alt="Nieves y Jesús"/>
 </div>
 
 <!-- ░░ LARGE PHOTO ░░ -->
-<img class="photo-full" src="/inv/nieves-y-jesus/fotos/foto-07.jpg" alt="Condominios Los Charamicos" style="object-position:center"/>
+<img class="photo-full" src="./fotos/foto-07.jpg" alt="Condominios Los Charamicos" style="object-position:center"/>
 
 <!-- ░░ FOOTER ░░ -->
 <footer>
@@ -756,30 +766,10 @@ const db = supabase.createClient(SUPA_URL, SUPA_KEY)
   const play  = document.getElementById('icon-play')
   const pause = document.getElementById('icon-pause')
   let on = false
-
-  function startMusic(){
-    if(on) return
-    audio.play().then(()=>{
-      play.style.display  = 'none'
-      pause.style.display = 'block'
-      btn.classList.add('playing')
-      on = true
-    }).catch(()=>{})
-  }
-
-  // Autoplay on first interaction
-  const events = ['touchstart','click','scroll','keydown']
-  function onFirstInteraction(){
-    startMusic()
-    events.forEach(e => document.removeEventListener(e, onFirstInteraction))
-  }
-  events.forEach(e => document.addEventListener(e, onFirstInteraction, {once:true, passive:true}))
-
-  // Manual toggle
-  btn.addEventListener('click', function(e){
-    e.stopPropagation()
-    if(on){ audio.pause(); play.style.display='block'; pause.style.display='none'; btn.classList.remove('playing'); on=false }
-    else { startMusic() }
+  btn.addEventListener('click',function(){
+    if(on){ audio.pause(); play.style.display='block'; pause.style.display='none'; btn.classList.remove('playing') }
+    else { audio.play().catch(()=>{}); play.style.display='none'; pause.style.display='block'; btn.classList.add('playing') }
+    on = !on
   })
 })()
 
