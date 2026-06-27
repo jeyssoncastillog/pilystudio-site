@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nieves & Jesús — ¡Nos casamos!</title>
+<meta name="description" content="Nieves & Jesús — La vita è bella; ¡nos casamos! Viernes 27 de noviembre de 2026."/>
+<meta property="og:title" content="Nieves & Jesús — ¡Nos casamos!"/>
+<meta property="og:image" content="./fotos/foto-03.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:   #F5F0E6;
+  --cream-dk:#EDE6D8;
+  --lav:     #B8BDCF;
+  --lav-lt:  #D4D8E8;
+  --lav-dk:  #8B91B5;
+  --dark:    #2A2A3E;
+  --mid:     #5A5A78;
+  --white:   #FFFFFF;
+  --cinzel:  'Cinzel', serif;
+  --script:  'Pinyon Script', cursive;
+  --body:    'Crimson Pro', Georgia, serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--dark);
+  font-family:var(--body);font-weight:300;
+  line-height:1.7;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── MUSIC BTN ── */
+.music-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;
+  width:50px;height:50px;border-radius:50%;
+  background:rgba(42,42,62,.8);backdrop-filter:blur(8px);
+  border:1.5px solid rgba(184,189,207,.5);
+  color:var(--lav-lt);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+  transition:all .3s;
+}
+.music-btn:hover{background:rgba(42,42,62,.95);border-color:var(--lav)}
+.music-btn.playing{border-color:var(--lav);animation:pulse 2.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,189,207,.35)}60%{box-shadow:0 0 0 10px rgba(184,189,207,0)}}
+
+/* ── BACK LINK ── */
+.back{
+  position:fixed;top:1rem;left:1rem;z-index:300;
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--cinzel);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);text-decoration:none;
+  background:rgba(42,42,62,.5);backdrop-filter:blur(8px);
+  padding:.45rem 1rem;border-radius:50px;
+  border:1px solid rgba(255,255,255,.2);transition:all .2s;
+}
+.back:hover{color:#fff;background:rgba(42,42,62,.8)}
+
+/* ── BOTANICAL SVGs ── */
+.botanical{position:absolute;pointer-events:none;opacity:.15}
+
+/* ── MONOGRAM ── */
+.monogram{
+  font-family:var(--script);font-size:3.5rem;
+  color:var(--lav-dk);line-height:1;
+  display:block;text-align:center;margin-bottom:.5rem;
+}
+
+/* ── HERO ── */
+#hero{
+  min-height:100svh;position:relative;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding:3rem 1.5rem 4rem;text-align:center;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('./fotos/foto-01.jpg') center/cover no-repeat;
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(42,42,62,.85) 0%,rgba(42,42,62,.3) 45%,rgba(42,42,62,.1) 100%);
+}
+.hero-content{position:relative;z-index:1}
+.hero-monogram{
+  font-family:var(--script);font-size:4rem;
+  color:rgba(255,255,255,.7);display:block;margin-bottom:1rem;
+  text-shadow:0 2px 20px rgba(0,0,0,.3);
+}
+.hero-names{
+  font-family:var(--cinzel);
+  font-size:clamp(2.5rem,10vw,4.5rem);
+  font-weight:600;letter-spacing:.08em;
+  color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.4);line-height:1.1;
+}
+.hero-amp{color:rgba(255,255,255,.75)}
+.hero-tagline{
+  font-family:var(--script);font-size:clamp(1.3rem,5vw,2rem);
+  color:rgba(255,255,255,.8);margin-top:.8rem;
+  text-shadow:0 1px 12px rgba(0,0,0,.3);
+}
+
+/* ── SECTIONS ── */
+section{padding:4.5rem 1.5rem;text-align:center}
+section.lav{background:var(--lav);color:var(--white)}
+.s-pre{
+  font-family:var(--cinzel);font-size:.62rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--lav-dk);display:block;margin-bottom:.8rem;
+}
+.lav .s-pre{color:rgba(255,255,255,.7)}
+.s-h2{
+  font-family:var(--cinzel);font-size:clamp(1.3rem,5vw,2rem);
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  line-height:1.3;color:var(--dark);
+}
+.lav .s-h2{color:#fff}
+.s-body{
+  font-size:1rem;color:var(--mid);
+  line-height:1.95;max-width:420px;margin:0 auto;
+}
+.lav .s-body{color:rgba(255,255,255,.8)}
+.divider{
+  width:1px;height:60px;
+  background:linear-gradient(to bottom,var(--lav-dk),transparent);
+  margin:2rem auto;
+}
+
+/* ── INVITACION ── */
+#invitacion{position:relative;overflow:hidden;padding:5rem 1.5rem}
+.inv-botanical-left{position:absolute;left:-20px;top:50%;transform:translateY(-50%);width:160px;opacity:.12}
+.inv-botanical-right{position:absolute;right:-20px;top:20%;width:130px;opacity:.12;transform:scaleX(-1)}
+.inv-date{
+  font-family:var(--cinzel);font-size:.9rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dark);margin:1.5rem 0;
+}
+
+/* ── COUNTDOWN ── */
+.clock{display:flex;gap:.8rem;justify-content:center;align-items:flex-end;margin:1.5rem 0}
+.clock-unit{display:flex;flex-direction:column;align-items:center}
+.clock-num{
+  font-family:var(--cinzel);
+  font-size:clamp(2rem,8vw,3rem);
+  font-weight:400;color:var(--dark);line-height:1;letter-spacing:.05em;
+}
+.clock-sep{font-family:var(--cinzel);font-size:2rem;color:var(--lav-dk);line-height:1.1;padding-bottom:.1rem}
+.clock-label{
+  font-family:var(--cinzel);font-size:.45rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--mid);margin-top:.3rem;
+}
+
+/* ── DARK GARDEN ── */
+#garden{
+  min-height:70vh;position:relative;
+  display:flex;align-items:flex-end;
+  padding:3rem 2rem;overflow:hidden;
+}
+.garden-bg{
+  position:absolute;inset:0;
+  background:url('./fotos/foto-02.jpg') center top/cover no-repeat;
+}
+.garden-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(42,42,62,.75) 0%,rgba(42,42,62,.15) 70%);
+}
+.garden-content{position:relative;z-index:1;text-align:left;max-width:320px}
+.garden-text{
+  font-family:var(--cinzel);font-size:clamp(1.1rem,4vw,1.5rem);
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;line-height:1.4;margin-bottom:1rem;
+}
+.garden-monogram{font-family:var(--script);font-size:2.8rem;color:rgba(255,255,255,.7)}
+
+/* ── GALLERY 2-COL ── */
+.gallery-2{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4px;max-width:600px;margin:0 auto;
+}
+.gallery-2 img,.gallery-3 img{
+  width:100%;object-fit:cover;display:block;transition:transform .4s;
+}
+.gallery-2 img:hover,.gallery-3 img:hover{transform:scale(1.02)}
+.gallery-2 .tall{aspect-ratio:3/4}
+
+/* ── PADRES ── */
+#padres{position:relative;overflow:hidden}
+.padres-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;max-width:480px;margin:2.5rem auto 0;text-align:left;
+}
+.padres-role{
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);margin-bottom:.7rem;
+}
+.padres-names{
+  font-family:var(--cinzel);font-size:.95rem;
+  font-weight:400;letter-spacing:.06em;
+  color:#fff;line-height:1.7;
+}
+.padres-cross{font-size:.8rem;color:rgba(255,255,255,.6)}
+
+/* ── VENUE ── */
+#venue{
+  min-height:80vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  padding:4rem 1.5rem;overflow:hidden;
+}
+.venue-bg{
+  position:absolute;inset:0;
+  background:url('./fotos/foto-07.jpg') center/cover no-repeat;
+}
+.venue-bg::after{content:'';position:absolute;inset:0;background:rgba(42,42,62,.62)}
+.venue-inner{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr auto;
+  gap:3rem;align-items:center;max-width:700px;width:100%;
+}
+.venue-left{text-align:left}
+.venue-monogram{
+  font-family:var(--script);font-size:3rem;
+  color:rgba(255,255,255,.65);display:block;margin-bottom:.8rem;
+}
+.venue-name{
+  font-family:var(--cinzel);font-size:clamp(1.3rem,5vw,2rem);
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;line-height:1.3;margin-bottom:1.5rem;
+}
+.venue-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.65rem 1.6rem;
+  border:1.5px solid rgba(255,255,255,.7);
+  color:#fff;font-family:var(--cinzel);
+  font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+  border-radius:2px;text-decoration:none;transition:all .2s;
+}
+.venue-btn:hover{background:rgba(255,255,255,.15)}
+.timeline{display:flex;flex-direction:column;gap:0;position:relative}
+.timeline::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;
+  width:1px;background:rgba(255,255,255,.3);transform:translateX(-50%);
+}
+.tl-item{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;padding:1rem .5rem;min-width:100px;
+}
+.tl-icon{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.8);font-size:.9rem;margin-bottom:.4rem;position:relative;z-index:1;
+}
+.tl-name{
+  font-family:var(--cinzel);font-size:.55rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.85);text-align:center;
+}
+.tl-time{font-family:var(--cinzel);font-size:.5rem;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-top:.1rem;text-align:center}
+
+/* ── VESTIMENTA ── */
+#vestimenta{position:relative;overflow:hidden}
+.vest-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;max-width:580px;margin:2.5rem auto 0;text-align:left;
+}
+.vest-role{
+  font-family:var(--cinzel);font-size:.62rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--lav-dk);margin-bottom:.8rem;
+}
+.vest-text{font-size:.9rem;color:var(--mid);line-height:1.85}
+.vest-palette{display:flex;gap:.7rem;justify-content:center;margin:2rem 0 1rem}
+.swatch{width:38px;height:38px;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+.vest-note{
+  font-size:.85rem;color:var(--mid);max-width:460px;
+  margin:0 auto;line-height:1.9;font-style:italic;
+}
+.vest-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:1.5rem;padding:.6rem 1.5rem;
+  border:1px solid var(--lav);color:var(--dark);
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  border-radius:2px;text-decoration:none;transition:all .2s;
+}
+.vest-btn:hover{background:var(--lav);color:#fff}
+
+/* ── REGALO ── */
+#regalo{position:relative;overflow:hidden}
+.regalo-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;max-width:600px;margin:0 auto;align-items:center;
+}
+.regalo-photos{display:flex;flex-direction:column;gap:4px}
+.regalo-photos img{width:100%;object-fit:cover;border-radius:2px;aspect-ratio:4/3}
+.regalo-text{text-align:left}
+.regalo-h{
+  font-family:var(--cinzel);font-size:clamp(1rem,4vw,1.4rem);
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;line-height:1.4;margin-bottom:1.2rem;
+}
+.regalo-sub{font-size:.88rem;color:rgba(255,255,255,.75);line-height:1.9;margin-bottom:1.5rem}
+.banco-box{margin-bottom:1.5rem}
+.banco-name{
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);margin-bottom:.4rem;
+}
+.banco-info{font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.75}
+.banco-info b{color:#fff;font-weight:600}
+.regalo-quote{
+  font-family:var(--script);font-size:1.3rem;
+  color:rgba(255,255,255,.65);margin-top:1.5rem;line-height:1.6;
+}
+
+/* ── RSVP SECTION ── */
+#rsvp{background:var(--cream-dk);padding:5rem 1.5rem;position:relative;overflow:hidden}
+.rsvp-box{
+  max-width:520px;margin:2.5rem auto 0;
+  background:var(--white);border-radius:4px;
+  padding:2.5rem 2rem;
+  box-shadow:0 4px 40px rgba(42,42,62,.08);
+}
+.rsvp-field{margin-bottom:1.5rem;text-align:left}
+.rsvp-label{
+  font-family:var(--cinzel);font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mid);margin-bottom:.6rem;display:block;
+}
+.rsvp-input,.rsvp-textarea{
+  width:100%;padding:.8rem 1rem;
+  border:1px solid var(--lav);border-radius:2px;
+  font-family:var(--body);font-size:.95rem;color:var(--dark);
+  background:var(--cream);outline:none;
+  transition:border-color .2s;
+}
+.rsvp-input:focus,.rsvp-textarea:focus{border-color:var(--lav-dk)}
+.rsvp-textarea{resize:vertical;min-height:80px}
+.rsvp-radio-group{display:flex;flex-direction:column;gap:.7rem;margin-top:.4rem}
+.rsvp-radio{display:flex;align-items:center;gap:.7rem;cursor:pointer}
+.rsvp-radio input{accent-color:var(--lav-dk);width:16px;height:16px;cursor:pointer}
+.rsvp-radio span{font-family:var(--body);font-size:.92rem;color:var(--dark)}
+.rsvp-submit{
+  width:100%;padding:.9rem;
+  background:var(--lav-dk);color:#fff;
+  font-family:var(--cinzel);font-size:.65rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  transition:background .2s;margin-top:.5rem;
+}
+.rsvp-submit:hover{background:var(--dark)}
+.rsvp-submit:disabled{background:var(--lav);cursor:not-allowed}
+.rsvp-success{
+  text-align:center;padding:2rem 1rem;display:none;
+}
+.rsvp-success .check{
+  font-size:2.5rem;margin-bottom:1rem;display:block;
+}
+.rsvp-success p{
+  font-family:var(--cinzel);font-size:.75rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--mid);line-height:1.8;
+}
+.rsvp-error{
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.1em;color:#c0392b;
+  margin-top:.5rem;display:none;text-align:center;
+}
+
+/* ── GALLERY 3-COL ── */
+.gallery-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:700px;margin:0 auto}
+.gallery-3 img{aspect-ratio:3/4;width:100%;object-fit:cover;display:block;transition:transform .4s}
+.gallery-3 img:hover{transform:scale(1.02)}
+
+/* ── LARGE PHOTO ── */
+.photo-full{width:100%;height:70vh;object-fit:cover;display:block}
+
+/* ── FOOTER ── */
+footer{background:var(--lav);padding:3.5rem 1.5rem;text-align:center}
+.footer-text{
+  font-family:var(--cinzel);font-size:clamp(.8rem,3vw,1.1rem);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:#fff;line-height:1.6;
+}
+.footer-brand{
+  font-family:var(--cinzel);font-size:.5rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-top:1.5rem;
+}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-1{transition-delay:.1s}
+.reveal-2{transition-delay:.2s}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  .venue-inner{grid-template-columns:1fr;gap:2rem}
+  .timeline{flex-direction:row;justify-content:center}
+  .timeline::before{top:50%;left:0;right:0;bottom:auto;height:1px;width:100%;transform:none}
+  .regalo-inner{grid-template-columns:1fr}
+  .regalo-photos{display:none}
+  .padres-grid{grid-template-columns:1fr;gap:2rem}
+  .vest-grid{grid-template-columns:1fr}
+  .gallery-3{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- Audio -->
+<audio id="audio" loop>
+  <source src="./cancion.mp3" type="audio/mpeg"/>
+</audio>
+
+<!-- Music button -->
+<button class="music-btn" id="music-btn" aria-label="Reproducir música">
+  <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.73-3.37-1.9-4.5l-1.42 1.42C14.1 9.84 14.5 10.88 14.5 12s-.4 2.16-1.32 3.08l1.42 1.42c1.17-1.13 1.9-2.73 1.9-4.5z"/></svg>
+  <svg id="icon-pause" style="display:none" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+</button>
+
+<!-- Back -->
+<a href="/" class="back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  PilyStudio
+</a>
+
+<!-- ░░ HERO ░░ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content reveal">
+    <span class="hero-monogram">NJ</span>
+    <h1 class="hero-names">Nieves <span class="hero-amp">&</span> Jesús</h1>
+    <p class="hero-tagline">La vita è bella; ¡nos casamos!</p>
+  </div>
+</section>
+
+<!-- ░░ INVITACIÓN ░░ -->
+<section id="invitacion">
+  <svg class="inv-botanical-left" viewBox="0 0 120 280" fill="none">
+    <path d="M60 270 Q45 200 30 140 Q15 80 40 20" stroke="#8B91B5" stroke-width="1.5" fill="none"/>
+    <ellipse cx="35" cy="110" rx="18" ry="10" transform="rotate(-30 35 110)" fill="#8B91B5" opacity=".7"/>
+    <ellipse cx="55" cy="75" rx="15" ry="8" transform="rotate(20 55 75)" fill="#8B91B5" opacity=".6"/>
+    <ellipse cx="28" cy="155" rx="20" ry="10" transform="rotate(-45 28 155)" fill="#8B91B5" opacity=".6"/>
+    <ellipse cx="48" cy="45" rx="12" ry="6" transform="rotate(10 48 45)" fill="#8B91B5" opacity=".5"/>
+    <circle cx="60" cy="25" r="4" fill="#8B91B5" opacity=".5"/>
+    <circle cx="55" cy="35" r="3" fill="#8B91B5" opacity=".4"/>
+    <circle cx="65" cy="30" r="3" fill="#8B91B5" opacity=".4"/>
+  </svg>
+  <svg class="inv-botanical-right" viewBox="0 0 120 280" fill="none">
+    <path d="M60 270 Q75 200 90 140 Q105 80 80 20" stroke="#8B91B5" stroke-width="1.5" fill="none"/>
+    <ellipse cx="85" cy="110" rx="18" ry="10" transform="rotate(30 85 110)" fill="#8B91B5" opacity=".7"/>
+    <ellipse cx="65" cy="75" rx="15" ry="8" transform="rotate(-20 65 75)" fill="#8B91B5" opacity=".6"/>
+    <ellipse cx="92" cy="155" rx="20" ry="10" transform="rotate(45 92 155)" fill="#8B91B5" opacity=".6"/>
+    <circle cx="60" cy="25" r="4" fill="#8B91B5" opacity=".5"/>
+    <circle cx="65" cy="35" r="3" fill="#8B91B5" opacity=".4"/>
+  </svg>
+
+  <div class="reveal">
+    <span class="monogram">NJ</span>
+    <p class="s-body" style="margin-bottom:1rem">
+      Estamos muy felices de compartir<br>este día tan especial contigo.
+    </p>
+    <p class="s-body">
+      Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.
+    </p>
+    <p class="inv-date">Viernes, 27 de noviembre de 2026</p>
+    <div class="clock">
+      <div class="clock-unit"><span class="clock-num" id="cd-d">000</span><span class="clock-label">Días</span></div>
+      <span class="clock-sep">:</span>
+      <div class="clock-unit"><span class="clock-num" id="cd-h">00</span><span class="clock-label">Hrs</span></div>
+      <span class="clock-sep">:</span>
+      <div class="clock-unit"><span class="clock-num" id="cd-m">00</span><span class="clock-label">Mins</span></div>
+      <span class="clock-sep">:</span>
+      <div class="clock-unit"><span class="clock-num" id="cd-s">00</span><span class="clock-label">Seg</span></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+</section>
+
+<!-- ░░ DARK GARDEN ░░ -->
+<section id="garden">
+  <div class="garden-bg"></div>
+  <div class="garden-content reveal">
+    <p class="garden-text">El gran día está<br>cada vez más cerca</p>
+    <span class="garden-monogram">NJ</span>
+  </div>
+</section>
+
+<!-- ░░ BANNER LAVANDA ░░ -->
+<section class="lav" style="padding:2.5rem 1.5rem">
+  <p class="s-h2 reveal" style="font-size:clamp(1rem,4vw,1.5rem)">
+    Y deseamos que compartas<br>este momento especial con nosotros
+  </p>
+</section>
+
+<!-- ░░ GALLERY 2-COL ░░ -->
+<div class="gallery-2">
+  <img src="./fotos/foto-03.jpg" class="tall" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-04.jpg" class="tall" alt="Nieves"/>
+  <img src="./fotos/foto-11.jpg" class="tall" alt="Juntos"/>
+  <img src="./fotos/foto-12.jpg" class="tall" alt="Amor"/>
+</div>
+
+<!-- ░░ PADRES ░░ -->
+<section id="padres" class="lav" style="padding-top:3rem;padding-bottom:3rem">
+  <p class="s-h2 reveal" style="font-size:1.2rem;color:#fff">Con la bendición de<br>nuestros padres:</p>
+  <div class="padres-grid reveal reveal-1">
+    <div>
+      <p class="padres-role">Padres de la Novia:</p>
+      <p class="padres-names">
+        Julio Alberto Almonte de la Cruz<br>
+        Nieves Álvarez Mena
+      </p>
+    </div>
+    <div>
+      <p class="padres-role">Padres del Novio:</p>
+      <p class="padres-names">
+        Simón Rafael Moronta Quiñónez <span class="padres-cross">✝</span><br>
+        Yluminada Lugo
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ VENUE ░░ -->
+<section id="venue">
+  <div class="venue-bg"></div>
+  <div class="venue-inner">
+    <div class="venue-left reveal">
+      <span class="venue-monogram">NJ</span>
+      <p class="venue-name">Condominios<br>Los Charamicos I</p>
+      <a class="venue-btn" href="https://maps.google.com/?q=Condominios+Los+Charamicos,+Jarabacoa,+Dominican+Republic" target="_blank" rel="noopener">
+        Ver → Ubicación
+      </a>
+    </div>
+    <div class="timeline reveal reveal-1">
+      <div class="tl-item">
+        <div class="tl-icon">🎉</div>
+        <p class="tl-name">Celebración</p>
+        <p class="tl-time">8:00 PM – 11:00 PM</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">🍽</div>
+        <p class="tl-name">Cena</p>
+        <p class="tl-time">7:00 PM – 8:00 PM</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">🥂</div>
+        <p class="tl-name">Recepción</p>
+        <p class="tl-time">5:00 PM – 7:00 PM</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">💍</div>
+        <p class="tl-name">Ceremonia</p>
+        <p class="tl-time">4:00 PM – 5:00 PM</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ VESTIMENTA ░░ -->
+<section id="vestimenta">
+  <span class="monogram reveal">NJ</span>
+  <div class="vest-grid reveal reveal-1">
+    <div>
+      <p class="vest-role">Caballeros:</p>
+      <p class="vest-text">Pueden optar por chachabanas, trajes en tonos claros o una combinación de camisa, pantalón de vestir y blazer. La corbata o corbatín es opcional, permitiéndose el uso de colores o estampados discretos.</p>
+    </div>
+    <div>
+      <p class="vest-role">Damas:</p>
+      <p class="vest-text">Se sugiere la elección de vestidos largos o de corte midi. El uso de calzado de tacón es imprescindible para completar la etiqueta de la ocasión.</p>
+    </div>
+  </div>
+  <a class="vest-btn reveal reveal-2" href="https://www.pinterest.com/pilylach/vestimenta-nj/?invite_code=8ba0f2c831a34947b037792c9a3d28e6&sender=723109421328189020" target="_blank" rel="noopener">
+    Vestimenta → Inspiración
+  </a>
+  <div class="divider"></div>
+  <div class="vest-palette reveal">
+    <div class="swatch" style="background:#FFFFFF;border:1px solid #ddd" title="Blanco"></div>
+    <div class="swatch" style="background:#B8BDCF" title="Baby Blue"></div>
+    <div class="swatch" style="background:#D4C98A" title="Butter Yellow"></div>
+    <div class="swatch" style="background:#F0EDE8;border:1px solid #eee" title="Blanco roto"></div>
+  </div>
+  <p class="vest-note reveal reveal-1">
+    Con el fin de mantener la armonía visual de la celebración, reservamos los tonos
+    <strong>blanco</strong>, <em>baby blue</em> (azul pastel) y <em>butter yellow</em> (amarillo pastel)
+    <strong>exclusivamente</strong> para el concepto del evento.
+    Agradecemos su gentil colaboración al evitar estos colores en su atuendo.
+  </p>
+</section>
+
+<!-- ░░ REGALO ░░ -->
+<section id="regalo" class="lav">
+  <div class="regalo-inner">
+    <div class="regalo-photos reveal">
+      <img src="./fotos/foto-08.jpg" alt="Nieves y Jesús"/>
+      <img src="./fotos/foto-09.jpg" style="margin-top:4px" alt="Nieves y Jesús"/>
+    </div>
+    <div class="regalo-text reveal reveal-1">
+      <h3 class="regalo-h">Contar con tu presencia es nuestro mejor regalo.</h3>
+      <p class="regalo-sub">Si desean hacernos un obsequio, lo recibiremos con mucho cariño a través de las siguientes cuentas:</p>
+      <div class="banco-box">
+        <p class="banco-name">Banco XXX — Titular</p>
+        <p class="banco-info">
+          <b>Nieves Almonte Álvarez</b><br>
+          Cédula: 4xx-250xxxxx-x<br>
+          Correo: xxxxx@gmail.com<br>
+          <b>Cuenta Corriente (DOP):</b> xxxxxxx<br>
+          <b>Cuenta en Dólares (USD):</b> xxxxxxx
+        </p>
+      </div>
+      <p class="regalo-quote">"Porque en la mirada de cada día, descubrimos nuestro perfecto para siempre."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ RSVP ░░ -->
+<section id="rsvp">
+  <svg class="inv-botanical-left" style="top:5%" viewBox="0 0 120 280" fill="none">
+    <path d="M60 270 Q45 200 30 140 Q15 80 40 20" stroke="#8B91B5" stroke-width="1.5" fill="none"/>
+    <ellipse cx="35" cy="110" rx="18" ry="10" transform="rotate(-30 35 110)" fill="#8B91B5" opacity=".6"/>
+    <ellipse cx="55" cy="75" rx="15" ry="8" transform="rotate(20 55 75)" fill="#8B91B5" opacity=".5"/>
+    <ellipse cx="28" cy="155" rx="20" ry="10" transform="rotate(-45 28 155)" fill="#8B91B5" opacity=".5"/>
+  </svg>
+
+  <span class="monogram reveal">NJ</span>
+  <h2 class="s-h2 reveal reveal-1" style="margin-bottom:.5rem">Confirmar Asistencia</h2>
+  <p class="s-body reveal reveal-2" style="font-size:.9rem">
+    ¡Qué alegría compartir este momento contigo!<br>
+    Ayúdanos a preparar cada detalle confirmando antes del <strong>27 de octubre de 2026</strong>.
+  </p>
+  <p class="s-body reveal reveal-2" style="font-size:.8rem;margin-top:.5rem;font-style:italic">
+    Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
+  </p>
+
+  <div class="rsvp-box reveal reveal-1">
+    <!-- Form -->
+    <div id="rsvp-form">
+      <div class="rsvp-field">
+        <label class="rsvp-label">Nombre y Apellido *</label>
+        <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
+      </div>
+
+      <div class="rsvp-field">
+        <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
+        <div class="rsvp-radio-group">
+          <label class="rsvp-radio">
+            <input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/>
+            <span>Sí, ¡ahí estaré! 🎉</span>
+          </label>
+          <label class="rsvp-radio">
+            <input type="radio" name="asistencia" value="Lamentablemente no podré asistir"/>
+            <span>Lamentablemente no podré asistir 🙁</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="rsvp-field" id="pases-field">
+        <label class="rsvp-label">¿Cuántos pases confirmas?</label>
+        <div class="rsvp-radio-group">
+          <label class="rsvp-radio"><input type="radio" name="pases" value="1"/><span>1 Pase</span></label>
+          <label class="rsvp-radio"><input type="radio" name="pases" value="2"/><span>2 Pases</span></label>
+          <label class="rsvp-radio"><input type="radio" name="pases" value="3"/><span>3 Pases</span></label>
+        </div>
+      </div>
+
+      <div class="rsvp-field">
+        <label class="rsvp-label">Restricciones alimenticias o alergias</label>
+        <div class="rsvp-radio-group">
+          <label class="rsvp-radio"><input type="radio" name="restricciones" value="Ninguna"/><span>Ninguna</span></label>
+          <label class="rsvp-radio"><input type="radio" name="restricciones" value="Vegetariano / Vegano"/><span>Vegetariano / Vegano</span></label>
+          <label class="rsvp-radio"><input type="radio" name="restricciones" value="Intolerante al gluten / Lactosa"/><span>Intolerante al gluten / Lactosa</span></label>
+          <label class="rsvp-radio"><input type="radio" name="restricciones" value="Alergia a mariscos / frutos secos"/><span>Alergia a mariscos / frutos secos</span></label>
+        </div>
+      </div>
+
+      <div class="rsvp-field">
+        <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
+        <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
+      </div>
+
+      <div class="rsvp-field">
+        <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
+        <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
+      </div>
+
+      <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
+      <button class="rsvp-submit" id="rsvp-submit">Confirmar asistencia →</button>
+    </div>
+
+    <!-- Success state -->
+    <div class="rsvp-success" id="rsvp-success">
+      <span class="check">💌</span>
+      <p>¡Gracias por confirmar!<br><br>Nieves & Jesús han recibido tu respuesta.<br>Nos emociona saber que estarás presente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ GALLERY 3-COL ░░ -->
+<div class="gallery-3">
+  <img src="./fotos/foto-05.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-10.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-06.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-13.jpg" alt="Nieves y Jesús"/>
+  <img src="./fotos/foto-02.jpg" alt="Nieves y Jesús" style="object-position:center top"/>
+  <img src="./fotos/foto-03.jpg" alt="Nieves y Jesús"/>
+</div>
+
+<!-- ░░ LARGE PHOTO ░░ -->
+<img class="photo-full" src="./fotos/foto-07.jpg" alt="Condominios Los Charamicos" style="object-position:center"/>
+
+<!-- ░░ FOOTER ░░ -->
+<footer>
+  <p class="footer-text reveal">
+    Con el corazón lleno de amor y gratitud.<br>
+    Esperamos compartir este día contigo.
+  </p>
+  <p class="footer-brand">Invitación digital por PilyStudio · pilystudio.net</p>
+</footer>
+
+<script>
+// ── SUPABASE ──
+const SUPA_URL = 'https://ngiqppkflzfvtcykfaqk.supabase.co'
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5naXFwcGtmbHpmdnRjeWtmYXFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxOTc1MDksImV4cCI6MjA5NDc3MzUwOX0.Yx-JvS99fAi5mMPgOV8LGNilm5NTpo0r4z96ZOqUREQ'
+const db = supabase.createClient(SUPA_URL, SUPA_KEY)
+
+// ── COUNTDOWN ──
+;(function(){
+  const target = new Date('2026-11-27T16:00:00')
+  function pad(n,d){return String(n).padStart(d||2,'0')}
+  function tick(){
+    const diff = target - Date.now()
+    if(diff <= 0) return
+    document.getElementById('cd-d').textContent = pad(Math.floor(diff/86400000),3)
+    document.getElementById('cd-h').textContent = pad(Math.floor(diff%86400000/3600000))
+    document.getElementById('cd-m').textContent = pad(Math.floor(diff%3600000/60000))
+    document.getElementById('cd-s').textContent = pad(Math.floor(diff%60000/1000))
+  }
+  tick(); setInterval(tick,1000)
+})()
+
+// ── MUSIC ──
+;(function(){
+  const btn   = document.getElementById('music-btn')
+  const audio = document.getElementById('audio')
+  const play  = document.getElementById('icon-play')
+  const pause = document.getElementById('icon-pause')
+  let on = false
+  btn.addEventListener('click',function(){
+    if(on){ audio.pause(); play.style.display='block'; pause.style.display='none'; btn.classList.remove('playing') }
+    else { audio.play().catch(()=>{}); play.style.display='none'; pause.style.display='block'; btn.classList.add('playing') }
+    on = !on
+  })
+})()
+
+// ── RSVP ──
+;(function(){
+  const submitBtn = document.getElementById('rsvp-submit')
+  const errorEl  = document.getElementById('rsvp-error')
+  const formEl   = document.getElementById('rsvp-form')
+  const successEl= document.getElementById('rsvp-success')
+
+  submitBtn.addEventListener('click', async function(){
+    const nombre     = document.getElementById('r-nombre').value.trim()
+    const asistencia = document.querySelector('input[name="asistencia"]:checked')?.value
+    const pases      = document.querySelector('input[name="pases"]:checked')?.value
+    const restricc   = document.querySelector('input[name="restricciones"]:checked')?.value
+    const cancion    = document.getElementById('r-cancion').value.trim()
+    const mensaje    = document.getElementById('r-mensaje').value.trim()
+
+    if(!nombre || !asistencia){
+      errorEl.style.display = 'block'
+      return
+    }
+    errorEl.style.display = 'none'
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Enviando...'
+
+    try {
+      const { error } = await db.from('rsvp').insert({
+        invitacion:    'nieves-y-jesus',
+        nombre:        nombre,
+        asistencia:    asistencia,
+        pases:         pases ? parseInt(pases) : null,
+        restricciones: restricc || 'Ninguna',
+        cancion:       cancion || null,
+        mensaje:       mensaje || null
+      })
+      if(error) throw error
+      formEl.style.display    = 'none'
+      successEl.style.display = 'block'
+    } catch(e){
+      console.error(e)
+      submitBtn.disabled    = false
+      submitBtn.textContent = 'Confirmar asistencia →'
+      errorEl.textContent   = 'Ocurrió un error. Por favor intenta de nuevo.'
+      errorEl.style.display = 'block'
+    }
+  })
+})()
+
+// ── REVEAL ──
+const obs = new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')})
+},{threshold:0.08})
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>
