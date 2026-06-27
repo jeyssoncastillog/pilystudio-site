@@ -756,10 +756,30 @@ const db = supabase.createClient(SUPA_URL, SUPA_KEY)
   const play  = document.getElementById('icon-play')
   const pause = document.getElementById('icon-pause')
   let on = false
-  btn.addEventListener('click',function(){
-    if(on){ audio.pause(); play.style.display='block'; pause.style.display='none'; btn.classList.remove('playing') }
-    else { audio.play().catch(()=>{}); play.style.display='none'; pause.style.display='block'; btn.classList.add('playing') }
-    on = !on
+
+  function startMusic(){
+    if(on) return
+    audio.play().then(()=>{
+      play.style.display  = 'none'
+      pause.style.display = 'block'
+      btn.classList.add('playing')
+      on = true
+    }).catch(()=>{})
+  }
+
+  // Autoplay on first interaction
+  const events = ['touchstart','click','scroll','keydown']
+  function onFirstInteraction(){
+    startMusic()
+    events.forEach(e => document.removeEventListener(e, onFirstInteraction))
+  }
+  events.forEach(e => document.addEventListener(e, onFirstInteraction, {once:true, passive:true}))
+
+  // Manual toggle
+  btn.addEventListener('click', function(e){
+    e.stopPropagation()
+    if(on){ audio.pause(); play.style.display='block'; pause.style.display='none'; btn.classList.remove('playing'); on=false }
+    else { startMusic() }
   })
 })()
 
