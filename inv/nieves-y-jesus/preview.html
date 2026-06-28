@@ -661,11 +661,16 @@ footer::before{
   .regalo-quote{display:none}
   .padres-grid{grid-template-columns:1fr;gap:2rem}
   .vest-grid{grid-template-columns:1fr}
-  .s4-gallery{grid-template-columns:1fr}
-  .s4-right{min-height:260px}
-  .s4-img-v{width:100%;height:100%;object-fit:cover;flex:none}
   .gallery-3{grid-template-columns:repeat(2,1fr)}
   .rsvp-box{padding:2rem 1.25rem}
+}
+/* ── SECTION 4 MOBILE ── */
+@media(max-width:1023px){
+  .s4-gallery{display:flex;flex-direction:column;height:auto;max-width:92%;margin:0 auto;gap:8px;align-items:stretch}
+  .s4-left{display:flex;flex-direction:column;gap:8px;width:100%;height:auto}
+  .s4-img-h{aspect-ratio:unset;flex:unset;width:100%;height:56vw;max-height:260px;object-fit:cover}
+  .s4-right{display:flex;width:100%;height:auto}
+  .s4-img-v{flex:none;width:100%;height:72vw;max-height:340px;object-fit:cover;object-position:center top}
 }
 @media(prefers-reduced-motion:reduce){
   .reveal{transition:none;opacity:1;transform:none}
