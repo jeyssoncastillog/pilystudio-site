@@ -891,42 +891,93 @@ footer::before{
 /* ── Wax seal ── */
 #nj-env-seal {
   position: absolute;
-  top: calc(min(440px, 86vw) * 0.309 - 32px);
+  top: calc(min(620px, 80vw) * 0.309 - 38px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: clamp(56px, 13vw, 70px);
-  height: clamp(56px, 13vw, 70px);
+  width: clamp(68px, 15vw, 86px);
+  height: clamp(68px, 15vw, 86px);
   border-radius: 50%;
-  background: radial-gradient(circle at 36% 32%,
-              #8fa8c8 0%, #6483a8 45%, #445f80 100%);
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 32% 28%,
+      rgba(255,255,255,0.18) 0%,
+      transparent 36%),
+    radial-gradient(circle at 65% 70%,
+      rgba(0,0,0,0.20) 0%,
+      transparent 45%),
+    radial-gradient(circle at 50% 50%,
+      #8b2a3a 0%,
+      #6b1a28 40%,
+      #4a0f1c 75%,
+      #380a15 100%);
   box-shadow:
-    0 6px 22px rgba(50, 80, 130, 0.50),
-    0 2px 6px  rgba(50, 80, 130, 0.30),
-    inset 0 1px 3px rgba(255,255,255,0.25),
-    inset 0 -1px 3px rgba(0,0,0,0.15);
+    0 0 0 3px rgba(120, 40, 55, 0.45),
+    0 0 0 5px rgba(90, 20, 35, 0.25),
+    0 0 0 7px rgba(70, 10, 25, 0.12),
+    0 8px 28px rgba(80, 10, 20, 0.55),
+    0 3px 10px rgba(80, 10, 20, 0.40),
+    inset 0 2px 4px rgba(255,255,255,0.12),
+    inset 0 -3px 6px rgba(0,0,0,0.30);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 6px 18px rgba(80, 10, 20, 0.45));
+}
+#nj-env-seal::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px solid rgba(210, 160, 100, 0.35);
+  background: transparent;
+  pointer-events: none;
+}
+#nj-env-seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      rgba(255,255,255,0.025) 0deg 10deg,
+      rgba(0,0,0,0.025) 10deg 20deg
+    );
+  pointer-events: none;
 }
 #nj-env-seal:hover {
-  transform: translateX(-50%) scale(1.12);
+  transform: translateX(-50%) scale(1.10) rotate(6deg);
+  filter: drop-shadow(0 10px 28px rgba(80, 10, 20, 0.60))
+          brightness(1.08);
   box-shadow:
-    0 10px 32px rgba(50, 80, 130, 0.60),
-    0 3px 8px  rgba(50, 80, 130, 0.35),
-    inset 0 1px 3px rgba(255,255,255,0.25);
-}
-#nj-env-seal img {
-  width: 58%;
-  filter: brightness(0) invert(1);
-  opacity: 0.90;
+    0 0 0 3px rgba(120, 40, 55, 0.55),
+    0 0 0 6px rgba(90, 20, 35, 0.30),
+    0 0 0 9px rgba(70, 10, 25, 0.14),
+    0 14px 40px rgba(80, 10, 20, 0.65),
+    0 4px 12px rgba(80, 10, 20, 0.45),
+    inset 0 2px 4px rgba(255,255,255,0.15),
+    inset 0 -3px 6px rgba(0,0,0,0.30);
 }
 #nj-envelope.open #nj-env-seal {
-  transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#nj-env-seal img {
+  width: 54%;
+  position: relative;
+  z-index: 1;
+  filter: brightness(0) invert(1)
+          drop-shadow(0 1px 3px rgba(0,0,0,0.40));
+  opacity: 0.95;
+}
+@media (max-width: 767px) {
+  #nj-env-seal {
+    top: calc(86vw * 0.309 - 32px);
+    width: clamp(58px, 13vw, 68px);
+    height: clamp(58px, 13vw, 68px);
+  }
 }
 
 /* ── CTA ── */
@@ -949,9 +1000,6 @@ footer::before{
   #nj-env-flap {
     padding-bottom: calc(86vw * 0.309);
   }
-  #nj-env-seal {
-    top: calc(86vw * 0.309 - 28px);
-  }
 }
 
 /* Desktop envelope adjustments */
@@ -967,11 +1015,6 @@ footer::before{
   }
   #nj-env-flap {
     padding-bottom: calc(min(620px, 80vw) * 0.309);
-  }
-  #nj-env-seal {
-    top: calc(min(620px, 80vw) * 0.309 - 35px);
-    width: 78px;
-    height: 78px;
   }
   .nj-olive-tl,
   .nj-olive-br {
@@ -1659,6 +1702,9 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
   const SESSION_KEY = 'nj_inv_opened';
 
   function openEnvelope() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     if (!envelope) return;
     envelope.classList.add('open');
     setTimeout(startMusic, 700);
