@@ -891,73 +891,80 @@ footer::before{
 /* ── Wax seal ── */
 #nj-env-seal {
   position: absolute;
-  top: calc(min(620px, 80vw) * 0.309 - 38px);
+  top: calc(min(720px, 82vw) * 0.309 - 42px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: clamp(68px, 15vw, 86px);
-  height: clamp(68px, 15vw, 86px);
+  width: clamp(74px, 16vw, 96px);
+  height: clamp(74px, 16vw, 96px);
   border-radius: 50%;
   cursor: pointer;
-  background:
-    radial-gradient(circle at 32% 28%,
-      rgba(255,255,255,0.18) 0%,
-      transparent 36%),
-    radial-gradient(circle at 65% 70%,
-      rgba(0,0,0,0.20) 0%,
-      transparent 45%),
-    radial-gradient(circle at 50% 50%,
-      #8b2a3a 0%,
-      #6b1a28 40%,
-      #4a0f1c 75%,
-      #380a15 100%);
-  box-shadow:
-    0 0 0 3px rgba(120, 40, 55, 0.45),
-    0 0 0 5px rgba(90, 20, 35, 0.25),
-    0 0 0 7px rgba(70, 10, 25, 0.12),
-    0 8px 28px rgba(80, 10, 20, 0.55),
-    0 3px 10px rgba(80, 10, 20, 0.40),
-    inset 0 2px 4px rgba(255,255,255,0.12),
-    inset 0 -3px 6px rgba(0,0,0,0.30);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-  filter: drop-shadow(0 6px 18px rgba(80, 10, 20, 0.45));
+  transition: transform 0.35s ease, filter 0.35s ease;
+  background:
+    radial-gradient(
+      ellipse 38% 32% at 33% 28%,
+      rgba(255,255,255,0.38) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 20% 18% at 60% 22%,
+      rgba(255,255,255,0.16) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 50% 50% at 68% 72%,
+      rgba(20, 40, 75, 0.45) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 42% 36%,
+      #c8daf0 0%,
+      #8faec8 22%,
+      #6888a8 44%,
+      #4a6585 65%,
+      #304560 82%,
+      #1e2f45 100%
+    );
+  box-shadow:
+    0 0 0 4px rgba(140, 175, 215, 0.55),
+    0 0 0 7px rgba(100, 135, 180, 0.28),
+    0 0 0 10px rgba(70, 100, 150, 0.13),
+    0 10px 32px rgba(30, 55, 100, 0.55),
+    0 4px 12px  rgba(30, 55, 100, 0.40),
+    0 2px 4px   rgba(30, 55, 100, 0.30),
+    inset 0 3px 6px rgba(255, 255, 255, 0.22),
+    inset 0 -4px 8px rgba(10, 25, 55, 0.35);
+  filter: drop-shadow(0 6px 18px rgba(30, 55, 110, 0.45));
 }
 #nj-env-seal::before {
   content: '';
   position: absolute;
-  inset: 5px;
+  inset: 8px;
   border-radius: 50%;
-  border: 1px solid rgba(210, 160, 100, 0.35);
+  border: 1.5px solid rgba(180, 210, 240, 0.30);
   background: transparent;
   pointer-events: none;
+  z-index: 1;
 }
 #nj-env-seal::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background:
-    repeating-conic-gradient(
-      rgba(255,255,255,0.025) 0deg 10deg,
-      rgba(0,0,0,0.025) 10deg 20deg
-    );
+  background: repeating-conic-gradient(
+    rgba(255,255,255,0.018) 0deg 8deg,
+    rgba(0,0,0,0.018) 8deg 16deg
+  );
   pointer-events: none;
+  z-index: 1;
 }
 #nj-env-seal:hover {
-  transform: translateX(-50%) scale(1.10) rotate(6deg);
-  filter: drop-shadow(0 10px 28px rgba(80, 10, 20, 0.60))
-          brightness(1.08);
-  box-shadow:
-    0 0 0 3px rgba(120, 40, 55, 0.55),
-    0 0 0 6px rgba(90, 20, 35, 0.30),
-    0 0 0 9px rgba(70, 10, 25, 0.14),
-    0 14px 40px rgba(80, 10, 20, 0.65),
-    0 4px 12px rgba(80, 10, 20, 0.45),
-    inset 0 2px 4px rgba(255,255,255,0.15),
-    inset 0 -3px 6px rgba(0,0,0,0.30);
+  transform: translateX(-50%) scale(1.09) rotate(5deg);
+  filter: drop-shadow(0 12px 28px rgba(30, 55, 110, 0.60))
+          brightness(1.07);
 }
 #nj-envelope.open #nj-env-seal {
   opacity: 0;
@@ -965,18 +972,18 @@ footer::before{
   transition: opacity 0.3s ease;
 }
 #nj-env-seal img {
-  width: 54%;
+  width: 52%;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   filter: brightness(0) invert(1)
-          drop-shadow(0 1px 3px rgba(0,0,0,0.40));
+          drop-shadow(0 1px 4px rgba(0,0,0,0.50));
   opacity: 0.95;
 }
 @media (max-width: 767px) {
   #nj-env-seal {
     top: calc(86vw * 0.309 - 32px);
-    width: clamp(58px, 13vw, 68px);
-    height: clamp(58px, 13vw, 68px);
+    width: clamp(62px, 14vw, 74px);
+    height: clamp(62px, 14vw, 74px);
   }
 }
 
@@ -1009,12 +1016,15 @@ footer::before{
                 #dce7f4 0%, #c5d6ea 55%, #b2c7de 100%);
   }
   #nj-envelope {
-    width: min(620px, 80vw);
+    width: min(700px, 80vw);
     animation: njEnvEntrance 1.1s cubic-bezier(0.22,1,0.36,1) both,
                njEnvFloat 4s ease-in-out 1.2s infinite;
   }
   #nj-env-flap {
-    padding-bottom: calc(min(620px, 80vw) * 0.309);
+    padding-bottom: calc(min(700px, 80vw) * 0.309);
+  }
+  #nj-env-seal {
+    top: calc(min(700px, 80vw) * 0.309 - 42px);
   }
   .nj-olive-tl,
   .nj-olive-br {
@@ -1026,6 +1036,19 @@ footer::before{
   .nj-olive-flap-r {
     width: clamp(70px, 14vw, 100px);
     opacity: 0.55;
+  }
+}
+
+/* Large screen envelope adjustments */
+@media (min-width: 1600px) {
+  #nj-envelope {
+    width: min(820px, 72vw);
+  }
+  #nj-env-flap {
+    padding-bottom: calc(min(820px, 72vw) * 0.309);
+  }
+  #nj-env-seal {
+    top: calc(min(820px, 72vw) * 0.309 - 46px);
   }
 }
 
