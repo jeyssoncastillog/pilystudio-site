@@ -219,7 +219,10 @@ body{
 }
 .s4-header{
   position:relative;overflow:hidden;
-  background:#b5c4dd;
+  background-color:#b5c4dd;
+  background-image:url('./assets/section-4-corner-tiles.svg');
+  background-size:100% 100%;
+  background-repeat:no-repeat;
   padding:clamp(2rem,5vh,3.5rem) clamp(2.5rem,7vw,7rem);
   min-height:clamp(120px,13.4vw,182px);
   display:flex;align-items:center;justify-content:center;
@@ -227,12 +230,6 @@ body{
 .s4-body{
   padding:clamp(2.5rem,5vh,4rem) clamp(2rem,5vw,5rem) clamp(3.5rem,7vh,6rem);
 }
-.s4-corner{
-  position:absolute;pointer-events:none;
-  opacity:.28;width:clamp(70px,8vw,110px);
-}
-.s4-corner-tl{top:0;left:0;transform:scaleX(-1)}
-.s4-corner-tr{top:0;right:0}
 .s4-top{
   font-family:var(--cinzel);font-size:clamp(1rem,1.8vw,1.4rem);
   font-weight:500;letter-spacing:0;text-transform:uppercase;
@@ -671,22 +668,6 @@ footer::before{
 <!-- ░░ SECTION 4 ░░ -->
 <section id="section4">
   <div class="s4-header">
-    <svg class="s4-corner s4-corner-tl" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-      <path d="M95 5 L30 5" stroke="#fff" stroke-width="1.2"/>
-      <path d="M95 5 L95 70" stroke="#fff" stroke-width="1.2"/>
-      <circle cx="30" cy="5" r="2.5" fill="#fff"/>
-      <circle cx="95" cy="70" r="2.5" fill="#fff"/>
-      <path d="M95 20 L80 5" stroke="#fff" stroke-width=".8"/>
-      <path d="M95 32 L68 5" stroke="#fff" stroke-width=".5"/>
-    </svg>
-    <svg class="s4-corner s4-corner-tr" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-      <path d="M95 5 L30 5" stroke="#fff" stroke-width="1.2"/>
-      <path d="M95 5 L95 70" stroke="#fff" stroke-width="1.2"/>
-      <circle cx="30" cy="5" r="2.5" fill="#fff"/>
-      <circle cx="95" cy="70" r="2.5" fill="#fff"/>
-      <path d="M95 20 L80 5" stroke="#fff" stroke-width=".8"/>
-      <path d="M95 32 L68 5" stroke="#fff" stroke-width=".5"/>
-    </svg>
     <p class="s4-top reveal">Y deseamos que compartas<br>este momento especial con nosotros.</p>
   </div>
 
