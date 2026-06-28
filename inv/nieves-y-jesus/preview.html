@@ -181,7 +181,9 @@ body{
 #garden{
   position:relative;min-height:92vh;
   background:url('./assets/section-3-photo.webp') center 58%/cover no-repeat;
-  display:flex;align-items:center;padding:5rem 4rem 5rem 15rem;overflow:hidden;
+  display:flex;align-items:flex-start;
+  padding:clamp(3.5rem,12vh,7rem) 4rem 4rem clamp(2rem,7vw,5rem);
+  overflow:hidden;
 }
 #garden::before{
   content:'';position:absolute;inset:0;
@@ -195,7 +197,7 @@ body{
   text-shadow:0 2px 18px rgba(0,0,0,.36);
 }
 .garden-monogram{
-  width:clamp(145px,15vw,210px);display:block;
+  width:clamp(170px,17vw,240px);display:block;
   opacity:.88;filter:drop-shadow(0 2px 12px rgba(0,0,0,.30));
 }
 
@@ -607,7 +609,7 @@ footer::before{
 <!-- ░░ GARDEN ░░ -->
 <section id="garden">
   <div class="garden-z">
-    <p class="garden-text">El gran día está<br>cada vez más cerca.</p>
+    <p class="garden-text">El gran día está<br>cada vez más<br>cerca.</p>
     <img class="garden-monogram" src="./assets/monograma-nj-white.png" alt="NJ"/>
   </div>
 </section>
