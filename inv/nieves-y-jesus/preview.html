@@ -106,61 +106,62 @@ body{
 /* ── INVITATION ── */
 #invitacion{
   position:relative;overflow:hidden;
-  padding:6rem 2rem 5.5rem;text-align:center;
+  min-height:90vh;padding:5rem 2rem;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:var(--cream);
 }
 #invitacion::before{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:url('./assets/textura-piedra-caliza.webp') center/cover no-repeat;
-  opacity:.12;
+  opacity:.15;
 }
 #invitacion::after{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:rgba(255,251,202,.23);
 }
-.inv-content{max-width:740px;margin:0 auto;position:relative;z-index:2}
+.inv-content{max-width:680px;width:100%;position:relative;z-index:2}
 .inv-bot-tr{
   position:absolute;top:0;right:0;z-index:1;
-  width:clamp(180px,28vw,320px);
-  opacity:.6;pointer-events:none;
+  width:clamp(200px,32vw,380px);
+  opacity:.72;pointer-events:none;
 }
 .inv-bot-bl{
   position:absolute;bottom:0;left:0;z-index:1;
-  width:clamp(180px,28vw,320px);
-  opacity:.6;pointer-events:none;
+  width:clamp(200px,32vw,380px);
+  opacity:.72;pointer-events:none;
 }
 .inv-monogram{
-  width:clamp(110px,14vw,155px);display:block;margin:0 auto 2.5rem;
-  opacity:.75;
+  width:clamp(120px,16vw,170px);display:block;margin:0 auto 2.8rem;
+  opacity:.88;
 }
 .inv-text{
   font-family:var(--cinzel);font-size:clamp(14px,1.6vw,22.9px);
-  letter-spacing:0;color:#b5c4dd;line-height:1.2;
-  max-width:680px;margin:0 auto;
+  letter-spacing:0;color:#3a434a;line-height:1.2;
+  max-width:640px;margin:0 auto;
 }
 .inv-text+.inv-text{margin-top:1.6em}
 .inv-date{
   font-family:var(--cinzel);font-size:clamp(14px,1.6vw,22.9px);
-  letter-spacing:0;color:#b5c4dd;line-height:1.2;margin:2.5rem 0 2rem;
+  letter-spacing:0;color:#3a434a;line-height:1.2;margin:2.5rem 0 2rem;
 }
 .clock{display:flex;gap:clamp(.5rem,1.2vw,1.2rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
 .clock-unit{display:flex;flex-direction:column;align-items:center}
 .clock-num{
-  font-family:var(--cinzel);font-size:clamp(1.8rem,5vw,5rem);
-  font-weight:400;color:#b5c4dd;line-height:1;letter-spacing:.02em;
+  font-family:var(--cinzel);font-size:clamp(2rem,5vw,5rem);
+  font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
 }
 .clock-sep{
-  font-family:var(--cinzel);font-size:clamp(1.4rem,3.8vw,3.8rem);
-  color:rgba(181,196,221,.65);line-height:1;padding-bottom:.15rem;
+  font-family:var(--cinzel);font-size:clamp(1.5rem,3.8vw,3.8rem);
+  color:rgba(182,199,233,.65);line-height:1;padding-bottom:.15rem;
 }
 .clock-label{
   font-family:var(--cinzel);font-size:clamp(.48rem,.55vw,.65rem);
   letter-spacing:.22em;text-transform:uppercase;
-  color:#b5c4dd;margin-top:.5rem;opacity:.82;
+  color:#b6c7e9;margin-top:.5rem;opacity:.82;
 }
 .divider{
-  width:1px;height:110px;
-  background:linear-gradient(to bottom,#b5c4dd,transparent);
+  width:1px;height:120px;
+  background:linear-gradient(to bottom,#b6c7e9,transparent);
   margin:2rem auto;
 }
 
@@ -487,7 +488,8 @@ footer::before{
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .inv-bot-tr,.inv-bot-bl{width:130px;opacity:.35}
+  .inv-bot-tr,.inv-bot-bl{width:140px;opacity:.4}
+  #invitacion{min-height:auto;padding:4rem 1.5rem}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
   .timeline::before{top:50%;left:0;right:0;bottom:auto;height:1px;width:100%;transform:none}
