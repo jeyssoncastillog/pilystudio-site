@@ -107,58 +107,60 @@ body{
 #invitacion{
   position:relative;overflow:hidden;
   padding:6rem 2rem 5.5rem;text-align:center;
-  background:
-    repeating-linear-gradient(-45deg,
-      transparent 0,transparent 5px,
-      rgba(175,150,118,.025) 5px,rgba(175,150,118,.025) 6px),
-    radial-gradient(ellipse 75% 55% at 4% 4%, rgba(200,175,140,.14) 0%, transparent 65%),
-    radial-gradient(ellipse 65% 50% at 96% 96%, rgba(200,175,140,.12) 0%, transparent 65%),
-    radial-gradient(ellipse 100% 55% at 50% 100%, rgba(240,233,218,.60) 0%, transparent 70%),
-    var(--cream);
+  background:var(--cream);
 }
-.inv-content{max-width:680px;margin:0 auto;position:relative;z-index:1}
+#invitacion::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:url('./canva-svg/assets/img-43-3f2db9a0e20af271.webp') center/cover no-repeat;
+  opacity:.09;
+}
+#invitacion::after{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:rgba(255,251,202,.23);
+}
+.inv-content{max-width:740px;margin:0 auto;position:relative;z-index:2}
 .inv-bot-tr{
-  position:absolute;top:-18px;right:-18px;
-  width:clamp(150px,25vw,230px);
-  opacity:.28;pointer-events:none;
+  position:absolute;top:0;right:0;z-index:1;
+  width:clamp(180px,28vw,320px);
+  opacity:.6;pointer-events:none;
 }
 .inv-bot-bl{
-  position:absolute;bottom:-18px;left:-18px;
-  width:clamp(150px,25vw,230px);
-  opacity:.28;pointer-events:none;
-  transform:scale(-1,-1);
+  position:absolute;bottom:0;left:0;z-index:1;
+  width:clamp(180px,28vw,320px);
+  opacity:.6;pointer-events:none;
 }
 .inv-monogram{
-  width:clamp(120px,16vw,165px);display:block;margin:0 auto 2.5rem;
-  opacity:.76;
+  width:clamp(110px,14vw,155px);display:block;margin:0 auto 2.5rem;
+  opacity:.75;
 }
 .inv-text{
-  font-family:var(--cinzel);font-size:clamp(1.2rem,2vw,2rem);
-  letter-spacing:0;color:var(--dark);line-height:1.7;
-  max-width:580px;margin:0 auto;
+  font-family:var(--cinzel);font-size:clamp(14px,1.6vw,22.9px);
+  letter-spacing:0;color:#b5c4dd;line-height:1.2;
+  max-width:680px;margin:0 auto;
 }
+.inv-text+.inv-text{margin-top:1.6em}
 .inv-date{
-  font-family:var(--cinzel);font-size:clamp(1rem,1.8vw,1.7rem);
-  letter-spacing:0;color:var(--dark);margin:2.5rem 0 2rem;
+  font-family:var(--cinzel);font-size:clamp(14px,1.6vw,22.9px);
+  letter-spacing:0;color:#b5c4dd;line-height:1.2;margin:2.5rem 0 2rem;
 }
 .clock{display:flex;gap:clamp(.5rem,1.2vw,1.2rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
 .clock-unit{display:flex;flex-direction:column;align-items:center}
 .clock-num{
   font-family:var(--cinzel);font-size:clamp(1.8rem,5vw,5rem);
-  font-weight:400;color:var(--lav-dk);line-height:1;letter-spacing:.02em;
+  font-weight:400;color:#b5c4dd;line-height:1;letter-spacing:.02em;
 }
 .clock-sep{
   font-family:var(--cinzel);font-size:clamp(1.4rem,3.8vw,3.8rem);
-  color:var(--lav);line-height:1;padding-bottom:.15rem;
+  color:rgba(181,196,221,.65);line-height:1;padding-bottom:.15rem;
 }
 .clock-label{
   font-family:var(--cinzel);font-size:clamp(.48rem,.55vw,.65rem);
   letter-spacing:.22em;text-transform:uppercase;
-  color:var(--lav-dk);margin-top:.5rem;opacity:.82;
+  color:#b5c4dd;margin-top:.5rem;opacity:.82;
 }
 .divider{
   width:1px;height:110px;
-  background:linear-gradient(to bottom,var(--lav-dk),transparent);
+  background:linear-gradient(to bottom,#b5c4dd,transparent);
   margin:2rem auto;
 }
 
@@ -485,7 +487,7 @@ footer::before{
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .inv-bot-tr,.inv-bot-bl{width:100px;opacity:.16}
+  .inv-bot-tr,.inv-bot-bl{width:130px;opacity:.35}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
   .timeline::before{top:50%;left:0;right:0;bottom:auto;height:1px;width:100%;transform:none}
@@ -495,6 +497,9 @@ footer::before{
   .vest-grid{grid-template-columns:1fr}
   .gallery-3{grid-template-columns:repeat(2,1fr)}
   .rsvp-box{padding:2rem 1.25rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{transition:none;opacity:1;transform:none}
 }
 </style>
 </head>
@@ -533,58 +538,14 @@ footer::before{
 
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
-
-  <!-- Botanical branch — top right corner -->
-  <svg class="inv-bot-tr" viewBox="0 0 220 340" fill="none" aria-hidden="true">
-    <path d="M195 5 C178 55 158 100 130 148 C102 196 78 240 50 325" stroke="#B8BDCF" stroke-width="1.3" stroke-linecap="round"/>
-    <path d="M175 52 C188 40 202 28 213 20" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
-    <ellipse cx="215" cy="18" rx="7" ry="2.5" transform="rotate(-35 215 18)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M194 36 C202 26 209 18 215 11" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="216" cy="9" rx="5" ry="2" transform="rotate(-50 216 9)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M155 90 C170 78 184 68 196 58" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
-    <ellipse cx="198" cy="56" rx="6.5" ry="2.5" transform="rotate(-25 198 56)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M176 74 C184 64 192 56 198 48" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="200" cy="46" rx="5" ry="2" transform="rotate(-40 200 46)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M132 130 C148 120 165 112 180 106" stroke="#B8BDCF" stroke-width=".95" stroke-linecap="round"/>
-    <ellipse cx="182" cy="104" rx="6" ry="2.5" transform="rotate(-18 182 104)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M110 168 C125 160 142 153 156 148" stroke="#B8BDCF" stroke-width=".9" stroke-linecap="round"/>
-    <ellipse cx="158" cy="146" rx="6" ry="2.5" transform="rotate(-12 158 146)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M88 205 C102 200 117 195 130 191" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="132" cy="189" rx="5.5" ry="2.2" transform="rotate(-8 132 189)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <circle cx="193" cy="7" r="2.5" fill="none" stroke="#B8BDCF" stroke-width=".9"/>
-    <circle cx="200" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <circle cx="187" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-  </svg>
-
-  <!-- Botanical branch — bottom left corner (CSS-mirrored) -->
-  <svg class="inv-bot-bl" viewBox="0 0 220 340" fill="none" aria-hidden="true">
-    <path d="M195 5 C178 55 158 100 130 148 C102 196 78 240 50 325" stroke="#B8BDCF" stroke-width="1.3" stroke-linecap="round"/>
-    <path d="M175 52 C188 40 202 28 213 20" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
-    <ellipse cx="215" cy="18" rx="7" ry="2.5" transform="rotate(-35 215 18)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M194 36 C202 26 209 18 215 11" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="216" cy="9" rx="5" ry="2" transform="rotate(-50 216 9)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M155 90 C170 78 184 68 196 58" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
-    <ellipse cx="198" cy="56" rx="6.5" ry="2.5" transform="rotate(-25 198 56)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M176 74 C184 64 192 56 198 48" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="200" cy="46" rx="5" ry="2" transform="rotate(-40 200 46)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M132 130 C148 120 165 112 180 106" stroke="#B8BDCF" stroke-width=".95" stroke-linecap="round"/>
-    <ellipse cx="182" cy="104" rx="6" ry="2.5" transform="rotate(-18 182 104)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
-    <path d="M110 168 C125 160 142 153 156 148" stroke="#B8BDCF" stroke-width=".9" stroke-linecap="round"/>
-    <ellipse cx="158" cy="146" rx="6" ry="2.5" transform="rotate(-12 158 146)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <path d="M88 205 C102 200 117 195 130 191" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
-    <ellipse cx="132" cy="189" rx="5.5" ry="2.2" transform="rotate(-8 132 189)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <circle cx="193" cy="7" r="2.5" fill="none" stroke="#B8BDCF" stroke-width=".9"/>
-    <circle cx="200" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-    <circle cx="187" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
-  </svg>
+  <img class="inv-bot-tr" src="./assets/olivo-superior-derecho.svg" alt="" loading="lazy"/>
+  <img class="inv-bot-bl" src="./assets/olivo-inferior-izquierdo.svg" alt="" loading="lazy"/>
 
   <div class="reveal inv-content">
     <img class="inv-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
-    <p class="inv-text">
-      Estamos muy felices de compartir<br>este día tan especial contigo.<br><br>
-      Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.
-    </p>
-    <p class="inv-date">Viernes, 27 de noviembre de 2026</p>
+    <p class="inv-text">Estamos muy felices de compartir<br>este día tan especial contigo.</p>
+    <p class="inv-text">Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.</p>
+    <p class="inv-date">Viernes, 27 de noviembre de 2026.</p>
     <div class="clock">
       <div class="clock-unit"><span class="clock-num" id="cd-d">000</span><span class="clock-label">Días</span></div>
       <span class="clock-sep">:</span>
