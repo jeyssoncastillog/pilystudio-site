@@ -106,8 +106,8 @@ body{
 /* ── INVITATION ── */
 #invitacion{
   position:relative;overflow:hidden;
-  min-height:90vh;padding:4rem 2rem 0;text-align:center;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  min-height:100svh;padding:clamp(1.5rem,4vh,3.5rem) 2rem;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:var(--cream);
 }
 #invitacion::before{
@@ -119,7 +119,7 @@ body{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:rgba(255,251,202,.23);
 }
-.inv-content{max-width:780px;width:100%;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;flex:1 1 auto;}
+.inv-content{max-width:780px;width:100%;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
 .inv-olive{
   position:absolute;pointer-events:none;z-index:1;
   opacity:.88;
@@ -136,27 +136,28 @@ body{
   transform-origin:bottom left;
 }
 .inv-monogram{
-  width:clamp(145px,20vw,210px);display:block;margin:0 auto 2.8rem;
+  width:clamp(105px,11vw,160px);display:block;margin:0 auto clamp(1.4rem,2.5vh,2.8rem);
   opacity:.88;
 }
 .inv-text{
-  font-family:var(--cinzel);font-size:clamp(19px,2.5vw,34px);
+  font-family:var(--cinzel);font-size:clamp(1.05rem,1.6vw,1.55rem);
   letter-spacing:.08em;color:#3a434a;line-height:1.2;
   max-width:780px;margin:0 auto;
 }
 .inv-text+.inv-text{margin-top:1.6em}
 .inv-date{
-  font-family:var(--cinzel);font-size:clamp(19px,2.5vw,34px);
-  letter-spacing:.08em;color:#3a434a;line-height:1.2;margin:2.5rem 0 2rem;
+  font-family:var(--cinzel);font-size:clamp(1.05rem,1.6vw,1.55rem);
+  letter-spacing:.08em;color:#3a434a;line-height:1.2;
+  margin:clamp(1.5rem,3vh,2.5rem) 0 clamp(1.2rem,2.5vh,2rem);
 }
 .clock{display:flex;gap:clamp(.5rem,1.4vw,1.4rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
 .clock-unit{display:flex;flex-direction:column;align-items:center}
 .clock-num{
-  font-family:var(--cinzel);font-size:clamp(2.2rem,5.5vw,5.5rem);
+  font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,5.2rem);
   font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
 }
 .clock-sep{
-  font-family:var(--cinzel);font-size:clamp(1.6rem,4.2vw,4.2rem);
+  font-family:var(--cinzel);font-size:clamp(1.5rem,3.8vw,4rem);
   color:rgba(182,199,233,.5);line-height:1;padding-bottom:.15rem;
 }
 .clock-label{
@@ -166,13 +167,13 @@ body{
 }
 .divider{
   width:8px;
-  flex:1 1 auto;
-  min-height:260px;
+  height:clamp(190px,24vh,300px);
   background:#b6c7e9;
   border-radius:0;
   opacity:1;
-  margin:34px auto 0;
+  margin:clamp(24px,3vh,38px) auto 0;
   display:block;
+  flex:0 0 auto;
 }
 
 /* ── GARDEN ── */
@@ -499,17 +500,19 @@ footer::before{
 /* ── OLIVE RESPONSIVE ── */
 @media(max-width:1440px){
   .inv-olive-tr{width:clamp(240px,22vw,340px);right:-40px;top:-10px;transform:rotate(-45deg)}
+  .inv-olive-bl{width:clamp(180px,30vw,360px)}
 }
 @media(max-width:1200px){
   .inv-olive-tr{width:clamp(190px,18vw,260px);right:-60px;top:-15px;transform:rotate(-40deg);opacity:.65}
+  .inv-olive-bl{width:clamp(160px,24vw,300px);opacity:.65}
 }
 
 /* ── MOBILE ── */
 @media(max-width:640px){
   .inv-olive-tr{width:160px;right:-80px;top:0;transform:rotate(-30deg);opacity:.4}
   .inv-olive-bl{opacity:.5;width:clamp(140px,50vw,200px)}
-  #invitacion{min-height:auto;padding:4rem 1.5rem}
-  .divider{min-height:180px}
+  #invitacion{padding:2.5rem 1.2rem}
+  .divider{height:clamp(140px,20vh,200px)}
   #garden{min-height:72vh;padding:3rem 1.75rem;align-items:flex-end}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
