@@ -1,0 +1,251 @@
+{
+  "elapsed_sec": 22.78,
+  "original_svg_mb": 213.96,
+  "svg_after_externalizing_mb": 5.97,
+  "assets_total_mb": 5.47,
+  "total_mb": 11.44,
+  "image_references": 56,
+  "unique_images": 43,
+  "top_savings": [
+    {
+      "file": "img-23-7459307ea6d35215.webp",
+      "orig_bytes": 17284114,
+      "new_bytes": 511140,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        4672,
+        7008
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-33-690efc37e6303fe7.webp",
+      "orig_bytes": 16862281,
+      "new_bytes": 713190,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        7008,
+        4672
+      ],
+      "new_dims": [
+        2400,
+        1600
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-42-8d9d4836ff376f99.webp",
+      "orig_bytes": 14858822,
+      "new_bytes": 357182,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        7008,
+        4672
+      ],
+      "new_dims": [
+        2400,
+        1600
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-15-f50ba0b28bd9070d.webp",
+      "orig_bytes": 14120842,
+      "new_bytes": 412742,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        7008,
+        4672
+      ],
+      "new_dims": [
+        2400,
+        1600
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-43-3f2db9a0e20af271.webp",
+      "orig_bytes": 9575674,
+      "new_bytes": 277904,
+      "mime": "image/png",
+      "mode": "RGB",
+      "orig_dims": [
+        4271,
+        2402
+      ],
+      "new_dims": [
+        2400,
+        1350
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-20-e75ebb9fcff5efab.webp",
+      "orig_bytes": 9238547,
+      "new_bytes": 862904,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        4928,
+        3264
+      ],
+      "new_dims": [
+        2400,
+        1590
+      ],
+      "count": 5
+    },
+    {
+      "file": "img-24-45837884981433cc.webp",
+      "orig_bytes": 7491436,
+      "new_bytes": 187888,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        3271,
+        4906
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-27-403fb9f3c60f84ae.webp",
+      "orig_bytes": 5480021,
+      "new_bytes": 245064,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        2804,
+        4205
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-38-623c439e95c7983c.webp",
+      "orig_bytes": 4751176,
+      "new_bytes": 253714,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        4906,
+        3271
+      ],
+      "new_dims": [
+        2400,
+        1600
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-28-56b2399d8bb6b869.webp",
+      "orig_bytes": 4616491,
+      "new_bytes": 239310,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        2804,
+        4205
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 2
+    },
+    {
+      "file": "img-40-e17ac48f5974a437.webp",
+      "orig_bytes": 3710928,
+      "new_bytes": 284894,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        2336,
+        3504
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-41-077fdc928ae5c0f6.webp",
+      "orig_bytes": 3541210,
+      "new_bytes": 272994,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        2336,
+        3504
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-39-96911031868fe9d3.webp",
+      "orig_bytes": 2937648,
+      "new_bytes": 229476,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        3504,
+        2336
+      ],
+      "new_dims": [
+        2400,
+        1600
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-36-1d0edc248ee14344.webp",
+      "orig_bytes": 2906262,
+      "new_bytes": 233056,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        2336,
+        3504
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    },
+    {
+      "file": "img-37-cc1804ae29c7da56.webp",
+      "orig_bytes": 1825723,
+      "new_bytes": 207170,
+      "mime": "image/jpeg",
+      "mode": "RGB",
+      "orig_dims": [
+        1869,
+        2804
+      ],
+      "new_dims": [
+        1600,
+        2400
+      ],
+      "count": 1
+    }
+  ]
+}
