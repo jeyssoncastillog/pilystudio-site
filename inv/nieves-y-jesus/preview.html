@@ -674,6 +674,57 @@ footer::before{
   .s4-right{display:flex;width:100%;height:auto}
   .s4-img-v{flex:none;width:100%;height:72vw;max-height:340px;object-fit:cover;object-position:center top}
 }
+/* ── SECTION 4 GALLERY ANIMATIONS ── */
+@keyframes s4FadeRise{
+  from{opacity:0;transform:translateY(48px) scale(0.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes s4KenBurns{
+  0%{transform:scale(1) translate(0,0)}
+  50%{transform:scale(1.08) translate(-1.5%,-1%)}
+  100%{transform:scale(1) translate(0,0)}
+}
+@keyframes s4Shimmer{
+  0%{left:-100%}
+  100%{left:200%}
+}
+.s4-img-h,.s4-img-v{opacity:0}
+.s4-img-h.s4-visible{animation:s4FadeRise 0.85s cubic-bezier(0.22,1,0.36,1) forwards}
+.s4-img-v.s4-visible{animation:s4FadeRise 0.95s cubic-bezier(0.22,1,0.36,1) forwards}
+.s4-img-h:nth-of-type(1).s4-visible{animation-delay:0.10s}
+.s4-img-h:nth-of-type(2).s4-visible{animation-delay:0.30s}
+.s4-img-v.s4-visible{animation-delay:0.50s}
+.s4-img-v.s4-kenburns{
+  animation:
+    s4FadeRise 0.95s cubic-bezier(0.22,1,0.36,1) 0.50s forwards,
+    s4KenBurns 9s ease-in-out 1.45s infinite
+}
+.s4-img-wrap{
+  position:relative;overflow:hidden;
+  display:block;width:100%;height:100%;
+}
+.s4-left>.s4-img-wrap{flex:1;min-height:0}
+.s4-img-wrap>.s4-img-h{width:100%;height:100%}
+.s4-right>.s4-img-wrap{height:100%}
+.s4-img-wrap>.s4-img-v{width:100%;height:100%}
+@media(max-width:1023px){
+  .s4-left>.s4-img-wrap{flex:unset;height:auto}
+  .s4-img-wrap>.s4-img-h{height:56vw;max-height:260px}
+  .s4-right>.s4-img-wrap{height:auto}
+  .s4-img-wrap>.s4-img-v{height:72vw;max-height:340px}
+}
+.s4-img-wrap::after{
+  content:'';
+  position:absolute;top:0;left:-100%;
+  width:50%;height:100%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);
+  pointer-events:none;opacity:0;
+}
+.s4-img-wrap.s4-shimmer::after{opacity:1;animation:s4Shimmer 0.9s ease-out forwards}
+@media(hover:hover){
+  .s4-img-wrap{transition:box-shadow 0.4s ease,transform 0.4s ease;will-change:transform}
+  .s4-img-wrap:hover{transform:scale(1.025);box-shadow:0 18px 48px rgba(0,0,0,0.22);z-index:2}
+}
 @media(prefers-reduced-motion:reduce){
   .reveal{transition:none;opacity:1;transform:none}
 }
@@ -752,11 +803,17 @@ footer::before{
   <div class="s4-body">
     <div class="s4-gallery reveal reveal-1">
       <div class="s4-left">
-        <img class="s4-img-h" src="./fotos/foto-05.jpg" alt="Nieves y Jesús" loading="lazy" style="object-position:center 25%"/>
-        <img class="s4-img-h" src="./fotos/foto-06.jpg" alt="Nieves con ramo fucsias" loading="lazy" style="object-position:center 80%"/>
+        <span class="s4-img-wrap">
+          <img class="s4-img-h" src="./fotos/foto-05.jpg" alt="Nieves y Jesús" loading="lazy" style="object-position:center 25%"/>
+        </span>
+        <span class="s4-img-wrap">
+          <img class="s4-img-h" src="./fotos/foto-06.jpg" alt="Nieves con ramo fucsias" loading="lazy" style="object-position:center 80%"/>
+        </span>
       </div>
       <div class="s4-right">
-        <img class="s4-img-v" src="./fotos/foto-03.jpg" alt="Nieves y Jesús retrato" loading="lazy" style="object-position:center 18%"/>
+        <span class="s4-img-wrap">
+          <img class="s4-img-v" src="./fotos/foto-03.jpg" alt="Nieves y Jesús retrato" loading="lazy" style="object-position:center 18%"/>
+        </span>
       </div>
     </div>
 
@@ -1084,6 +1141,42 @@ const obs=new IntersectionObserver(
   {threshold:0.07}
 )
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
+</script>
+<script>
+(function() {
+  const imgs  = document.querySelectorAll('.s4-img-h, .s4-img-v');
+  const wraps = document.querySelectorAll('.s4-img-wrap');
+
+  if (!imgs.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const el = entry.target;
+
+      // Add shimmer to wrapper
+      const wrap = el.closest('.s4-img-wrap');
+      if (wrap) {
+        setTimeout(() => wrap.classList.add('s4-shimmer'), 80);
+      }
+
+      // Fade+rise — Ken Burns on portrait
+      if (el.classList.contains('s4-img-v')) {
+        el.classList.add('s4-visible', 's4-kenburns');
+      } else {
+        el.classList.add('s4-visible');
+      }
+
+      observer.unobserve(el);
+    });
+  }, {
+    threshold: 0.18,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  imgs.forEach(img => observer.observe(img));
+})();
 </script>
 </body>
 </html>
