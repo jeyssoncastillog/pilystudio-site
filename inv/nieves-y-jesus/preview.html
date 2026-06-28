@@ -500,11 +500,12 @@ footer::before{
 
 /* ── LARGE SCREEN ── */
 @media(min-width:1600px){
+  .inv-content{flex:1 1 auto}
   .inv-monogram{width:clamp(160px,12vw,200px)}
   .inv-text,.inv-date{font-size:clamp(1.3rem,1.7vw,1.75rem)}
   .clock-num{font-size:clamp(4rem,5.2vw,6rem)}
   .clock-sep{font-size:clamp(3rem,4vw,4.5rem)}
-  .divider{height:clamp(300px,30vh,440px);margin-top:clamp(32px,4vh,50px)}
+  .divider{flex:1 1 auto;min-height:280px;height:auto;margin-top:clamp(32px,4vh,50px)}
 }
 
 /* ── INTRO RESPONSIVE ── */
