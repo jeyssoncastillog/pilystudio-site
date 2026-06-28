@@ -715,10 +715,12 @@ footer::before{
   inset: 0;
   z-index: 99999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #e8edf5 0%, #f0f4f8 50%, #e4ecf5 100%);
-  transition: opacity 0.9s ease;
+  background: radial-gradient(ellipse at 50% 40%,
+              #dde6f2 0%, #c8d8ec 60%, #b8ccdf 100%);
+  transition: opacity 1s ease;
 }
 #nj-envelope-overlay.nj-env-hiding {
   opacity: 0;
@@ -729,152 +731,222 @@ footer::before{
 /* ── Envelope wrapper ── */
 #nj-envelope {
   position: relative;
-  width: min(420px, 88vw);
+  width: min(440px, 86vw);
   display: flex;
   flex-direction: column;
   align-items: center;
-  perspective: 900px;
-  animation: njEnvEntrance 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: njEnvEntrance 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @keyframes njEnvEntrance {
-  from { opacity: 0; transform: translateY(32px) scale(0.94); }
+  from { opacity: 0; transform: translateY(40px) scale(0.92); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── Flap ── */
-#nj-env-flap {
-  width: 100%;
-  padding-bottom: 50%;
-  position: relative;
-  transform-origin: top center;
-  transform-style: preserve-3d;
-  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 3;
-}
-.nj-env-flap-inner {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #d8e4f0 0%, #cddaea 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  box-shadow: 0 6px 24px rgba(100,130,180,0.15);
-}
-#nj-envelope.open #nj-env-flap {
-  transform: rotateX(-178deg);
-}
-
-/* ── Body ── */
+/* ── Envelope body ── */
 #nj-env-body {
   width: 100%;
-  background: linear-gradient(170deg, #f6f9fd 0%, #f0f4f9 100%);
-  border-radius: 0 0 14px 14px;
-  padding: 2.8rem 2rem 2.5rem;
+  aspect-ratio: 1.618 / 1;
+  background: linear-gradient(165deg, #f7fafd 0%, #edf3fa 100%);
+  border-radius: 4px 4px 10px 10px;
   position: relative;
-  z-index: 2;
-  box-shadow: 0 16px 56px rgba(70,100,150,0.18),
-              0 2px 8px rgba(70,100,150,0.10);
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(60, 90, 140, 0.22),
+    0  4px 16px rgba(60, 90, 140, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  z-index: 1;
 }
 
-/* ── Corner accents ── */
-.nj-env-corner {
+/* ── Envelope fold lines — the X that shows folds ── */
+.nj-fold {
   position: absolute;
-  width: 26px;
-  height: 26px;
-  border-color: #b5c4dd;
-  border-style: solid;
+  background: rgba(181, 196, 221, 0.30);
+  pointer-events: none;
 }
-.nj-env-corner-tl { top:12px; left:12px;  border-width:2px 0 0 2px; }
-.nj-env-corner-tr { top:12px; right:12px; border-width:2px 2px 0 0; }
-.nj-env-corner-bl { bottom:12px; left:12px;  border-width:0 0 2px 2px; }
-.nj-env-corner-br { bottom:12px; right:12px; border-width:0 2px 2px 0; }
+.nj-fold-tl {
+  width: 2px; height: 140%;
+  top: -20%; left: 0;
+  transform-origin: top left;
+  transform: rotate(35deg);
+}
+.nj-fold-tr {
+  width: 2px; height: 140%;
+  top: -20%; right: 0;
+  transform-origin: top right;
+  transform: rotate(-35deg);
+}
+.nj-fold-bl {
+  width: 2px; height: 140%;
+  bottom: -20%; left: 0;
+  transform-origin: bottom left;
+  transform: rotate(-35deg);
+}
+.nj-fold-br {
+  width: 2px; height: 140%;
+  bottom: -20%; right: 0;
+  transform-origin: bottom right;
+  transform: rotate(35deg);
+}
+
+/* ── Olive branches on body ── */
+.nj-env-olive {
+  position: absolute;
+  pointer-events: none;
+}
+.nj-olive-tl {
+  width: clamp(90px, 24vw, 130px);
+  top: -10px; left: -10px;
+  opacity: 0.55;
+  transform: rotate(0deg);
+  filter: drop-shadow(0 2px 4px rgba(100,130,180,0.15));
+}
+.nj-olive-br {
+  width: clamp(90px, 24vw, 130px);
+  bottom: -10px; right: -10px;
+  opacity: 0.55;
+  transform: rotate(180deg);
+  filter: drop-shadow(0 2px 4px rgba(100,130,180,0.15));
+}
 
 /* ── Center content ── */
 #nj-env-center {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.5rem 0 0.5rem;
+  justify-content: center;
+  gap: 0.55rem;
+  padding-top: 1rem;
 }
 .nj-env-date {
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.6rem, 2vw, 0.72rem);
-  letter-spacing: 0.28em;
-  color: #b5c4dd;
+  font-size: clamp(0.55rem, 1.6vw, 0.68rem);
+  letter-spacing: 0.3em;
+  color: #8fa5c4;
   margin: 0;
 }
 #nj-env-monogram {
-  width: clamp(80px, 22vw, 108px);
-  opacity: 0.82;
+  width: clamp(72px, 20vw, 100px);
+  opacity: 0.75;
+  filter: drop-shadow(0 2px 8px rgba(100,130,180,0.2));
 }
 .nj-env-names {
   font-family: 'Pinyon Script', cursive;
-  font-size: clamp(1.7rem, 5.5vw, 2.1rem);
-  color: #6b7f9e;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  color: #6b85a8;
   margin: 0;
   line-height: 1;
+  text-shadow: 0 1px 6px rgba(100,130,180,0.18);
 }
 
-/* ── Olive branches ── */
-.nj-env-olive {
+/* ── Flap — triangle that folds open upward ── */
+#nj-env-flap {
   position: absolute;
-  width: clamp(65px, 17vw, 96px);
-  opacity: 0.5;
+  top: 0; left: 0;
+  width: 100%;
+  padding-bottom: calc(min(440px, 86vw) * 0.309);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(170deg, #c8d9ee 0%, #b8ccdf 60%, #a8bdd4 100%);
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 1.1s ease;
+  z-index: 3;
+  box-shadow: 0 8px 24px rgba(80,110,160,0.18);
+  overflow: hidden;
+}
+#nj-env-flap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(170deg,
+              rgba(255,255,255,0.22) 0%,
+              transparent 60%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
   pointer-events: none;
-  z-index: 4;
 }
-.nj-env-olive-tl {
-  top: -12px; left: -20px;
-  transform: rotate(180deg) scaleX(-1);
+.nj-olive-flap-l {
+  width: clamp(55px, 15vw, 80px);
+  top: 4px; left: 4px;
+  opacity: 0.45;
+  transform: rotate(0deg);
 }
-.nj-env-olive-br {
-  bottom: -12px; right: -20px;
-  transform: rotate(180deg);
+.nj-olive-flap-r {
+  width: clamp(55px, 15vw, 80px);
+  top: 4px; right: 4px;
+  opacity: 0.45;
+  transform: rotate(90deg) scaleX(-1);
+}
+#nj-envelope.open #nj-env-flap {
+  transform: rotateX(-180deg);
+  box-shadow: 0 -4px 16px rgba(80,110,160,0.08);
 }
 
 /* ── Wax seal ── */
 #nj-env-seal {
   position: absolute;
-  top: calc(50% - 36px);
+  top: calc(min(440px, 86vw) * 0.309 - 32px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: clamp(58px, 14vw, 74px);
-  height: clamp(58px, 14vw, 74px);
+  width: clamp(56px, 13vw, 70px);
+  height: clamp(56px, 13vw, 70px);
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 35%,
-              #9baec8 0%, #6b84a8 55%, #4a6080 100%);
-  box-shadow: 0 5px 20px rgba(60,90,130,0.45),
-              inset 0 1px 3px rgba(255,255,255,0.22);
+  background: radial-gradient(circle at 36% 32%,
+              #8fa8c8 0%, #6483a8 45%, #445f80 100%);
+  box-shadow:
+    0 6px 22px rgba(50, 80, 130, 0.50),
+    0 2px 6px  rgba(50, 80, 130, 0.30),
+    inset 0 1px 3px rgba(255,255,255,0.25),
+    inset 0 -1px 3px rgba(0,0,0,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 #nj-env-seal:hover {
-  transform: translateX(-50%) scale(1.10);
-  box-shadow: 0 8px 28px rgba(60,90,130,0.58),
-              inset 0 1px 3px rgba(255,255,255,0.22);
+  transform: translateX(-50%) scale(1.12);
+  box-shadow:
+    0 10px 32px rgba(50, 80, 130, 0.60),
+    0 3px 8px  rgba(50, 80, 130, 0.35),
+    inset 0 1px 3px rgba(255,255,255,0.25);
 }
 #nj-env-seal img {
-  width: 60%;
+  width: 58%;
   filter: brightness(0) invert(1);
-  opacity: 0.92;
+  opacity: 0.90;
+}
+#nj-envelope.open #nj-env-seal {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* ── CTA text ── */
+/* ── CTA ── */
 #nj-env-cta {
-  margin-top: 1.6rem;
+  margin-top: 1.5rem;
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.58rem, 1.8vw, 0.68rem);
-  letter-spacing: 0.22em;
-  color: #8a9fb8;
+  font-size: clamp(0.55rem, 1.6vw, 0.65rem);
+  letter-spacing: 0.25em;
+  color: rgba(80, 110, 160, 0.65);
   text-align: center;
-  animation: njEnvPulse 2.4s ease-in-out infinite;
+  animation: njEnvPulse 2.6s ease-in-out infinite;
 }
 @keyframes njEnvPulse {
-  0%,100% { opacity: 0.45; }
-  50%     { opacity: 1; }
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 1;    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #nj-env-flap {
+    padding-bottom: calc(86vw * 0.309);
+  }
+  #nj-env-seal {
+    top: calc(86vw * 0.309 - 28px);
+  }
 }
 
 /* ── Player container ── */
@@ -1057,20 +1129,22 @@ footer::before{
 <div id="nj-envelope-overlay">
   <div id="nj-envelope">
 
-    <img class="nj-env-olive nj-env-olive-tl"
-         src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="">
-    <img class="nj-env-olive nj-env-olive-br"
-         src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="">
-
-    <div id="nj-env-flap">
-      <div class="nj-env-flap-inner"></div>
-    </div>
-
+    <!-- Envelope body — the main white card -->
     <div id="nj-env-body">
-      <div class="nj-env-corner nj-env-corner-tl"></div>
-      <div class="nj-env-corner nj-env-corner-tr"></div>
-      <div class="nj-env-corner nj-env-corner-bl"></div>
-      <div class="nj-env-corner nj-env-corner-br"></div>
+
+      <!-- Fold lines (decorative X on envelope back) -->
+      <div class="nj-fold nj-fold-tl"></div>
+      <div class="nj-fold nj-fold-tr"></div>
+      <div class="nj-fold nj-fold-bl"></div>
+      <div class="nj-fold nj-fold-br"></div>
+
+      <!-- Olive branches in body corners -->
+      <img class="nj-env-olive nj-olive-tl"
+           src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="">
+      <img class="nj-env-olive nj-olive-br"
+           src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="">
+
+      <!-- Center content inside envelope -->
       <div id="nj-env-center">
         <p class="nj-env-date">27 · XI · 2026</p>
         <img id="nj-env-monogram"
@@ -1078,13 +1152,25 @@ footer::before{
              alt="NJ">
         <p class="nj-env-names">Nieves &amp; Jesús</p>
       </div>
+
     </div>
 
+    <!-- Flap — sits on top of body, hinged at top edge -->
+    <div id="nj-env-flap">
+      <img class="nj-env-olive nj-olive-flap-l"
+           src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="">
+      <img class="nj-env-olive nj-olive-flap-r"
+           src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="">
+    </div>
+
+    <!-- Wax seal — sits at the flap/body junction -->
     <div id="nj-env-seal" title="Abrir invitación">
-      <img src="/inv/nieves-y-jesus/assets/monograma-nj-white.png" alt="Sello NJ">
+      <img src="/inv/nieves-y-jesus/assets/monograma-nj-white.png" alt="NJ">
     </div>
 
+    <!-- CTA -->
     <p id="nj-env-cta">Toca el sello para abrir</p>
+
   </div>
 </div>
 
