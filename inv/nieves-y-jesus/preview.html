@@ -246,6 +246,21 @@ body{
 .s4-right{display:flex}
 .s4-img-v{width:100%;flex:1;object-fit:cover;display:block;object-position:center 15%}
 .s4-bottom-wrap{margin-top:0}
+.s4-footer{
+  position:relative;overflow:hidden;
+  background-color:#b5c4dd;
+  padding:clamp(2rem,5vh,3.5rem) clamp(2.5rem,7vw,7rem);
+  min-height:clamp(120px,13.4vw,182px);
+  display:flex;align-items:center;justify-content:center;
+}
+.s4-footer::before{
+  content:'';position:absolute;inset:0;
+  background-image:url('./assets/section-4-corner-tiles.svg');
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  transform:scaleY(-1);
+  pointer-events:none;
+}
 
 /* ── GALLERY 2-COL ── */
 .gallery-2{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:700px;margin:0 auto}
@@ -689,6 +704,9 @@ footer::before{
       </div>
     </div>
 
+  </div>
+  <div class="s4-footer">
+    <p class="s4-top reveal">Con la bendición de<br>Nuestros Padres:</p>
   </div>
 </section>
 
