@@ -498,6 +498,15 @@ footer::before{
 .reveal-1{transition-delay:.12s}
 .reveal-2{transition-delay:.24s}
 
+/* ── LARGE SCREEN ── */
+@media(min-width:1600px){
+  .inv-monogram{width:clamp(160px,12vw,200px)}
+  .inv-text,.inv-date{font-size:clamp(1.3rem,1.7vw,1.75rem)}
+  .clock-num{font-size:clamp(4rem,5.2vw,6rem)}
+  .clock-sep{font-size:clamp(3rem,4vw,4.5rem)}
+  .divider{height:clamp(300px,30vh,440px);margin-top:clamp(32px,4vh,50px)}
+}
+
 /* ── INTRO RESPONSIVE ── */
 @media(max-width:1536px){
   .inv-olive-tr{width:clamp(260px,24vw,370px);right:-30px;top:-10px;transform:rotate(-45deg)}
