@@ -90,14 +90,21 @@ body{
 }
 .hero-names{
   font-family:var(--cinzel);font-size:clamp(2.2rem,9vw,5.5rem);
-  font-weight:600;letter-spacing:.1em;
-  color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.5);line-height:1.1;
+  font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.5);line-height:1.15;
 }
-.hero-amp{color:rgba(255,255,255,.75);font-weight:400}
+.hero-amp{color:rgba(255,255,255,.7);font-weight:400;letter-spacing:.08em}
 .hero-tagline{
   font-family:var(--script);font-size:clamp(1.4rem,5vw,2.4rem);
-  color:rgba(255,255,255,.9);margin-top:.5rem;
+  color:rgba(255,255,255,.9);margin-top:.3rem;
   text-shadow:0 1px 15px rgba(0,0,0,.4);
+}
+/* TODO: When monogram image is provided, use .hero-monogram-img:
+   <img class="hero-monogram-img" src="./assets/monograma-nj.svg" alt="Monograma NJ" />
+*/
+.hero-monogram-img{
+  width:clamp(90px,20vw,160px);opacity:.88;display:block;margin:0 auto;
+  filter:drop-shadow(0 2px 24px rgba(0,0,0,.4));
 }
 
 /* ── INVITATION ── */
@@ -502,6 +509,11 @@ footer::before{
 <!-- ░░ HERO ░░ -->
 <section id="hero">
   <div class="hero-z">
+    <!-- TODO: Replace with Pily's final NJ monogram asset when provided.
+         Preferred path: ./assets/monograma-nj.svg (or .png)
+         Replace the <span> below with:
+         <img class="hero-monogram-img" src="./assets/monograma-nj.svg" alt="Monograma NJ" />
+    -->
     <span class="hero-monogram">NJ</span>
   </div>
   <div class="hero-z">
