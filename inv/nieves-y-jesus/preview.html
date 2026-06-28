@@ -106,43 +106,60 @@ body{
 /* ── INVITATION ── */
 #invitacion{
   position:relative;overflow:hidden;
-  padding:5.5rem 1.5rem 4rem;text-align:center;
+  padding:6rem 2rem 5.5rem;text-align:center;
   background:
-    radial-gradient(ellipse 80% 50% at 12% 18%, rgba(175,150,118,.06) 0%, transparent 100%),
-    radial-gradient(ellipse 65% 45% at 88% 82%, rgba(175,150,118,.055) 0%, transparent 100%),
-    radial-gradient(ellipse 100% 55% at 50% 100%, rgba(237,230,216,.55) 0%, transparent 70%),
+    repeating-linear-gradient(-45deg,
+      transparent 0,transparent 5px,
+      rgba(175,150,118,.025) 5px,rgba(175,150,118,.025) 6px),
+    radial-gradient(ellipse 75% 55% at 4% 4%, rgba(200,175,140,.14) 0%, transparent 65%),
+    radial-gradient(ellipse 65% 50% at 96% 96%, rgba(200,175,140,.12) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 55% at 50% 100%, rgba(240,233,218,.60) 0%, transparent 70%),
     var(--cream);
 }
+.inv-content{max-width:680px;margin:0 auto;position:relative;z-index:1}
+.inv-bot-tr{
+  position:absolute;top:-18px;right:-18px;
+  width:clamp(150px,25vw,230px);
+  opacity:.28;pointer-events:none;
+}
+.inv-bot-bl{
+  position:absolute;bottom:-18px;left:-18px;
+  width:clamp(150px,25vw,230px);
+  opacity:.28;pointer-events:none;
+  transform:scale(-1,-1);
+}
 .inv-monogram{
-  width:clamp(80px,18vw,130px);display:block;margin:0 auto 1.2rem;
-  opacity:.72;
+  width:clamp(120px,16vw,165px);display:block;margin:0 auto 2.5rem;
+  opacity:.76;
 }
 .inv-text{
-  font-family:var(--cinzel);font-size:clamp(.76rem,.85vw+.6rem,.98rem);
-  letter-spacing:.13em;color:var(--dark);line-height:2.1;
-  max-width:400px;margin:0 auto;
+  font-family:var(--cinzel);font-size:clamp(1.2rem,2vw,2rem);
+  letter-spacing:0;color:var(--dark);line-height:1.7;
+  max-width:580px;margin:0 auto;
 }
 .inv-date{
-  font-family:var(--cinzel);font-size:.8rem;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--dark);margin:1.8rem 0 1.2rem;
+  font-family:var(--cinzel);font-size:clamp(1rem,1.8vw,1.7rem);
+  letter-spacing:0;color:var(--dark);margin:2.5rem 0 2rem;
 }
-.clock{display:flex;gap:.7rem;justify-content:center;align-items:flex-end;margin-bottom:1.2rem}
+.clock{display:flex;gap:clamp(.5rem,1.2vw,1.2rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
 .clock-unit{display:flex;flex-direction:column;align-items:center}
 .clock-num{
-  font-family:var(--cinzel);font-size:clamp(2rem,7vw,3rem);
-  font-weight:400;color:var(--dark);line-height:1;letter-spacing:.05em;
+  font-family:var(--cinzel);font-size:clamp(1.8rem,5vw,5rem);
+  font-weight:400;color:var(--lav-dk);line-height:1;letter-spacing:.02em;
 }
-.clock-sep{font-family:var(--cinzel);font-size:2rem;color:var(--lav-dk);line-height:1.1;padding-bottom:.1rem}
+.clock-sep{
+  font-family:var(--cinzel);font-size:clamp(1.4rem,3.8vw,3.8rem);
+  color:var(--lav);line-height:1;padding-bottom:.15rem;
+}
 .clock-label{
-  font-family:var(--cinzel);font-size:.42rem;
-  letter-spacing:.28em;text-transform:uppercase;
-  color:var(--mid);margin-top:.25rem;
+  font-family:var(--cinzel);font-size:clamp(.48rem,.55vw,.65rem);
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--lav-dk);margin-top:.5rem;opacity:.82;
 }
 .divider{
-  width:1px;height:60px;
+  width:1px;height:110px;
   background:linear-gradient(to bottom,var(--lav-dk),transparent);
-  margin:1.8rem auto;
+  margin:2rem auto;
 }
 
 /* ── GARDEN ── */
@@ -468,6 +485,7 @@ footer::before{
 
 /* ── MOBILE ── */
 @media(max-width:640px){
+  .inv-bot-tr,.inv-bot-bl{width:100px;opacity:.16}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
   .timeline::before{top:50%;left:0;right:0;bottom:auto;height:1px;width:100%;transform:none}
@@ -515,28 +533,52 @@ footer::before{
 
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
-  <svg class="botanical botanical-l" viewBox="0 0 72 230" fill="none" aria-hidden="true">
-    <path d="M36 222 C33 172 27 138 21 104 C15 70 20 42 35 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
-    <path d="M26 100 C16 93 7 82 5 70 C14 71 24 80 28 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M22 132 C10 124 3 110 3 98 C12 100 22 110 24 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M30 70 C22 60 18 46 20 35 C28 39 33 52 34 65" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M33 44 C27 34 25 22 28 13 C34 17 37 29 37 42" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
-    <circle cx="35" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
-    <circle cx="40" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
-    <circle cx="29" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
-  </svg>
-  <svg class="botanical botanical-r" viewBox="0 0 72 230" fill="none" aria-hidden="true">
-    <path d="M36 222 C39 172 45 138 51 104 C57 70 52 42 37 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
-    <path d="M46 100 C56 93 65 82 67 70 C58 71 48 80 44 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M50 132 C62 124 69 110 69 98 C60 100 50 110 48 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M42 70 C50 60 54 46 52 35 C44 39 39 52 38 65" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M39 44 C45 34 47 22 44 13 C38 17 35 29 35 42" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
-    <circle cx="37" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
-    <circle cx="32" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
-    <circle cx="43" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
+
+  <!-- Botanical branch — top right corner -->
+  <svg class="inv-bot-tr" viewBox="0 0 220 340" fill="none" aria-hidden="true">
+    <path d="M195 5 C178 55 158 100 130 148 C102 196 78 240 50 325" stroke="#B8BDCF" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M175 52 C188 40 202 28 213 20" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
+    <ellipse cx="215" cy="18" rx="7" ry="2.5" transform="rotate(-35 215 18)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M194 36 C202 26 209 18 215 11" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="216" cy="9" rx="5" ry="2" transform="rotate(-50 216 9)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M155 90 C170 78 184 68 196 58" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
+    <ellipse cx="198" cy="56" rx="6.5" ry="2.5" transform="rotate(-25 198 56)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M176 74 C184 64 192 56 198 48" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="200" cy="46" rx="5" ry="2" transform="rotate(-40 200 46)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M132 130 C148 120 165 112 180 106" stroke="#B8BDCF" stroke-width=".95" stroke-linecap="round"/>
+    <ellipse cx="182" cy="104" rx="6" ry="2.5" transform="rotate(-18 182 104)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M110 168 C125 160 142 153 156 148" stroke="#B8BDCF" stroke-width=".9" stroke-linecap="round"/>
+    <ellipse cx="158" cy="146" rx="6" ry="2.5" transform="rotate(-12 158 146)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M88 205 C102 200 117 195 130 191" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="132" cy="189" rx="5.5" ry="2.2" transform="rotate(-8 132 189)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <circle cx="193" cy="7" r="2.5" fill="none" stroke="#B8BDCF" stroke-width=".9"/>
+    <circle cx="200" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <circle cx="187" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
   </svg>
 
-  <div class="reveal">
+  <!-- Botanical branch — bottom left corner (CSS-mirrored) -->
+  <svg class="inv-bot-bl" viewBox="0 0 220 340" fill="none" aria-hidden="true">
+    <path d="M195 5 C178 55 158 100 130 148 C102 196 78 240 50 325" stroke="#B8BDCF" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M175 52 C188 40 202 28 213 20" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
+    <ellipse cx="215" cy="18" rx="7" ry="2.5" transform="rotate(-35 215 18)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M194 36 C202 26 209 18 215 11" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="216" cy="9" rx="5" ry="2" transform="rotate(-50 216 9)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M155 90 C170 78 184 68 196 58" stroke="#B8BDCF" stroke-width="1" stroke-linecap="round"/>
+    <ellipse cx="198" cy="56" rx="6.5" ry="2.5" transform="rotate(-25 198 56)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M176 74 C184 64 192 56 198 48" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="200" cy="46" rx="5" ry="2" transform="rotate(-40 200 46)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M132 130 C148 120 165 112 180 106" stroke="#B8BDCF" stroke-width=".95" stroke-linecap="round"/>
+    <ellipse cx="182" cy="104" rx="6" ry="2.5" transform="rotate(-18 182 104)" fill="none" stroke="#B8BDCF" stroke-width=".85"/>
+    <path d="M110 168 C125 160 142 153 156 148" stroke="#B8BDCF" stroke-width=".9" stroke-linecap="round"/>
+    <ellipse cx="158" cy="146" rx="6" ry="2.5" transform="rotate(-12 158 146)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <path d="M88 205 C102 200 117 195 130 191" stroke="#B8BDCF" stroke-width=".85" stroke-linecap="round"/>
+    <ellipse cx="132" cy="189" rx="5.5" ry="2.2" transform="rotate(-8 132 189)" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <circle cx="193" cy="7" r="2.5" fill="none" stroke="#B8BDCF" stroke-width=".9"/>
+    <circle cx="200" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+    <circle cx="187" cy="4" r="1.8" fill="none" stroke="#B8BDCF" stroke-width=".8"/>
+  </svg>
+
+  <div class="reveal inv-content">
     <img class="inv-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
     <p class="inv-text">
       Estamos muy felices de compartir<br>este día tan especial contigo.<br><br>
