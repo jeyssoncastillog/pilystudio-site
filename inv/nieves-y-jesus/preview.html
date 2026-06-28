@@ -800,15 +800,17 @@ footer::before{
 }
 .nj-olive-tl {
   width: clamp(90px, 24vw, 130px);
-  top: -10px; left: -10px;
+  top: -20px; left: -20px;
   opacity: 0.55;
+  z-index: 4;
   transform: rotate(0deg);
   filter: drop-shadow(0 2px 4px rgba(100,130,180,0.15));
 }
 .nj-olive-br {
   width: clamp(200px, 45vw, 310px);
-  bottom: 60px; right: -20px;
-  opacity: 0.55;
+  bottom: 40px; right: -20px;
+  opacity: 0.65;
+  z-index: 4;
   transform: rotate(300deg);
   filter: drop-shadow(0 2px 4px rgba(100,130,180,0.15));
 }
@@ -1220,12 +1222,6 @@ footer::before{
       <div class="nj-fold nj-fold-bl"></div>
       <div class="nj-fold nj-fold-br"></div>
 
-      <!-- Olive branches in body corners -->
-      <img class="nj-env-olive nj-olive-tl"
-           src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="">
-      <img class="nj-env-olive nj-olive-br"
-           src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="">
-
       <!-- Center content inside envelope -->
       <div id="nj-env-center">
         <p class="nj-env-date">27 · XI · 2026</p>
@@ -1236,6 +1232,12 @@ footer::before{
       </div>
 
     </div>
+
+    <!-- Olive branches — direct children of #nj-envelope to escape overflow:hidden -->
+    <img class="nj-env-olive nj-olive-tl"
+         src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="">
+    <img class="nj-env-olive nj-olive-br"
+         src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="">
 
     <!-- Flap — sits on top of body, hinged at top edge -->
     <div id="nj-env-flap">
