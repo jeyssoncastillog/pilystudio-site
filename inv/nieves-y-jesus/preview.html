@@ -252,35 +252,42 @@ body{
 .gallery-2 img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .5s}
 .gallery-2 img:hover{transform:scale(1.02)}
 
-/* ── PADRES ── */
-#padres{
+/* ── PADRES SECTION ── */
+#padres-section{
   position:relative;overflow:hidden;
-  background:var(--lav);padding:4.5rem 1.5rem;text-align:center;
+  background:var(--cream);
+  padding:clamp(4rem,8vh,6.5rem) clamp(1.5rem,5vw,3rem);
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:55vh;
 }
-.sec-pre{
-  font-family:var(--cinzel);font-size:.6rem;
+#padres-section::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:url('./assets/textura-piedra-caliza.webp') center/cover no-repeat;
+  opacity:.15;
+}
+#padres-section::after{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:rgba(255,251,202,.23);
+}
+.padres-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  gap:clamp(3rem,6vh,5rem);
+  max-width:480px;width:100%;
+}
+.padres-block{display:flex;flex-direction:column;gap:.75rem}
+.padres-title{
+  font-family:var(--cinzel);font-size:clamp(.58rem,.8vw,.72rem);
   letter-spacing:.3em;text-transform:uppercase;
-  color:rgba(255,255,255,.65);display:block;margin-bottom:.8rem;
+  color:#b6c7e9;display:block;
 }
-.sec-heading{
-  font-family:var(--cinzel);font-size:clamp(1.1rem,4vw,1.6rem);
-  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
-  line-height:1.3;color:#fff;margin-bottom:2rem;
+.padres-name{
+  font-family:var(--cinzel);font-size:clamp(.9rem,1.3vw,1.1rem);
+  font-weight:400;letter-spacing:.07em;
+  color:#3a434a;line-height:1.85;
 }
-.padres-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:2.5rem 3.5rem;max-width:480px;margin:0 auto;text-align:left;
-}
-.padres-role{
-  font-family:var(--cinzel);font-size:.58rem;
-  letter-spacing:.25em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);margin-bottom:.6rem;display:block;
-}
-.padres-names{
-  font-family:var(--cinzel);font-size:.9rem;
-  font-weight:400;letter-spacing:.07em;color:#fff;line-height:1.9;
-}
-.padres-cross{color:rgba(255,255,255,.55);font-size:.8rem}
+.padres-dagger{color:#b6c7e9;font-size:.85em}
 
 /* ── VENUE ── */
 #venue{
@@ -682,25 +689,28 @@ footer::before{
       </div>
     </div>
 
-    <div class="s4-bottom-wrap reveal reveal-1">
-      <span class="sec-pre">Con la bendición de</span>
-      <h2 class="sec-heading">Nuestros Padres</h2>
-      <div class="padres-grid">
-        <div>
-          <span class="padres-role">Padres de la Novia:</span>
-          <p class="padres-names">
-            Julio Alberto Almonte<br>de la Cruz<br>
-            Nieves Álvarez Mena
-          </p>
-        </div>
-        <div>
-          <span class="padres-role">Padres del Novio:</span>
-          <p class="padres-names">
-            Simón Rafael Moronta<br>Quiñónez <span class="padres-cross">✝</span><br>
-            Yluminada Lugo
-          </p>
-        </div>
-      </div>
+  </div>
+</section>
+
+<!-- ░░ PADRES ░░ -->
+<section id="padres-section">
+  <img class="inv-olive inv-olive-tr" src="./assets/olivo-superior-derecho.svg" alt="" aria-hidden="true" loading="lazy"/>
+  <img class="inv-olive inv-olive-bl" src="./assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true" loading="lazy"/>
+
+  <div class="padres-content reveal">
+    <div class="padres-block">
+      <span class="padres-title">Padres de la Novia:</span>
+      <p class="padres-name">
+        Julio Alberto Almonte de la Cruz<br>
+        Nieves Álvarez Mena
+      </p>
+    </div>
+    <div class="padres-block reveal reveal-1">
+      <span class="padres-title">Padres del Novio:</span>
+      <p class="padres-name">
+        Simón Rafael Moronta Quiñónez <span class="padres-dagger">†</span><br>
+        Yluminada Lugo
+      </p>
     </div>
   </div>
 </section>
