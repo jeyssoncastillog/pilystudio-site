@@ -163,24 +163,24 @@ body{
 
 /* ── GARDEN ── */
 #garden{
-  position:relative;min-height:65vh;
-  background:url('./canva-svg/assets/img-23-7459307ea6d35215.webp') center top/cover no-repeat;
-  display:flex;align-items:flex-end;padding:3rem 2rem;overflow:hidden;
+  position:relative;min-height:85vh;
+  background:url('./assets/section-3-photo.webp') center 20%/cover no-repeat;
+  display:flex;align-items:center;padding:5rem 4rem;overflow:hidden;
 }
 #garden::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(20,18,30,.74) 0%,rgba(20,18,30,.15) 75%);
+  background:linear-gradient(to right,rgba(15,14,24,.50) 0%,rgba(15,14,24,.06) 52%,transparent 78%);
 }
-.garden-z{position:relative;z-index:1}
+.garden-z{position:relative;z-index:1;max-width:520px}
 .garden-text{
-  font-family:var(--cinzel);font-size:clamp(1rem,3.5vw,1.45rem);
-  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
-  color:#fff;line-height:1.45;margin-bottom:.9rem;
-  text-shadow:0 2px 15px rgba(0,0,0,.5);
+  font-family:var(--cinzel);font-size:clamp(1.8rem,4.5vw,3.2rem);
+  font-weight:400;letter-spacing:0;
+  color:#fff;line-height:1.09;margin-bottom:2rem;
+  text-shadow:0 2px 18px rgba(0,0,0,.36);
 }
 .garden-monogram{
-  width:72px;display:block;
-  opacity:.78;filter:drop-shadow(0 2px 10px rgba(0,0,0,.4));
+  width:clamp(90px,10vw,140px);display:block;
+  opacity:.88;filter:drop-shadow(0 2px 12px rgba(0,0,0,.30));
 }
 
 /* ── LAVENDER BANNER ── */
@@ -486,6 +486,7 @@ footer::before{
 @media(max-width:640px){
   .inv-decoration{opacity:.55}
   #invitacion{min-height:auto;padding:4rem 1.5rem}
+  #garden{min-height:72vh;padding:3rem 1.75rem;align-items:flex-end}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
   .timeline::before{top:50%;left:0;right:0;bottom:auto;height:1px;width:100%;transform:none}
@@ -559,7 +560,7 @@ footer::before{
 <!-- ░░ GARDEN ░░ -->
 <section id="garden">
   <div class="garden-z">
-    <p class="garden-text">El gran día está<br>cada vez más cerca</p>
+    <p class="garden-text">El gran día está<br>cada vez más cerca.</p>
     <img class="garden-monogram" src="./assets/monograma-nj-white.png" alt="NJ"/>
   </div>
 </section>
