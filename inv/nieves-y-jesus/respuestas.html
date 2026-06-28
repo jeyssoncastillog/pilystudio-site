@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Respuestas RSVP — Nieves &amp; Jesús</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F0E6;
+  --cream-dk:#EDE6D8;
+  --lav:#B8BDCF;
+  --lav-lt:#D4D8E8;
+  --lav-dk:#8B91B5;
+  --dark:#2A2A3E;
+  --mid:#5A5A78;
+  --green:#4A7C59;
+  --red:#9B3A3A;
+  --cinzel:'Cinzel',serif;
+  --script:'Pinyon Script',cursive;
+  --body:'Crimson Pro',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 20%, rgba(175,150,118,.06) 0%, transparent 100%),
+    radial-gradient(ellipse 65% 45% at 90% 80%, rgba(175,150,118,.05) 0%, transparent 100%),
+    var(--cream);
+  color:var(--dark);font-family:var(--body);font-weight:300;
+  line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+
+/* ── HEADER ── */
+.page-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 2rem;
+  border-bottom:1px solid rgba(184,189,207,.3);
+  background:rgba(245,240,230,.9);backdrop-filter:blur(8px);
+  position:sticky;top:0;z-index:100;
+}
+.header-title{
+  font-family:var(--cinzel);font-size:.72rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--mid);
+}
+.header-monogram{
+  font-family:var(--script);font-size:1.8rem;
+  color:var(--lav-dk);opacity:.75;line-height:1;
+}
+.back-link{
+  display:flex;align-items:center;gap:.35rem;
+  font-family:var(--cinzel);font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mid);text-decoration:none;transition:color .2s;
+}
+.back-link:hover{color:var(--dark)}
+.back-link svg{flex-shrink:0}
+
+/* ── PIN SCREEN ── */
+#pin-screen{
+  min-height:calc(100vh - 65px);
+  display:flex;align-items:center;justify-content:center;
+  padding:3rem 1.5rem;
+}
+.pin-card{
+  width:100%;max-width:420px;
+  background:rgba(255,255,252,.96);border-radius:3px;
+  padding:3rem 2.5rem;
+  box-shadow:0 1px 4px rgba(42,42,62,.04),0 6px 40px rgba(42,42,62,.08),0 0 0 1px rgba(184,189,207,.22);
+  text-align:center;
+}
+.pin-monogram{
+  font-family:var(--script);font-size:3rem;
+  color:var(--lav);opacity:.65;display:block;margin-bottom:.5rem;
+}
+.pin-title{
+  font-family:var(--cinzel);font-size:.9rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dark);margin-bottom:.4rem;
+}
+.pin-sub{
+  font-size:.88rem;color:var(--mid);margin-bottom:2rem;line-height:1.7;
+}
+.pin-input{
+  width:100%;padding:.8rem 1.2rem;text-align:center;
+  border:1px solid var(--lav);border-radius:2px;
+  font-family:var(--cinzel);font-size:1.2rem;letter-spacing:.4em;
+  color:var(--dark);background:#FAFAF7;outline:none;
+  transition:border-color .2s;margin-bottom:1.2rem;
+}
+.pin-input:focus{border-color:var(--lav-dk)}
+.pin-btn{
+  width:100%;padding:.85rem;
+  background:var(--lav-dk);color:#fff;
+  font-family:var(--cinzel);font-size:.62rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  transition:background .2s;
+}
+.pin-btn:hover{background:var(--dark)}
+.pin-btn:disabled{background:var(--lav);cursor:not-allowed}
+.pin-error{
+  font-family:var(--cinzel);font-size:.58rem;
+  letter-spacing:.1em;color:#9B3A3A;
+  margin-top:.8rem;display:none;
+}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none;padding:2.5rem 1.5rem 4rem;max-width:1200px;margin:0 auto}
+
+.dash-heading{
+  font-family:var(--cinzel);font-size:clamp(.7rem,2vw,.85rem);
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--mid);margin-bottom:2rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.dash-date{font-size:.6rem;color:var(--lav-dk);letter-spacing:.15em}
+
+/* Stats grid */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin-bottom:2.5rem;
+}
+.stat-card{
+  background:rgba(255,255,252,.94);border-radius:3px;
+  padding:1.5rem 1.2rem;text-align:center;
+  box-shadow:0 1px 3px rgba(42,42,62,.05),0 0 0 1px rgba(184,189,207,.2);
+}
+.stat-num{
+  font-family:var(--cinzel);font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:400;color:var(--dark);line-height:1;letter-spacing:.04em;
+}
+.stat-num.green{color:var(--green)}
+.stat-num.red{color:var(--red)}
+.stat-label{
+  font-family:var(--cinzel);font-size:.5rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mid);margin-top:.5rem;
+}
+
+/* Actions row */
+.actions-row{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem;
+}
+.section-label{
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--mid);
+}
+.csv-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.5rem 1.2rem;
+  border:1px solid var(--lav);color:var(--dark);
+  font-family:var(--cinzel);font-size:.56rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  border-radius:2px;background:transparent;
+  cursor:pointer;transition:all .2s;
+}
+.csv-btn:hover{background:var(--lav);color:#fff}
+
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:3px;box-shadow:0 1px 3px rgba(42,42,62,.06),0 0 0 1px rgba(184,189,207,.2)}
+table{
+  width:100%;min-width:780px;border-collapse:collapse;
+  background:rgba(255,255,252,.96);font-size:.88rem;
+}
+thead tr{
+  background:var(--lav);
+}
+thead th{
+  font-family:var(--cinzel);font-size:.48rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:#fff;font-weight:400;
+  padding:.85rem 1rem;text-align:left;white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid rgba(184,189,207,.2)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(212,216,232,.12)}
+tbody td{
+  padding:.8rem 1rem;color:var(--dark);
+  vertical-align:top;font-family:var(--body);
+  font-size:.88rem;
+}
+.badge{
+  display:inline-block;padding:.18rem .65rem;
+  border-radius:20px;font-family:var(--cinzel);
+  font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;
+}
+.badge-yes{background:rgba(74,124,89,.12);color:var(--green)}
+.badge-no{background:rgba(155,58,58,.1);color:var(--red)}
+.td-wrap{max-width:180px;word-break:break-word}
+.td-muted{color:var(--mid);font-style:italic;font-size:.82rem}
+.td-date{white-space:nowrap;font-size:.8rem;color:var(--mid)}
+
+/* Empty state */
+.empty{
+  text-align:center;padding:3rem 1rem;
+  font-family:var(--cinzel);font-size:.65rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--mid);
+}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .page-header{padding:1rem 1.2rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  #dashboard{padding:1.5rem 1rem 3rem}
+  .pin-card{padding:2.5rem 1.5rem}
+}
+@media(max-width:380px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-card{padding:1.2rem .8rem}
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <a href="./preview.html" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Invitación
+  </a>
+  <span class="header-monogram">NJ</span>
+  <span class="header-title">Respuestas</span>
+</header>
+
+<!-- ░░ PIN SCREEN ░░ -->
+<div id="pin-screen">
+  <div class="pin-card">
+    <span class="pin-monogram">NJ</span>
+    <p class="pin-title">Dashboard RSVP</p>
+    <p class="pin-sub">Ingresa el PIN para ver las respuestas de confirmación.</p>
+    <input class="pin-input" id="pin-input" type="password" placeholder="· · · ·" maxlength="20" autocomplete="off"/>
+    <button class="pin-btn" id="pin-btn">Acceder →</button>
+    <p class="pin-error" id="pin-error">PIN incorrecto. Intenta de nuevo.</p>
+  </div>
+</div>
+
+<!-- ░░ DASHBOARD ░░ -->
+<div id="dashboard">
+  <div class="dash-heading">
+    <span>Nieves &amp; Jesús · RSVP</span>
+    <span class="dash-date" id="dash-date"></span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <p class="stat-num" id="s-total">—</p>
+      <p class="stat-label">Respuestas</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-num green" id="s-conf">—</p>
+      <p class="stat-label">Confirmados</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-num red" id="s-no">—</p>
+      <p class="stat-label">No asistirán</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-num" id="s-pases">—</p>
+      <p class="stat-label">Total pases</p>
+    </div>
+  </div>
+
+  <div class="actions-row">
+    <span class="section-label">Listado de respuestas</span>
+    <button class="csv-btn" id="csv-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exportar CSV
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Asistencia</th>
+          <th>Pases</th>
+          <th>Restricciones</th>
+          <th>Canción</th>
+          <th>Mensaje</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="resp-tbody">
+        <tr><td colspan="9" class="empty">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let loadedData = [];
+
+function fmt(val) {
+  return (val === null || val === undefined || val === '') ? '<span class="td-muted">—</span>' : escHtml(String(val));
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtDate(iso) {
+  if (!iso) return '<span class="td-muted">—</span>';
+  try {
+    const d = new Date(iso);
+    const dd = String(d.getDate()).padStart(2,'0');
+    const mm = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()];
+    const yy = d.getFullYear();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const min = String(d.getMinutes()).padStart(2,'0');
+    return `<span class="td-date">${dd} ${mm} ${yy} ${hh}:${min}</span>`;
+  } catch(_) { return escHtml(iso); }
+}
+function asistenciaBadge(val) {
+  if (!val) return fmt(val);
+  if (val.startsWith('Sí')) return `<span class="badge badge-yes">Sí</span>`;
+  return `<span class="badge badge-no">No</span>`;
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById('resp-tbody');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty">Aún no hay respuestas.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r, i) => `
+    <tr>
+      <td class="td-muted">${i + 1}</td>
+      <td><strong>${fmt(r.nombre)}</strong></td>
+      <td>${fmt(r.telefono)}</td>
+      <td>${asistenciaBadge(r.asistencia)}</td>
+      <td style="text-align:center">${r.pases ?? '<span class="td-muted">—</span>'}</td>
+      <td class="td-wrap">${fmt(r.restricciones)}</td>
+      <td class="td-wrap">${fmt(r.cancion)}</td>
+      <td class="td-wrap">${fmt(r.mensaje)}</td>
+      <td>${fmtDate(r.fecha_rsvp)}</td>
+    </tr>`).join('');
+}
+
+function exportCSV() {
+  if (!loadedData.length) return;
+  const cols  = ['nombre','telefono','asistencia','pases','restricciones','cancion','mensaje','fecha_rsvp'];
+  const heads = ['Nombre','Teléfono','Asistencia','Pases','Restricciones','Canción','Mensaje','Fecha'];
+  const csvRows = loadedData.map(r =>
+    cols.map(c => JSON.stringify(r[c] ?? '')).join(',')
+  );
+  const csv = [heads.join(','), ...csvRows].join('\n');
+  const blob = new Blob(['﻿' + csv, ''], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'rsvp-nieves-y-jesus.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+async function loadDashboard(pin) {
+  const pinBtn   = document.getElementById('pin-btn');
+  const pinError = document.getElementById('pin-error');
+  pinBtn.disabled    = true;
+  pinBtn.textContent = 'Cargando...';
+  pinError.style.display = 'none';
+
+  try {
+    const res = await fetch(
+      `/api/rsvp-report?invitacion=nieves-y-jesus&pin=${encodeURIComponent(pin)}`
+    );
+    const json = await res.json();
+
+    if (!res.ok) {
+      pinError.textContent   = json.error || 'Error al cargar. Intenta de nuevo.';
+      pinError.style.display = 'block';
+      pinBtn.disabled    = false;
+      pinBtn.textContent = 'Acceder →';
+      return;
+    }
+
+    // Switch views
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display  = 'block';
+
+    // Stats
+    document.getElementById('s-total').textContent = json.total_respuestas;
+    document.getElementById('s-conf').textContent  = json.total_confirmados;
+    document.getElementById('s-no').textContent    = json.total_no_asisten;
+    document.getElementById('s-pases').textContent = json.total_pases;
+
+    // Date stamp
+    const now = new Date();
+    document.getElementById('dash-date').textContent =
+      `Actualizado: ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+    loadedData = json.respuestas || [];
+    renderTable(loadedData);
+
+  } catch(_) {
+    pinError.textContent   = 'Error de conexión. Intenta de nuevo.';
+    pinError.style.display = 'block';
+    pinBtn.disabled    = false;
+    pinBtn.textContent = 'Acceder →';
+  }
+}
+
+// PIN submit
+document.getElementById('pin-btn').addEventListener('click', function() {
+  const pin = document.getElementById('pin-input').value.trim();
+  if (!pin) return;
+  loadDashboard(pin);
+});
+document.getElementById('pin-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('pin-btn').click();
+});
+
+// CSV export
+document.getElementById('csv-btn').addEventListener('click', exportCSV);
+</script>
+</body>
+</html>
