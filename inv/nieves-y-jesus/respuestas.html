@@ -6,12 +6,11 @@
 <title>Respuestas RSVP — Nieves &amp; Jesús</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cream:#F5F0E6;
-  --cream-dk:#EDE6D8;
   --lav:#B8BDCF;
   --lav-lt:#D4D8E8;
   --lav-dk:#8B91B5;
@@ -22,45 +21,56 @@
   --cinzel:'Cinzel',serif;
   --script:'Pinyon Script',cursive;
   --body:'Crimson Pro',Georgia,serif;
+  --sh-sm:0 1px 3px rgba(42,42,62,.05),0 0 0 1px rgba(184,189,207,.2);
+  --sh-md:0 2px 8px rgba(42,42,62,.07),0 8px 32px rgba(42,42,62,.07),0 0 0 1px rgba(184,189,207,.22);
+  --sh-lg:0 4px 16px rgba(42,42,62,.09),0 20px 60px rgba(42,42,62,.1),0 0 0 1px rgba(184,189,207,.25);
 }
-html{scroll-behavior:smooth}
-
-/* ── BACKGROUND PHOTO ── */
-body::before{
-  content:'';
-  position:fixed;inset:0;z-index:-1;
-  background:url('./fotos/foto-03.jpg') center/cover no-repeat;
-  opacity:.06;
-}
+html{background:var(--cream);min-height:100%}
 body{
   min-height:100vh;
-  background:
-    radial-gradient(ellipse 90% 60% at 8% 12%, rgba(175,150,118,.09) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 50% at 92% 88%, rgba(139,145,181,.08) 0%, transparent 100%),
-    var(--cream);
   color:var(--dark);font-family:var(--body);font-weight:300;
   line-height:1.75;-webkit-font-smoothing:antialiased;
+  position:relative;
 }
+
+/* ── BACKGROUND ── */
+.bg-photo{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.bg-photo::before{
+  content:'';
+  position:absolute;inset:-6%;
+  background:url('./fotos/foto-01.jpg') center 35%/cover no-repeat;
+  filter:blur(6px) saturate(.28) brightness(1.3);
+  opacity:.6;
+}
+.bg-photo::after{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(245,240,230,.91);
+}
+
+/* All page layers above bg */
+.page-header,#pin-screen,#dashboard{position:relative;z-index:1}
 
 /* ── HEADER ── */
 .page-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:1.4rem 2.5rem;
+  padding:1.3rem 2.5rem;
   border-bottom:1px solid rgba(184,189,207,.35);
-  background:rgba(245,240,230,.94);backdrop-filter:blur(14px);
+  background:rgba(245,240,230,.95);backdrop-filter:blur(16px);
   position:sticky;top:0;z-index:100;
 }
 .header-title{
-  font-family:var(--cinzel);font-size:.82rem;
-  letter-spacing:.3em;text-transform:uppercase;
-  color:var(--mid);
+  font-family:var(--cinzel);font-size:.78rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--mid);
 }
 .header-monogram{
   font-family:var(--script);font-size:2.4rem;
   color:var(--lav-dk);opacity:.78;line-height:1;
 }
 .back-link{
-  display:flex;align-items:center;gap:.4rem;
+  display:flex;align-items:center;gap:.45rem;
   font-family:var(--cinzel);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--mid);text-decoration:none;transition:color .2s;
 }
@@ -69,103 +79,103 @@ body{
 
 /* ── PIN SCREEN ── */
 #pin-screen{
-  min-height:calc(100vh - 74px);
+  min-height:calc(100vh - 70px);
   display:flex;align-items:center;justify-content:center;
   padding:3rem 1.5rem;
 }
 .pin-card{
   width:100%;max-width:460px;
-  background:rgba(255,255,252,.97);border-radius:3px;
+  background:rgba(255,255,252,.98);border-radius:3px;
   padding:3.5rem 3rem;
-  box-shadow:
-    0 1px 4px rgba(42,42,62,.04),
-    0 8px 50px rgba(42,42,62,.11),
-    0 0 0 1px rgba(184,189,207,.28);
+  box-shadow:var(--sh-lg);
   text-align:center;
 }
 .pin-monogram{
-  font-family:var(--script);font-size:4.5rem;
-  color:var(--lav);opacity:.68;display:block;margin-bottom:.5rem;
+  font-family:var(--script);font-size:4.2rem;
+  color:var(--lav-dk);opacity:.65;display:block;
+  line-height:1;margin-bottom:.3rem;
+}
+.pin-rule{
+  width:40px;height:1px;
+  background:linear-gradient(to right,transparent,var(--lav),transparent);
+  margin:.6rem auto 1.4rem;
 }
 .pin-title{
-  font-family:var(--cinzel);font-size:1.05rem;
+  font-family:var(--cinzel);font-size:1rem;
   letter-spacing:.18em;text-transform:uppercase;
   color:var(--dark);margin-bottom:.5rem;
 }
 .pin-sub{
-  font-size:1.02rem;color:var(--mid);margin-bottom:2.2rem;line-height:1.8;
+  font-size:1rem;color:var(--mid);margin-bottom:2.2rem;line-height:1.8;
 }
 .pin-input{
   width:100%;padding:1rem 1.4rem;text-align:center;
   border:1px solid var(--lav);border-radius:2px;
-  font-family:var(--cinzel);font-size:1.6rem;letter-spacing:.55em;
+  font-family:var(--cinzel);font-size:1.6rem;letter-spacing:.5em;
   color:var(--dark);background:#FAFAF7;outline:none;
-  transition:border-color .2s;margin-bottom:1.4rem;
+  transition:border-color .25s,box-shadow .25s;margin-bottom:1.4rem;
 }
-.pin-input:focus{border-color:var(--lav-dk)}
+.pin-input:focus{border-color:var(--lav-dk);box-shadow:0 0 0 3px rgba(139,145,181,.15)}
 .pin-btn{
   width:100%;padding:1.05rem;
   background:var(--lav-dk);color:#fff;
   font-family:var(--cinzel);font-size:.7rem;
   letter-spacing:.28em;text-transform:uppercase;
   border:none;border-radius:2px;cursor:pointer;
-  transition:background .2s;
+  transition:background .25s,transform .1s;
 }
-.pin-btn:hover{background:var(--dark)}
+.pin-btn:hover:not(:disabled){background:var(--dark);transform:translateY(-1px)}
+.pin-btn:active:not(:disabled){transform:translateY(0)}
 .pin-btn:disabled{background:var(--lav);cursor:not-allowed}
+.pin-spinner{
+  display:inline-block;width:13px;height:13px;
+  border:2px solid rgba(255,255,255,.35);border-top-color:#fff;
+  border-radius:50%;animation:spin .65s linear infinite;
+  vertical-align:middle;margin-right:.5rem;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 .pin-error{
-  font-family:var(--cinzel);font-size:.65rem;
-  letter-spacing:.1em;color:#9B3A3A;
-  margin-top:1rem;display:none;
+  font-family:var(--cinzel);font-size:.62rem;
+  letter-spacing:.1em;color:var(--red);
+  margin-top:1rem;display:none;text-align:center;
 }
 
 /* ── DASHBOARD ── */
-#dashboard{display:none;padding:3rem 2.5rem 5rem;max-width:1280px;margin:0 auto}
+#dashboard{display:none;padding:3rem 2.5rem 5rem;max-width:1300px;margin:0 auto}
 
 .dash-heading{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
   margin-bottom:2.8rem;
-  padding-bottom:1.5rem;
+  padding-bottom:1.4rem;
   border-bottom:1px solid rgba(184,189,207,.3);
-  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;
 }
-.dash-heading-left{}
 .dash-title{
-  font-family:var(--cinzel);font-size:clamp(1.05rem,2.5vw,1.5rem);
-  font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--dark);margin-bottom:.3rem;
+  font-family:var(--cinzel);font-size:clamp(1.1rem,2.5vw,1.6rem);
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dark);margin-bottom:.25rem;
 }
 .dash-subtitle{
   font-family:var(--cinzel);font-size:.65rem;
-  letter-spacing:.25em;text-transform:uppercase;
-  color:var(--lav-dk);
+  letter-spacing:.26em;text-transform:uppercase;color:var(--lav-dk);
 }
 .dash-date{
-  font-family:var(--cinzel);font-size:.6rem;
-  letter-spacing:.12em;color:var(--mid);
-  text-align:right;
+  font-family:var(--cinzel);font-size:.58rem;
+  letter-spacing:.12em;color:var(--mid);text-align:right;flex-shrink:0;
 }
 
 /* ── STATS ── */
 .stats-grid{
   display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1.2rem;margin-bottom:3.2rem;
+  gap:1.2rem;margin-bottom:3rem;
 }
 .stat-card{
   background:rgba(255,255,252,.97);border-radius:3px;
   padding:2.2rem 1.5rem 2rem;text-align:center;
-  box-shadow:
-    0 1px 3px rgba(42,42,62,.05),
-    0 4px 22px rgba(42,42,62,.07),
-    0 0 0 1px rgba(184,189,207,.24);
+  box-shadow:var(--sh-md);
   transition:box-shadow .25s,transform .25s;
 }
-.stat-card:hover{
-  box-shadow:
-    0 2px 6px rgba(42,42,62,.08),
-    0 10px 35px rgba(42,42,62,.1),
-    0 0 0 1px rgba(184,189,207,.32);
-  transform:translateY(-1px);
-}
+.stat-card:hover{box-shadow:var(--sh-lg);transform:translateY(-2px)}
 .stat-num{
   font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,3.8rem);
   font-weight:400;color:var(--dark);line-height:1;letter-spacing:.03em;
@@ -179,9 +189,35 @@ body{
   margin:.85rem auto .75rem;
 }
 .stat-label{
-  font-family:var(--cinzel);font-size:.56rem;
-  letter-spacing:.26em;text-transform:uppercase;
-  color:var(--mid);
+  font-family:var(--cinzel);font-size:.55rem;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--mid);
+}
+
+/* ── FILTER / SEARCH ── */
+.filter-row{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.2rem;flex-wrap:wrap;
+}
+.search-wrap{
+  position:relative;flex:1;min-width:200px;max-width:360px;
+}
+.search-wrap svg{
+  position:absolute;left:.95rem;top:50%;transform:translateY(-50%);
+  color:var(--lav-dk);pointer-events:none;
+}
+.search-input{
+  width:100%;padding:.72rem 1rem .72rem 2.75rem;
+  border:1px solid var(--lav);border-radius:2px;
+  font-family:var(--body);font-size:.97rem;
+  color:var(--dark);background:rgba(255,255,252,.97);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.search-input::placeholder{color:rgba(184,189,207,.8);font-style:italic}
+.search-input:focus{border-color:var(--lav-dk);box-shadow:0 0 0 3px rgba(139,145,181,.12)}
+.result-count{
+  font-family:var(--cinzel);font-size:.58rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--mid);
+  white-space:nowrap;
 }
 
 /* ── ACTIONS ── */
@@ -194,95 +230,192 @@ body{
   letter-spacing:.28em;text-transform:uppercase;color:var(--dark);
 }
 .csv-btn{
-  display:inline-flex;align-items:center;gap:.45rem;
-  padding:.65rem 1.5rem;
-  border:1px solid var(--lav);color:var(--dark);
-  font-family:var(--cinzel);font-size:.6rem;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.72rem 1.6rem;
+  border:1px solid var(--lav-dk);color:var(--lav-dk);
+  font-family:var(--cinzel);font-size:.62rem;
   letter-spacing:.2em;text-transform:uppercase;
-  border-radius:2px;background:transparent;
-  cursor:pointer;transition:all .2s;
+  border-radius:2px;background:transparent;cursor:pointer;
+  transition:all .2s;
 }
-.csv-btn:hover{background:var(--lav-dk);border-color:var(--lav-dk);color:#fff}
+.csv-btn:hover{background:var(--lav-dk);color:#fff}
+.csv-btn svg{flex-shrink:0}
 
-/* ── TABLE ── */
+/* ── DESKTOP TABLE ── */
 .table-wrap{
   overflow-x:auto;border-radius:3px;
-  box-shadow:
-    0 2px 8px rgba(42,42,62,.07),
-    0 0 0 1px rgba(184,189,207,.28);
+  box-shadow:var(--sh-md);
 }
 table{
-  width:100%;min-width:840px;border-collapse:collapse;
+  width:100%;min-width:860px;border-collapse:collapse;
   background:rgba(255,255,252,.98);
 }
 thead tr{background:var(--lav-dk)}
 thead th{
-  font-family:var(--cinzel);font-size:.54rem;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:#fff;font-weight:400;
-  padding:1.1rem 1.3rem;text-align:left;white-space:nowrap;
+  font-family:var(--cinzel);font-size:.52rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.95);font-weight:400;
+  padding:1.1rem 1.4rem;text-align:left;white-space:nowrap;
 }
-tbody tr{border-bottom:1px solid rgba(184,189,207,.18)}
+tbody tr{border-bottom:1px solid rgba(184,189,207,.16)}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(212,216,232,.13)}
+tbody tr:nth-child(even){background:rgba(245,240,235,.38)}
+tbody tr:hover{background:rgba(212,216,232,.18)}
 tbody td{
-  padding:1.05rem 1.3rem;color:var(--dark);
+  padding:1.1rem 1.4rem;color:var(--dark);
   vertical-align:top;font-family:var(--body);
-  font-size:1rem;line-height:1.55;
+  font-size:.98rem;line-height:1.6;
 }
+.td-num{color:var(--mid);font-size:.85rem}
+.td-name{font-size:1rem}
 .badge{
-  display:inline-block;padding:.25rem .85rem;
+  display:inline-block;padding:.28rem .9rem;
   border-radius:20px;font-family:var(--cinzel);
-  font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;
+  font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
 }
-.badge-yes{background:rgba(74,124,89,.13);color:var(--green)}
-.badge-no{background:rgba(155,58,58,.11);color:var(--red)}
+.badge-yes{background:rgba(74,124,89,.14);color:var(--green)}
+.badge-no{background:rgba(155,58,58,.12);color:var(--red)}
 .td-wrap{max-width:200px;word-break:break-word}
-.td-muted{color:var(--mid);font-style:italic;font-size:.9rem}
-.td-date{white-space:nowrap;font-size:.9rem;color:var(--mid)}
+.td-muted{color:var(--mid);font-style:italic;font-size:.88rem}
+.td-date{white-space:nowrap;font-size:.88rem;color:var(--mid)}
 
-/* ── EMPTY ── */
-.empty{
+/* ── STATE CELLS (empty/loading) ── */
+.tbl-state{
   text-align:center;padding:4rem 1rem;
-  font-family:var(--cinzel);font-size:.72rem;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--mid);
+  font-family:var(--cinzel);font-size:.68rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
+}
+.tbl-state-sub{
+  display:block;font-family:var(--body);font-size:.9rem;
+  letter-spacing:0;text-transform:none;font-style:italic;
+  margin-top:.4rem;color:var(--lav-dk);
 }
 
-/* ── MOBILE ── */
+/* ── MOBILE CARDS ── */
+.cards-list{display:none;flex-direction:column;gap:1.1rem}
+
+@keyframes cardIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.rsvp-card{
+  background:rgba(255,255,252,.98);border-radius:3px;
+  border-left:3px solid var(--lav);
+  padding:1.5rem 1.4rem 1.3rem;
+  box-shadow:var(--sh-sm);
+  animation:cardIn .28s ease both;
+}
+.rsvp-card.attending{border-left-color:var(--green)}
+.rsvp-card.not-attending{border-left-color:var(--red)}
+.rc-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:1rem;margin-bottom:.9rem;
+  padding-bottom:.85rem;
+  border-bottom:1px solid rgba(184,189,207,.2);
+}
+.rc-name{
+  font-family:var(--cinzel);font-size:.98rem;
+  font-weight:500;color:var(--dark);
+  display:block;margin-bottom:.2rem;
+}
+.rc-phone{
+  font-family:var(--body);font-size:.9rem;color:var(--mid);
+}
+.rc-badges{
+  display:flex;flex-direction:column;align-items:flex-end;
+  gap:.4rem;flex-shrink:0;
+}
+.rc-pases{
+  font-family:var(--cinzel);font-size:.48rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mid);background:rgba(184,189,207,.18);
+  padding:.18rem .55rem;border-radius:10px;white-space:nowrap;
+}
+.rc-fields{
+  display:flex;flex-direction:column;gap:.55rem;
+  margin-bottom:.85rem;
+}
+.rc-row{
+  display:flex;gap:.7rem;
+  font-family:var(--body);font-size:.9rem;
+}
+.rc-label{
+  font-family:var(--cinzel);font-size:.46rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--lav-dk);min-width:92px;flex-shrink:0;
+  padding-top:.17rem;
+}
+.rc-val{color:var(--dark);line-height:1.55}
+.rc-footer{
+  font-family:var(--cinzel);font-size:.54rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mid);
+  padding-top:.75rem;
+  border-top:1px solid rgba(184,189,207,.16);
+}
+.cards-empty{
+  background:rgba(255,255,252,.97);border-radius:3px;
+  padding:3.5rem 1.5rem;text-align:center;
+  box-shadow:var(--sh-sm);
+}
+.cards-empty .ce-script{
+  font-family:var(--script);font-size:2.5rem;
+  color:var(--lav);opacity:.5;display:block;
+  line-height:1;margin-bottom:.6rem;
+}
+.cards-empty .ce-msg{
+  font-family:var(--cinzel);font-size:.65rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  #dashboard{padding:2.5rem 1.8rem 5rem}
+}
 @media(max-width:768px){
-  .page-header{padding:1.2rem 1.5rem}
+  .page-header{padding:1.1rem 1.4rem}
   .header-title{display:none}
   #dashboard{padding:2rem 1.2rem 4rem}
   .stats-grid{grid-template-columns:1fr 1fr;gap:1rem}
   .stat-card{padding:1.8rem 1.2rem 1.6rem}
-  .stat-num{font-size:clamp(2.2rem,10vw,3rem)}
-  .dash-title{font-size:1rem}
-  .dash-heading{margin-bottom:2rem;padding-bottom:1.2rem}
+  .stat-num{font-size:clamp(2.4rem,10vw,3.2rem)}
+  .dash-title{font-size:1.05rem}
+  .dash-heading{margin-bottom:2rem;padding-bottom:1.1rem}
+  .table-wrap{display:none}
+  .cards-list{display:flex}
+  .search-wrap{max-width:100%}
+  .filter-row{flex-direction:column;align-items:stretch}
+  .actions-row{flex-direction:column;align-items:stretch}
+  .csv-btn{justify-content:center;padding:.85rem}
 }
 @media(max-width:480px){
-  .pin-card{padding:2.8rem 1.5rem}
+  .page-header{padding:1rem}
+  .header-monogram{font-size:2rem}
+  .pin-card{padding:2.8rem 1.4rem}
   .pin-monogram{font-size:3.5rem}
-  .pin-title{font-size:.92rem}
-  .stat-card{padding:1.5rem 1rem 1.3rem}
-  .actions-row{flex-direction:column;align-items:flex-start}
+  .stats-grid{gap:.75rem}
+  .stat-card{padding:1.5rem .9rem 1.3rem}
+  #dashboard{padding:1.5rem .9rem 3.5rem}
+  .dash-heading{flex-direction:column;align-items:flex-start;gap:.3rem}
+  .dash-date{text-align:left}
 }
 </style>
 </head>
 <body>
 
+<div class="bg-photo" aria-hidden="true"></div>
+
 <header class="page-header">
   <a href="./preview.html" class="back-link">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Invitación
   </a>
   <span class="header-monogram">NJ</span>
   <span class="header-title">Respuestas</span>
 </header>
 
-<!-- ░░ PIN SCREEN ░░ -->
+<!-- PIN SCREEN -->
 <div id="pin-screen">
   <div class="pin-card">
-    <span class="pin-monogram">NJ</span>
+    <span class="pin-monogram">Nieves &amp; Jesús</span>
+    <div class="pin-rule"></div>
     <p class="pin-title">Dashboard RSVP</p>
     <p class="pin-sub">Ingresa el PIN para ver las respuestas de confirmación.</p>
     <input class="pin-input" id="pin-input" type="password" placeholder="· · · ·" maxlength="20" autocomplete="off"/>
@@ -291,10 +424,10 @@ tbody td{
   </div>
 </div>
 
-<!-- ░░ DASHBOARD ░░ -->
+<!-- DASHBOARD -->
 <div id="dashboard">
   <div class="dash-heading">
-    <div class="dash-heading-left">
+    <div>
       <p class="dash-title">Nieves &amp; Jesús</p>
       <p class="dash-subtitle">Confirmaciones de asistencia</p>
     </div>
@@ -324,14 +457,23 @@ tbody td{
     </div>
   </div>
 
+  <div class="filter-row">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input class="search-input" id="search-input" type="search" placeholder="Buscar por nombre o teléfono…" autocomplete="off"/>
+    </div>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
   <div class="actions-row">
     <span class="section-label">Listado de respuestas</span>
     <button class="csv-btn" id="csv-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Exportar CSV
     </button>
   </div>
 
+  <!-- Desktop table (hidden on mobile via CSS) -->
   <div class="table-wrap">
     <table>
       <thead>
@@ -348,137 +490,180 @@ tbody td{
         </tr>
       </thead>
       <tbody id="resp-tbody">
-        <tr><td colspan="9" class="empty">Cargando...</td></tr>
+        <tr><td colspan="9" class="tbl-state">Cargando respuestas…</td></tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Mobile cards (hidden on desktop via CSS) -->
+  <div class="cards-list" id="cards-list"></div>
 </div>
 
 <script>
-let loadedData = [];
+let allData = [];
 
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 function fmt(val) {
-  return (val === null || val === undefined || val === '') ? '<span class="td-muted">—</span>' : escHtml(String(val));
+  return (val == null || val === '') ? '<span class="td-muted">—</span>' : esc(val);
 }
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function fmtDate(iso) {
-  if (!iso) return '<span class="td-muted">—</span>';
+function fmtDate(iso, plain) {
+  if (!iso) return plain ? '—' : '<span class="td-muted">—</span>';
   try {
     const d = new Date(iso);
     const dd = String(d.getDate()).padStart(2,'0');
-    const mm = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()];
+    const mo = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()];
     const yy = d.getFullYear();
     const hh = String(d.getHours()).padStart(2,'0');
-    const min = String(d.getMinutes()).padStart(2,'0');
-    return `<span class="td-date">${dd} ${mm} ${yy} ${hh}:${min}</span>`;
-  } catch(_) { return escHtml(iso); }
+    const mn = String(d.getMinutes()).padStart(2,'0');
+    const str = `${dd} ${mo} ${yy} · ${hh}:${mn}`;
+    return plain ? str : `<span class="td-date">${str}</span>`;
+  } catch(_) { return plain ? iso : esc(iso); }
 }
-function asistenciaBadge(val) {
-  if (!val) return fmt(val);
-  if (val.startsWith('Sí')) return `<span class="badge badge-yes">Sí</span>`;
-  return `<span class="badge badge-no">No</span>`;
+function badge(val) {
+  if (!val) return '<span class="td-muted">—</span>';
+  return val.startsWith('Sí')
+    ? '<span class="badge badge-yes">Sí</span>'
+    : '<span class="badge badge-no">No</span>';
 }
 
 function renderTable(rows) {
   const tbody = document.getElementById('resp-tbody');
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty">Aún no hay respuestas.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="tbl-state">Sin resultados<span class="tbl-state-sub">Ninguna respuesta coincide con la búsqueda.</span></td></tr>';
     return;
   }
-  tbody.innerHTML = rows.map((r, i) => `
-    <tr>
-      <td class="td-muted">${i + 1}</td>
-      <td><strong>${fmt(r.nombre)}</strong></td>
-      <td>${fmt(r.telefono)}</td>
-      <td>${asistenciaBadge(r.asistencia)}</td>
-      <td style="text-align:center">${r.pases ?? '<span class="td-muted">—</span>'}</td>
-      <td class="td-wrap">${fmt(r.restricciones)}</td>
-      <td class="td-wrap">${fmt(r.cancion)}</td>
-      <td class="td-wrap">${fmt(r.mensaje)}</td>
-      <td>${fmtDate(r.fecha_rsvp)}</td>
-    </tr>`).join('');
+  tbody.innerHTML = rows.map((r, i) => `<tr>
+    <td class="td-num">${i+1}</td>
+    <td class="td-name">${fmt(r.nombre)}</td>
+    <td>${fmt(r.telefono)}</td>
+    <td>${badge(r.asistencia)}</td>
+    <td style="text-align:center">${r.pases != null ? esc(String(r.pases)) : '<span class="td-muted">—</span>'}</td>
+    <td class="td-wrap">${fmt(r.restricciones)}</td>
+    <td class="td-wrap">${fmt(r.cancion)}</td>
+    <td class="td-wrap">${fmt(r.mensaje)}</td>
+    <td>${fmtDate(r.fecha_rsvp, false)}</td>
+  </tr>`).join('');
+}
+
+function renderCards(rows) {
+  const list = document.getElementById('cards-list');
+  if (!rows.length) {
+    list.innerHTML = '<div class="cards-empty"><span class="ce-script">NJ</span><span class="ce-msg">Sin resultados</span></div>';
+    return;
+  }
+  list.innerHTML = rows.map(r => {
+    const si = r.asistencia && r.asistencia.startsWith('Sí');
+    const cls = si ? 'rsvp-card attending' : 'rsvp-card not-attending';
+    const hasR = r.restricciones && r.restricciones.trim();
+    const hasC = r.cancion && r.cancion.trim();
+    const hasM = r.mensaje && r.mensaje.trim();
+    return `<div class="${cls}">
+      <div class="rc-top">
+        <div>
+          <strong class="rc-name">${esc(r.nombre || '—')}</strong>
+          <span class="rc-phone">${esc(r.telefono || '—')}</span>
+        </div>
+        <div class="rc-badges">
+          ${badge(r.asistencia)}
+          ${r.pases != null ? `<span class="rc-pases">${esc(String(r.pases))} ${r.pases == 1 ? 'pase' : 'pases'}</span>` : ''}
+        </div>
+      </div>
+      ${(hasR||hasC||hasM) ? `<div class="rc-fields">
+        ${hasR ? `<div class="rc-row"><span class="rc-label">Restricciones</span><span class="rc-val">${esc(r.restricciones)}</span></div>` : ''}
+        ${hasC ? `<div class="rc-row"><span class="rc-label">Canción</span><span class="rc-val">${esc(r.cancion)}</span></div>` : ''}
+        ${hasM ? `<div class="rc-row"><span class="rc-label">Mensaje</span><span class="rc-val">${esc(r.mensaje)}</span></div>` : ''}
+      </div>` : ''}
+      <div class="rc-footer">${fmtDate(r.fecha_rsvp, true)}</div>
+    </div>`;
+  }).join('');
+}
+
+function setCount(shown, total) {
+  const el = document.getElementById('result-count');
+  if (!el) return;
+  el.textContent = shown === total
+    ? `${total} ${total === 1 ? 'respuesta' : 'respuestas'}`
+    : `${shown} de ${total} respuestas`;
+}
+
+function filter(q) {
+  q = q.toLowerCase().trim();
+  const rows = q
+    ? allData.filter(r => (r.nombre||'').toLowerCase().includes(q) || (r.telefono||'').toLowerCase().includes(q))
+    : allData;
+  renderTable(rows);
+  renderCards(rows);
+  setCount(rows.length, allData.length);
 }
 
 function exportCSV() {
-  if (!loadedData.length) return;
+  if (!allData.length) return;
   const cols  = ['nombre','telefono','asistencia','pases','restricciones','cancion','mensaje','fecha_rsvp'];
   const heads = ['Nombre','Teléfono','Asistencia','Pases','Restricciones','Canción','Mensaje','Fecha'];
-  const csvRows = loadedData.map(r =>
-    cols.map(c => JSON.stringify(r[c] ?? '')).join(',')
-  );
-  const csv = [heads.join(','), ...csvRows].join('\n');
-  const blob = new Blob(['﻿' + csv, ''], { type: 'text/csv;charset=utf-8;' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'rsvp-nieves-y-jesus.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const rows = allData.map(r => cols.map(c => JSON.stringify(r[c] ?? '')).join(','));
+  const csv = [heads.join(','), ...rows].join('\n');
+  const blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement('a'), {href:url, download:'rsvp-nieves-y-jesus.csv'});
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
 async function loadDashboard(pin) {
-  const pinBtn   = document.getElementById('pin-btn');
-  const pinError = document.getElementById('pin-error');
-  pinBtn.disabled    = true;
-  pinBtn.textContent = 'Cargando...';
-  pinError.style.display = 'none';
+  const btn = document.getElementById('pin-btn');
+  const err = document.getElementById('pin-error');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="pin-spinner"></span>Verificando…';
+  err.style.display = 'none';
 
   try {
-    const res = await fetch(
-      `/api/rsvp-report?invitacion=nieves-y-jesus&pin=${encodeURIComponent(pin)}`
-    );
+    const res  = await fetch(`/api/rsvp-report?invitacion=nieves-y-jesus&pin=${encodeURIComponent(pin)}`);
     const json = await res.json();
 
     if (!res.ok) {
-      pinError.textContent   = json.error || 'Error al cargar. Intenta de nuevo.';
-      pinError.style.display = 'block';
-      pinBtn.disabled    = false;
-      pinBtn.textContent = 'Acceder →';
+      err.textContent = json.error || 'Error al cargar. Intenta de nuevo.';
+      err.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Acceder →';
       return;
     }
 
-    // Switch views
     document.getElementById('pin-screen').style.display = 'none';
     document.getElementById('dashboard').style.display  = 'block';
 
-    // Stats
     document.getElementById('s-total').textContent = json.total_respuestas;
     document.getElementById('s-conf').textContent  = json.total_confirmados;
     document.getElementById('s-no').textContent    = json.total_no_asisten;
     document.getElementById('s-pases').textContent = json.total_pases;
 
-    // Date stamp
     const now = new Date();
     document.getElementById('dash-date').textContent =
       `Actualizado: ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-    loadedData = json.respuestas || [];
-    renderTable(loadedData);
+    allData = json.respuestas || [];
+    renderTable(allData);
+    renderCards(allData);
+    setCount(allData.length, allData.length);
 
   } catch(_) {
-    pinError.textContent   = 'Error de conexión. Intenta de nuevo.';
-    pinError.style.display = 'block';
-    pinBtn.disabled    = false;
-    pinBtn.textContent = 'Acceder →';
+    err.textContent = 'Error de conexión. Intenta de nuevo.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Acceder →';
   }
 }
 
-// PIN submit
 document.getElementById('pin-btn').addEventListener('click', function() {
   const pin = document.getElementById('pin-input').value.trim();
-  if (!pin) return;
-  loadDashboard(pin);
+  if (pin) loadDashboard(pin);
 });
 document.getElementById('pin-input').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('pin-btn').click();
 });
-
-// CSV export
 document.getElementById('csv-btn').addEventListener('click', exportCSV);
+document.getElementById('search-input').addEventListener('input', function() {
+  filter(this.value);
+});
 </script>
 </body>
 </html>
