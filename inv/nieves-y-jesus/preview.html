@@ -211,6 +211,36 @@ body{
   color:#fff;line-height:1.6;
 }
 
+/* ── SECTION 4 ── */
+#section4{
+  position:relative;overflow:hidden;
+  background:var(--lav);
+  padding:clamp(3.5rem,7vh,6rem) clamp(2rem,5vw,5rem);
+  text-align:center;
+}
+.s4-corner{
+  position:absolute;pointer-events:none;
+  opacity:.25;width:clamp(80px,9vw,130px);
+}
+.s4-corner-tr{top:0;right:0}
+.s4-corner-bl{bottom:0;left:0;transform:rotate(180deg)}
+.s4-top{
+  font-family:var(--cinzel);font-size:clamp(.72rem,1.2vw,.98rem);
+  font-weight:500;letter-spacing:.17em;text-transform:uppercase;
+  color:#fff;line-height:1.9;
+  margin-bottom:clamp(2.5rem,5vh,4rem);
+}
+.s4-gallery{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(6px,.8vw,10px);
+  max-width:820px;margin:0 auto;
+}
+.s4-left{display:flex;flex-direction:column;gap:clamp(6px,.8vw,10px)}
+.s4-img-h{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.s4-right{display:flex}
+.s4-img-v{width:100%;flex:1;object-fit:cover;display:block;object-position:center 15%}
+.s4-bottom-wrap{margin-top:clamp(2.5rem,5vh,4rem)}
+
 /* ── GALLERY 2-COL ── */
 .gallery-2{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:700px;margin:0 auto}
 .gallery-2 img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .5s}
@@ -554,6 +584,9 @@ footer::before{
   .regalo-quote{display:none}
   .padres-grid{grid-template-columns:1fr;gap:2rem}
   .vest-grid{grid-template-columns:1fr}
+  .s4-gallery{grid-template-columns:1fr}
+  .s4-right{min-height:260px}
+  .s4-img-v{width:100%;height:100%;object-fit:cover;flex:none}
   .gallery-3{grid-template-columns:repeat(2,1fr)}
   .rsvp-box{padding:2rem 1.25rem}
 }
@@ -626,32 +659,38 @@ footer::before{
   </div>
 </section>
 
-<!-- ░░ LAVENDER BANNER ░░ -->
-<section id="lav-banner">
-  <p class="lav-banner-text reveal">
-    Y deseamos que compartas<br>este momento especial con nosotros
-  </p>
-</section>
-
-<!-- ░░ GALLERY 2-COL ░░ -->
-<div>
-  <div class="gallery-2">
-    <img src="./fotos/foto-03.jpg" alt="Nieves y Jesús" loading="lazy"/>
-    <img src="./fotos/foto-04.jpg" alt="Nieves" loading="lazy"/>
-    <img src="./fotos/foto-11.jpg" alt="Juntos" loading="lazy"/>
-    <img src="./fotos/foto-12.jpg" alt="Amor" loading="lazy"/>
-  </div>
-</div>
-
-<!-- ░░ PADRES ░░ -->
-<section id="padres">
-  <svg class="botanical botanical-r" style="opacity:.08;top:50%" viewBox="0 0 100 260" fill="none" aria-hidden="true">
-    <path d="M50 250 Q62 185 72 130 Q82 75 60 20" stroke="#fff" stroke-width="1.2" fill="none"/>
-    <ellipse cx="68" cy="105" rx="16" ry="9" transform="rotate(30 68 105)" fill="#fff"/>
-    <ellipse cx="52" cy="70" rx="13" ry="7" transform="rotate(-20 52 70)" fill="#fff"/>
-    <ellipse cx="75" cy="148" rx="18" ry="9" transform="rotate(45 75 148)" fill="#fff"/>
+<!-- ░░ SECTION 4 ░░ -->
+<section id="section4">
+  <svg class="s4-corner s4-corner-tr" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <path d="M95 5 L30 5" stroke="#fff" stroke-width="1.2"/>
+    <path d="M95 5 L95 70" stroke="#fff" stroke-width="1.2"/>
+    <circle cx="30" cy="5" r="2.5" fill="#fff"/>
+    <circle cx="95" cy="70" r="2.5" fill="#fff"/>
+    <path d="M95 20 L80 5" stroke="#fff" stroke-width=".8"/>
+    <path d="M95 32 L68 5" stroke="#fff" stroke-width=".5"/>
   </svg>
-  <div style="position:relative;z-index:1" class="reveal">
+  <svg class="s4-corner s4-corner-bl" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <path d="M95 5 L30 5" stroke="#fff" stroke-width="1.2"/>
+    <path d="M95 5 L95 70" stroke="#fff" stroke-width="1.2"/>
+    <circle cx="30" cy="5" r="2.5" fill="#fff"/>
+    <circle cx="95" cy="70" r="2.5" fill="#fff"/>
+    <path d="M95 20 L80 5" stroke="#fff" stroke-width=".8"/>
+    <path d="M95 32 L68 5" stroke="#fff" stroke-width=".5"/>
+  </svg>
+
+  <p class="s4-top reveal">Y deseamos que compartas<br>este momento especial con nosotros.</p>
+
+  <div class="s4-gallery reveal reveal-1">
+    <div class="s4-left">
+      <img class="s4-img-h" src="./fotos/foto-05.jpg" alt="Nieves y Jesús" loading="lazy" style="object-position:center 25%"/>
+      <img class="s4-img-h" src="./fotos/foto-04.jpg" alt="Nieves con ramo" loading="lazy" style="object-position:center 30%"/>
+    </div>
+    <div class="s4-right">
+      <img class="s4-img-v" src="./fotos/foto-07.jpg" alt="Nieves y Jesús" loading="lazy"/>
+    </div>
+  </div>
+
+  <div class="s4-bottom-wrap reveal reveal-1">
     <span class="sec-pre">Con la bendición de</span>
     <h2 class="sec-heading">Nuestros Padres</h2>
     <div class="padres-grid">
