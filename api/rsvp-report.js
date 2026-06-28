@@ -1,16 +1,25 @@
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 'no-store');
 
-  if (req.method !== 'GET') {
+  // CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(204).end();
+  }
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { invitacion, pin } = req.query;
+  const { invitacion, pin } = req.body || {};
 
   // PIN check — small delay discourages brute force
   const expectedPin = process.env.RSVP_NIEVES_JESUS_PIN;
-  if (!expectedPin || !pin || pin.trim() !== expectedPin.trim()) {
+  if (!expectedPin || !pin || String(pin).trim() !== expectedPin.trim()) {
     await new Promise(r => setTimeout(r, 500));
     return res.status(401).json({ error: 'PIN incorrecto' });
   }

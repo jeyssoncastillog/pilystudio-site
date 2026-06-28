@@ -76,6 +76,16 @@ body{
 }
 .back-link:hover{color:var(--dark)}
 .back-link svg{flex-shrink:0}
+.header-right{display:flex;align-items:center;gap:1rem}
+.salir-btn{
+  display:none;align-items:center;gap:.3rem;
+  font-family:var(--cinzel);font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mid);background:transparent;
+  border:1px solid rgba(184,189,207,.55);border-radius:2px;
+  padding:.35rem .8rem;cursor:pointer;transition:all .2s;
+}
+.salir-btn:hover{color:var(--red);border-color:var(--red)}
 
 /* ── PIN SCREEN ── */
 #pin-screen{
@@ -408,7 +418,10 @@ tbody td{
     Invitación
   </a>
   <span class="header-monogram">NJ</span>
-  <span class="header-title">Respuestas</span>
+  <div class="header-right">
+    <span class="header-title">Respuestas</span>
+    <button class="salir-btn" id="salir-btn">Salir</button>
+  </div>
 </header>
 
 <!-- PIN SCREEN -->
@@ -500,8 +513,50 @@ tbody td{
 </div>
 
 <script>
+/* ── SESSION ── */
+const SESSION_KEY = 'rsvp_nieves_jesus_session';
+const SESSION_TTL = 4 * 60 * 60 * 1000; // 4 hours
+
+function getSession() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s.authenticated || !s.pin || !s.expiresAt) return null;
+    if (Date.now() > s.expiresAt) { sessionStorage.removeItem(SESSION_KEY); return null; }
+    return s;
+  } catch(_) { return null; }
+}
+function saveSession(pin) {
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+    authenticated: true, pin, expiresAt: Date.now() + SESSION_TTL
+  }));
+}
+function clearSession() { sessionStorage.removeItem(SESSION_KEY); }
+
+/* ── UI STATE ── */
 let allData = [];
 
+function showSalir(v) {
+  const btn = document.getElementById('salir-btn');
+  if (btn) btn.style.display = v ? 'flex' : 'none';
+}
+function showDashboard() {
+  document.getElementById('pin-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display  = 'block';
+  showSalir(true);
+}
+function showPinGate(msg) {
+  allData = [];
+  document.getElementById('dashboard').style.display  = 'none';
+  document.getElementById('pin-screen').style.display = 'flex';
+  showSalir(false);
+  const err = document.getElementById('pin-error');
+  if (msg) { err.textContent = msg; err.style.display = 'block'; }
+  else { err.style.display = 'none'; }
+}
+
+/* ── RENDER HELPERS ── */
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -611,6 +666,30 @@ function exportCSV() {
   document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
+/* ── API ── */
+function apiFetch(pin) {
+  return fetch('/api/rsvp-report', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ invitacion: 'nieves-y-jesus', pin })
+  });
+}
+
+function populateDashboard(json) {
+  document.getElementById('s-total').textContent = json.total_respuestas;
+  document.getElementById('s-conf').textContent  = json.total_confirmados;
+  document.getElementById('s-no').textContent    = json.total_no_asisten;
+  document.getElementById('s-pases').textContent = json.total_pases;
+  const now = new Date();
+  document.getElementById('dash-date').textContent =
+    `Actualizado: ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  allData = json.respuestas || [];
+  renderTable(allData);
+  renderCards(allData);
+  setCount(allData.length, allData.length);
+}
+
+/* ── LOAD FROM PIN GATE ── */
 async function loadDashboard(pin) {
   const btn = document.getElementById('pin-btn');
   const err = document.getElementById('pin-error');
@@ -619,40 +698,78 @@ async function loadDashboard(pin) {
   err.style.display = 'none';
 
   try {
-    const res  = await fetch(`/api/rsvp-report?invitacion=nieves-y-jesus&pin=${encodeURIComponent(pin)}`);
+    const res  = await apiFetch(pin);
     const json = await res.json();
 
     if (!res.ok) {
-      err.textContent = json.error || 'Error al cargar. Intenta de nuevo.';
+      err.textContent   = res.status === 401 ? 'PIN incorrecto. Intenta de nuevo.' : (json.error || 'Error al cargar.');
       err.style.display = 'block';
       btn.disabled = false; btn.textContent = 'Acceder →';
       return;
     }
 
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('dashboard').style.display  = 'block';
-
-    document.getElementById('s-total').textContent = json.total_respuestas;
-    document.getElementById('s-conf').textContent  = json.total_confirmados;
-    document.getElementById('s-no').textContent    = json.total_no_asisten;
-    document.getElementById('s-pases').textContent = json.total_pases;
-
-    const now = new Date();
-    document.getElementById('dash-date').textContent =
-      `Actualizado: ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-    allData = json.respuestas || [];
-    renderTable(allData);
-    renderCards(allData);
-    setCount(allData.length, allData.length);
+    saveSession(pin);
+    showDashboard();
+    populateDashboard(json);
 
   } catch(_) {
-    err.textContent = 'Error de conexión. Intenta de nuevo.';
+    err.textContent   = 'Error de conexión. Intenta de nuevo.';
     err.style.display = 'block';
     btn.disabled = false; btn.textContent = 'Acceder →';
   }
 }
 
+/* ── AUTO-LOAD FROM SESSION ── */
+async function autoLoad(pin) {
+  showDashboard();
+  document.getElementById('resp-tbody').innerHTML =
+    '<tr><td colspan="9" class="tbl-state">Cargando respuestas…</td></tr>';
+  document.getElementById('cards-list').innerHTML = '';
+
+  try {
+    const res  = await apiFetch(pin);
+    const json = await res.json();
+
+    if (!res.ok) {
+      clearSession();
+      if (res.status === 401) {
+        showPinGate('Tu sesión expiró. Ingresa el PIN nuevamente.');
+      } else {
+        document.getElementById('resp-tbody').innerHTML =
+          `<tr><td colspan="9" class="tbl-state">${esc(json.error || 'Error al cargar.')}</td></tr>`;
+      }
+      return;
+    }
+
+    populateDashboard(json);
+
+  } catch(_) {
+    document.getElementById('resp-tbody').innerHTML =
+      '<tr><td colspan="9" class="tbl-state">Error de conexión.<span class="tbl-state-sub">Verifica tu conexión e intenta de nuevo.</span></td></tr>';
+  }
+}
+
+/* ── LOGOUT ── */
+function logout() {
+  clearSession();
+  allData = [];
+  document.getElementById('pin-input').value = '';
+  document.getElementById('search-input').value = '';
+  ['s-total','s-conf','s-no','s-pases'].forEach(id => { document.getElementById(id).textContent = '—'; });
+  document.getElementById('dash-date').textContent = '';
+  document.getElementById('result-count').textContent = '';
+  document.getElementById('resp-tbody').innerHTML = '<tr><td colspan="9" class="tbl-state">Cargando respuestas…</td></tr>';
+  document.getElementById('cards-list').innerHTML = '';
+  showPinGate();
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', function() {
+  const session = getSession();
+  if (session) autoLoad(session.pin);
+});
+
+/* ── EVENTS ── */
 document.getElementById('pin-btn').addEventListener('click', function() {
   const pin = document.getElementById('pin-input').value.trim();
   if (pin) loadDashboard(pin);
@@ -661,6 +778,7 @@ document.getElementById('pin-input').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('pin-btn').click();
 });
 document.getElementById('csv-btn').addEventListener('click', exportCSV);
+document.getElementById('salir-btn').addEventListener('click', logout);
 document.getElementById('search-input').addEventListener('input', function() {
   filter(this.value);
 });
