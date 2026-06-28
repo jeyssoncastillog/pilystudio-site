@@ -120,17 +120,11 @@ body{
   background:rgba(255,251,202,.23);
 }
 .inv-content{max-width:780px;width:100%;position:relative;z-index:2}
-.inv-bot-tr{
-  position:absolute;top:0;right:0;z-index:1;
-  width:clamp(240px,38vw,500px);
-  opacity:.75;pointer-events:none;
-  transform:rotate(-18deg) translate(-6%,-4%);
-}
-.inv-bot-bl{
-  position:absolute;bottom:0;left:0;z-index:1;
-  width:clamp(240px,38vw,500px);
-  opacity:.75;pointer-events:none;
-  transform:rotate(-18deg) translate(6%,4%);
+.inv-decoration{
+  position:absolute;inset:0;z-index:1;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  pointer-events:none;opacity:.85;
 }
 .inv-monogram{
   width:clamp(120px,16vw,170px);display:block;margin:0 auto 2.8rem;
@@ -490,7 +484,7 @@ footer::before{
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .inv-bot-tr,.inv-bot-bl{width:150px;opacity:.35;transform:none}
+  .inv-decoration{opacity:.55}
   #invitacion{min-height:auto;padding:4rem 1.5rem}
   .venue-inner{grid-template-columns:1fr;gap:2rem}
   .timeline{flex-direction:row;justify-content:center}
@@ -542,8 +536,7 @@ footer::before{
 
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
-  <img class="inv-bot-tr" src="./assets/olivo-superior-derecho.svg" alt="" loading="lazy"/>
-  <img class="inv-bot-bl" src="./assets/olivo-inferior-izquierdo.svg" alt="" loading="lazy"/>
+  <img class="inv-decoration" src="./assets/decoracion-intro-canva.svg" alt="" loading="eager"/>
 
   <div class="reveal inv-content">
     <img class="inv-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
