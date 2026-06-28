@@ -614,7 +614,7 @@ footer::before{
     <div class="reveal">
       <span class="venue-monogram">NJ</span>
       <p class="venue-name">Condominios<br>Los Charamicos I</p>
-      <a class="venue-btn" href="https://maps.google.com/?q=Condominios+Los+Charamicos,+Jarabacoa,+Dominican+Republic" target="_blank" rel="noopener">
+      <a class="venue-btn" href="https://www.google.com/maps/place/Residencial+los+Charamicos/@19.7537433,-70.5206752,18z/data=!4m6!3m5!1s0x8eb1e3b47f2f8f39:0xcb6e771e69c7ac23!8m2!3d19.753648!4d-70.5206868!16s%2Fg%2F11r7dql1vj?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
         Ver → Ubicación
       </a>
     </div>
@@ -762,6 +762,10 @@ footer::before{
           <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
         </div>
         <div class="rsvp-field">
+          <label class="rsvp-label">WhatsApp o teléfono *</label>
+          <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
+        </div>
+        <div class="rsvp-field">
           <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
           <div class="rsvp-radio-group">
             <label class="rsvp-radio"><input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/><span>Sí, ¡ahí estaré! 🎉</span></label>
@@ -872,12 +876,13 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
     const restricc=document.querySelector('input[name="restricciones"]:checked')?.value
     const cancion=document.getElementById('r-cancion').value.trim()
     const mensaje=document.getElementById('r-mensaje').value.trim()
-    if(!nombre||!asistencia){errorEl.style.display='block';return}
+    const telefono=document.getElementById('r-telefono').value.trim()
+    if(!nombre||!telefono||!asistencia){errorEl.style.display='block';return}
     errorEl.style.display='none'
     submitBtn.disabled=true;submitBtn.textContent='Enviando...'
     try{
       const{error}=await db.from('rsvp').insert({
-        invitacion:'nieves-y-jesus',nombre,asistencia,
+        invitacion:'nieves-y-jesus',nombre,telefono,asistencia,
         pases:pases?parseInt(pases):null,
         restricciones:restricc||'Ninguna',
         cancion:cancion||null,mensaje:mensaje||null
