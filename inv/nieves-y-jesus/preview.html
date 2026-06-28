@@ -66,9 +66,9 @@ body{
 .back-btn:hover{color:#fff;background:rgba(42,42,62,.85)}
 
 /* ── BOTANICAL ── */
-.botanical{position:absolute;pointer-events:none;opacity:.13}
-.botanical-l{left:-10px;top:50%;transform:translateY(-50%);width:clamp(90px,15vw,150px)}
-.botanical-r{right:-10px;top:30%;width:clamp(80px,13vw,135px);transform:scaleX(-1)}
+.botanical{position:absolute;pointer-events:none;opacity:.11}
+.botanical-l{left:-8px;top:50%;transform:translateY(-50%);width:clamp(80px,13vw,140px)}
+.botanical-r{right:-8px;top:28%;width:clamp(70px,11vw,125px)}
 
 /* ── HERO ── */
 #hero{
@@ -104,7 +104,11 @@ body{
 #invitacion{
   position:relative;overflow:hidden;
   padding:5.5rem 1.5rem 4rem;text-align:center;
-  background:var(--cream);
+  background:
+    radial-gradient(ellipse 80% 50% at 12% 18%, rgba(175,150,118,.06) 0%, transparent 100%),
+    radial-gradient(ellipse 65% 45% at 88% 82%, rgba(175,150,118,.055) 0%, transparent 100%),
+    radial-gradient(ellipse 100% 55% at 50% 100%, rgba(237,230,216,.55) 0%, transparent 70%),
+    var(--cream);
 }
 .inv-monogram{
   font-family:var(--script);font-size:clamp(3rem,10vw,5rem);
@@ -267,7 +271,12 @@ body{
 /* ── VESTIMENTA ── */
 #vestimenta{
   position:relative;overflow:hidden;
-  padding:5rem 1.5rem 4rem;text-align:center;background:var(--cream);
+  padding:5rem 1.5rem 4rem;text-align:center;
+  background:
+    radial-gradient(ellipse 75% 50% at 8% 60%, rgba(122,138,110,.05) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 40% at 92% 20%, rgba(175,150,118,.05) 0%, transparent 100%),
+    radial-gradient(ellipse 100% 55% at 50% 0%, rgba(237,230,216,.45) 0%, transparent 70%),
+    var(--cream);
 }
 .vest-sec-pre{
   font-family:var(--cinzel);font-size:.6rem;
@@ -346,35 +355,40 @@ body{
 /* ── RSVP ── */
 #rsvp{
   position:relative;overflow:hidden;
-  padding:5.5rem 1.5rem;text-align:center;background:var(--cream);
+  padding:6.5rem 1.5rem 6rem;text-align:center;
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 25%, rgba(175,150,118,.055) 0%, transparent 100%),
+    radial-gradient(ellipse 65% 45% at 85% 75%, rgba(175,150,118,.05) 0%, transparent 100%),
+    #F9F5EE;
 }
 #rsvp::before{
   content:'';position:absolute;inset:0;
-  background:url('./fotos/foto-09.jpg') center/cover no-repeat;opacity:.05;
+  background:url('./fotos/foto-09.jpg') center/cover no-repeat;opacity:.04;
 }
 .rsvp-inner{position:relative;z-index:1}
 .rsvp-monogram{
   font-family:var(--script);font-size:clamp(2.8rem,8vw,4rem);
-  color:var(--lav-dk);opacity:.7;display:block;margin-bottom:.8rem;
+  color:var(--lav);opacity:.65;display:block;margin-bottom:.6rem;
 }
 .rsvp-title{
-  font-family:var(--cinzel);font-size:clamp(1rem,4vw,1.6rem);
-  font-weight:500;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--dark);margin-bottom:.6rem;
+  font-family:var(--cinzel);font-size:clamp(1rem,4vw,1.55rem);
+  font-weight:500;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--dark);margin-bottom:.7rem;
 }
 .rsvp-sub{
   font-size:.92rem;color:var(--mid);
-  max-width:440px;margin:0 auto .8rem;line-height:1.9;
+  max-width:420px;margin:0 auto 1rem;line-height:2;
 }
 .rsvp-note{
-  font-size:.8rem;color:var(--mid);max-width:400px;
-  margin:0 auto 2rem;font-style:italic;
+  font-size:.8rem;color:var(--mid);max-width:380px;
+  margin:0 auto 2.5rem;font-style:italic;line-height:1.75;
 }
 .rsvp-box{
   max-width:500px;margin:0 auto;
-  background:rgba(255,255,255,.9);border-radius:4px;
-  padding:2.5rem 2rem;
-  box-shadow:0 4px 40px rgba(42,42,62,.1);backdrop-filter:blur(4px);
+  background:rgba(255,255,252,.96);border-radius:3px;
+  padding:3rem 2.5rem;
+  box-shadow:0 1px 4px rgba(42,42,62,.04),0 6px 40px rgba(42,42,62,.07),0 0 0 1px rgba(184,189,207,.2);
+  backdrop-filter:blur(4px);
 }
 .rsvp-field{margin-bottom:1.4rem;text-align:left}
 .rsvp-label{
@@ -498,23 +512,25 @@ footer::before{
 
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
-  <svg class="botanical botanical-l" viewBox="0 0 100 260" fill="none" aria-hidden="true">
-    <path d="M50 250 Q38 185 28 130 Q18 75 40 20" stroke="#8B91B5" stroke-width="1.2" fill="none"/>
-    <ellipse cx="32" cy="105" rx="16" ry="9" transform="rotate(-30 32 105)" fill="#8B91B5"/>
-    <ellipse cx="48" cy="70" rx="13" ry="7" transform="rotate(20 48 70)" fill="#8B91B5"/>
-    <ellipse cx="25" cy="148" rx="18" ry="9" transform="rotate(-45 25 148)" fill="#8B91B5"/>
-    <ellipse cx="44" cy="42" rx="11" ry="5.5" transform="rotate(10 44 42)" fill="#8B91B5" opacity=".7"/>
-    <circle cx="50" cy="22" r="4" fill="#8B91B5" opacity=".65"/>
-    <circle cx="56" cy="30" r="3" fill="#8B91B5" opacity=".5"/>
-    <circle cx="44" cy="28" r="2.5" fill="#8B91B5" opacity=".45"/>
+  <svg class="botanical botanical-l" viewBox="0 0 72 230" fill="none" aria-hidden="true">
+    <path d="M36 222 C33 172 27 138 21 104 C15 70 20 42 35 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
+    <path d="M26 100 C16 93 7 82 5 70 C14 71 24 80 28 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M22 132 C10 124 3 110 3 98 C12 100 22 110 24 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M30 70 C22 60 18 46 20 35 C28 39 33 52 34 65" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M33 44 C27 34 25 22 28 13 C34 17 37 29 37 42" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="35" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
+    <circle cx="40" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
+    <circle cx="29" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
   </svg>
-  <svg class="botanical botanical-r" viewBox="0 0 100 260" fill="none" aria-hidden="true">
-    <path d="M50 250 Q62 185 72 130 Q82 75 60 20" stroke="#8B91B5" stroke-width="1.2" fill="none"/>
-    <ellipse cx="68" cy="105" rx="16" ry="9" transform="rotate(30 68 105)" fill="#8B91B5"/>
-    <ellipse cx="52" cy="70" rx="13" ry="7" transform="rotate(-20 52 70)" fill="#8B91B5"/>
-    <ellipse cx="75" cy="148" rx="18" ry="9" transform="rotate(45 75 148)" fill="#8B91B5"/>
-    <circle cx="50" cy="22" r="4" fill="#8B91B5" opacity=".65"/>
-    <circle cx="44" cy="30" r="3" fill="#8B91B5" opacity=".5"/>
+  <svg class="botanical botanical-r" viewBox="0 0 72 230" fill="none" aria-hidden="true">
+    <path d="M36 222 C39 172 45 138 51 104 C57 70 52 42 37 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
+    <path d="M46 100 C56 93 65 82 67 70 C58 71 48 80 44 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M50 132 C62 124 69 110 69 98 C60 100 50 110 48 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M42 70 C50 60 54 46 52 35 C44 39 39 52 38 65" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M39 44 C45 34 47 22 44 13 C38 17 35 29 35 42" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="37" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
+    <circle cx="32" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
+    <circle cx="43" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
   </svg>
 
   <div class="reveal">
@@ -629,12 +645,23 @@ footer::before{
 
 <!-- ░░ VESTIMENTA ░░ -->
 <section id="vestimenta">
-  <svg class="botanical botanical-l" style="opacity:.1;top:20%" viewBox="0 0 100 260" fill="none" aria-hidden="true">
-    <path d="M50 250 Q38 185 28 130 Q18 75 40 20" stroke="#7A8A6E" stroke-width="1.2" fill="none"/>
-    <ellipse cx="32" cy="105" rx="16" ry="9" transform="rotate(-30 32 105)" fill="#7A8A6E"/>
-    <ellipse cx="48" cy="70" rx="13" ry="7" transform="rotate(20 48 70)" fill="#7A8A6E"/>
-    <ellipse cx="25" cy="148" rx="18" ry="9" transform="rotate(-45 25 148)" fill="#7A8A6E"/>
-    <circle cx="50" cy="22" r="4" fill="#7A8A6E" opacity=".7"/>
+  <svg class="botanical botanical-l" style="opacity:.1;top:22%" viewBox="0 0 72 230" fill="none" aria-hidden="true">
+    <path d="M36 222 C33 172 27 138 21 104 C15 70 20 42 35 16" stroke="#7A8A6E" stroke-width=".85" stroke-linecap="round"/>
+    <path d="M26 100 C16 93 7 82 5 70 C14 71 24 80 28 92" stroke="#7A8A6E" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M22 132 C10 124 3 110 3 98 C12 100 22 110 24 124" stroke="#7A8A6E" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M30 70 C22 60 18 46 20 35 C28 39 33 52 34 65" stroke="#7A8A6E" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M33 44 C27 34 25 22 28 13 C34 17 37 29 37 42" stroke="#7A8A6E" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="35" cy="14" r="2" stroke="#7A8A6E" stroke-width=".75" fill="none"/>
+    <circle cx="40" cy="10" r="1.5" stroke="#7A8A6E" stroke-width=".65" fill="none"/>
+    <circle cx="29" cy="10" r="1.5" stroke="#7A8A6E" stroke-width=".65" fill="none"/>
+  </svg>
+  <svg class="botanical botanical-r" style="opacity:.09;top:55%" viewBox="0 0 72 180" fill="none" aria-hidden="true">
+    <path d="M36 172 C39 132 45 108 51 84 C57 60 52 36 37 14" stroke="#7A8A6E" stroke-width=".8" stroke-linecap="round"/>
+    <path d="M46 80 C56 74 64 64 65 54 C57 55 48 63 44 74" stroke="#7A8A6E" stroke-width=".7" stroke-linecap="round"/>
+    <path d="M50 104 C60 98 67 86 66 76 C58 77 50 87 48 98" stroke="#7A8A6E" stroke-width=".7" stroke-linecap="round"/>
+    <path d="M42 55 C50 46 53 33 50 23 C43 27 39 40 39 52" stroke="#7A8A6E" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="37" cy="12" r="1.8" stroke="#7A8A6E" stroke-width=".7" fill="none"/>
+    <circle cx="43" cy="8" r="1.3" stroke="#7A8A6E" stroke-width=".6" fill="none"/>
   </svg>
   <div style="position:relative;z-index:1" class="reveal">
     <span class="vest-sec-pre">Etiqueta</span>
@@ -703,6 +730,21 @@ footer::before{
 
 <!-- ░░ RSVP ░░ -->
 <section id="rsvp">
+  <svg class="botanical botanical-l" style="opacity:.09;top:30%" viewBox="0 0 72 230" fill="none" aria-hidden="true">
+    <path d="M36 222 C33 172 27 138 21 104 C15 70 20 42 35 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
+    <path d="M26 100 C16 93 7 82 5 70 C14 71 24 80 28 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M22 132 C10 124 3 110 3 98 C12 100 22 110 24 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
+    <path d="M30 70 C22 60 18 46 20 35 C28 39 33 52 34 65" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="35" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
+    <circle cx="40" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
+  </svg>
+  <svg class="botanical botanical-r" style="opacity:.08;top:55%" viewBox="0 0 72 180" fill="none" aria-hidden="true">
+    <path d="M36 172 C39 132 45 108 51 84 C57 60 52 36 37 14" stroke="#8B91B5" stroke-width=".8" stroke-linecap="round"/>
+    <path d="M46 80 C56 74 64 64 65 54 C57 55 48 63 44 74" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
+    <path d="M50 104 C60 98 67 86 66 76 C58 77 50 87 48 98" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
+    <circle cx="37" cy="12" r="1.8" stroke="#8B91B5" stroke-width=".7" fill="none"/>
+    <circle cx="43" cy="8" r="1.3" stroke="#8B91B5" stroke-width=".6" fill="none"/>
+  </svg>
   <div class="rsvp-inner">
     <span class="rsvp-monogram reveal">NJ</span>
     <h2 class="rsvp-title reveal reveal-1">Confirmar Asistencia</h2>
