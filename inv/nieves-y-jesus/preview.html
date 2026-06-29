@@ -221,16 +221,15 @@ body{
   padding:0;text-align:center;
 }
 .s4-header{
-  position:relative;overflow:hidden;
+  position:relative;
   background-color:#b5c4dd;
-  background-image:url('./assets/section-4-corner-tiles.svg');
-  background-size:100% 100%;
-  background-repeat:no-repeat;
   padding:clamp(2rem,5vh,3.5rem) clamp(2.5rem,7vw,7rem);
   min-height:clamp(120px,13.4vw,182px);
   display:flex;align-items:center;justify-content:center;
+  z-index:2;
 }
 .s4-body{
+  position:relative;z-index:2;
   padding:clamp(2.5rem,5vh,4rem) clamp(2rem,5vw,5rem) clamp(3.5rem,7vh,6rem);
 }
 .s4-top{
@@ -250,19 +249,21 @@ body{
 .s4-img-v{width:100%;flex:1;object-fit:cover;display:block;object-position:center 15%}
 .s4-bottom-wrap{margin-top:0}
 .s4-footer{
-  position:relative;overflow:hidden;
+  position:relative;
   background-color:#b5c4dd;
   padding:clamp(2rem,5vh,3.5rem) clamp(2.5rem,7vw,7rem);
   min-height:clamp(120px,13.4vw,182px);
   display:flex;align-items:center;justify-content:center;
+  z-index:2;
 }
-.s4-footer::before{
-  content:'';position:absolute;inset:0;
-  background-image:url('./assets/section-4-corner-tiles.svg');
-  background-size:100% 100%;
-  background-repeat:no-repeat;
-  transform:scaleY(-1);
+.s4-corner-overlay{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
   pointer-events:none;
+  user-select:none;
+  z-index:1;
 }
 
 /* ── GALLERY 2-COL ── */
@@ -1725,6 +1726,7 @@ footer::before{
 
 <!-- ░░ SECTION 4 ░░ -->
 <section id="section4">
+  <img class="s4-corner-overlay" src="./assets/section4/corner.png" alt="" aria-hidden="true" loading="lazy"/>
   <div class="s4-header">
     <p class="s4-top reveal">Y deseamos que compartas<br>este momento especial con nosotros.</p>
   </div>
