@@ -183,7 +183,6 @@ body{
 /* ── GARDEN ── */
 #garden{
   position:relative;min-height:92vh;
-  background:url('./assets/section-3-photo.webp') center 54%/cover no-repeat;
   display:flex;align-items:center;
   padding:clamp(2rem,5vh,4rem) 4rem 4rem clamp(10rem,20vw,16rem);
   overflow:hidden;
@@ -191,8 +190,9 @@ body{
 #garden::before{
   content:'';position:absolute;inset:0;
   background:linear-gradient(to right,rgba(15,14,24,.50) 0%,rgba(15,14,24,.06) 52%,transparent 78%);
+  z-index:1;
 }
-.garden-z{position:relative;z-index:1;max-width:640px}
+.garden-z{position:relative;z-index:2;max-width:640px}
 .garden-text{
   font-family:var(--cinzel);font-size:clamp(1.8rem,4.5vw,3.2rem);
   font-weight:400;letter-spacing:0;text-transform:uppercase;text-align:center;
@@ -202,6 +202,28 @@ body{
 .garden-monogram{
   width:clamp(170px,17vw,240px);display:block;margin:0 auto;
   opacity:.88;filter:drop-shadow(0 2px 12px rgba(0,0,0,.30));
+}
+.s3-bg-layer{
+  position:absolute;inset:0;
+  background:url('./assets/section-3-photo.webp') center 54%/cover no-repeat;
+  z-index:0;
+}
+/* ── GARDEN ANIMATION ── */
+@keyframes s3ClipReveal{
+  from{clip-path:inset(100% 0% 0% 0%);opacity:0.6}
+  to{clip-path:inset(0% 0% 0% 0%);opacity:1}
+}
+@keyframes s3TextReveal{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.s3-anim-photo{clip-path:inset(100% 0% 0% 0%);opacity:0.6}
+.s3-anim-text{opacity:0}
+.s3-anim-photo.s3-visible{animation:s3ClipReveal 1.4s cubic-bezier(0.76,0,0.24,1) 0.1s forwards}
+.s3-anim-text.s3-visible{animation:s3TextReveal 1s cubic-bezier(0.22,1,0.36,1) 0.9s forwards}
+@media(prefers-reduced-motion:reduce){
+  .s3-anim-photo{clip-path:none;opacity:1;animation:none}
+  .s3-anim-text{opacity:1;animation:none}
 }
 
 /* ── LAVENDER BANNER ── */
@@ -1754,7 +1776,8 @@ footer::before{
 
 <!-- ░░ GARDEN ░░ -->
 <section id="garden">
-  <div class="garden-z">
+  <div class="s3-bg-layer s3-anim-photo"></div>
+  <div class="garden-z s3-anim-text">
     <p class="garden-text">El gran día está<br>cada vez más cerca</p>
     <img class="garden-monogram" src="./assets/monograma-nj-white.png" alt="NJ"/>
   </div>
@@ -2444,6 +2467,25 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       }
     });
   }, { threshold: 0.15 });
+
+  targets.forEach(el => observer.observe(el));
+})();
+</script>
+<script>
+(function(){
+  const targets = document.querySelectorAll(
+    '.s3-anim-photo, .s3-anim-text'
+  );
+  if (!targets.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('s3-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
 
   targets.forEach(el => observer.observe(el));
 })();
