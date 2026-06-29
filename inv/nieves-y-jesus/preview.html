@@ -404,8 +404,18 @@ body{
       rgba(10,9,20,.38) 100%
     );
 }
+#venue::after{
+  content:'';position:absolute;
+  top:0;right:0;bottom:0;width:42%;
+  background:linear-gradient(to right,
+    transparent 0%,
+    rgba(14,22,18,.18) 35%,
+    rgba(14,22,18,.42) 100%
+  );
+  pointer-events:none;z-index:1;
+}
 .venue-grid{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   display:grid;grid-template-columns:34% 1fr 1fr;
   align-items:center;width:100%;
   min-height:calc(100svh - clamp(120px,18vh,230px));
@@ -440,82 +450,78 @@ body{
 .venue-tl{display:flex;flex-direction:column;position:relative}
 .venue-tl::before{
   content:'';position:absolute;
-  left:19px;top:22px;bottom:22px;
-  width:1.5px;background:rgba(182,199,233,.40);
+  left:28px;top:28px;bottom:28px;
+  width:2px;
+  background:linear-gradient(to bottom,
+    rgba(212,175,110,.15),
+    rgba(212,175,110,.42),
+    rgba(212,175,110,.15)
+  );
+  z-index:1;
 }
 .vt-item{
   display:flex;align-items:center;gap:clamp(.7rem,1.2vw,1.1rem);
   padding:clamp(.55rem,1.1vh,.85rem) 0;position:relative;
 }
 .vt-node{
-  width:38px;height:38px;flex-shrink:0;border-radius:50%;
-  background:rgba(182,199,233,.10);
-  border:1.5px solid rgba(182,199,233,.52);
+  width:56px;height:56px;flex-shrink:0;border-radius:50%;
+  background:rgba(255,252,245,.10);
+  border:1.5px solid rgba(212,175,110,.45);
+  backdrop-filter:blur(2px);
   display:flex;align-items:center;justify-content:center;
-  position:relative;z-index:1;
+  position:relative;z-index:2;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
+  transition:box-shadow .5s ease,transform .5s ease,border-color .5s ease,background .5s ease;
 }
-.vt-icon{width:26px;height:26px;display:block;object-fit:contain;opacity:1;filter:drop-shadow(0 0 5px rgba(255,235,140,.55))}
+.vt-icon{width:30px;height:30px;display:block;object-fit:contain;opacity:.92;filter:brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,.40))}
 .vt-name{
-  font-family:var(--cinzel);font-size:clamp(.68rem,.95vw,.88rem);
+  font-family:var(--cinzel);font-size:clamp(1rem,1.4vw,1.35rem);
   letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(255,255,255,.92);line-height:1.2;
+  color:#fff;line-height:1.2;
+  text-shadow:0 1px 6px rgba(0,0,0,.55);
 }
 .vt-time{
-  font-family:var(--cinzel);font-size:clamp(.55rem,.75vw,.7rem);
-  letter-spacing:.06em;color:rgba(182,199,233,.72);margin-top:.18rem;
+  font-family:var(--cinzel);font-size:clamp(.82rem,1.1vw,1rem);
+  letter-spacing:.08em;color:rgba(255,255,255,.90);margin-top:.15rem;
+  text-shadow:0 1px 5px rgba(0,0,0,.50);
 }
 #venue .padres-divider-zone{
   position:absolute;left:0;right:0;bottom:0;
   width:100%;height:clamp(130px,18vh,230px);
   display:flex;justify-content:center;align-items:stretch;
-  pointer-events:none;z-index:2;min-height:0;flex:none;
+  pointer-events:none;z-index:3;min-height:0;flex:none;
 }
 #venue .padres-divider{
   width:3px;height:100%;background:#b6c7e9;border-radius:1px;opacity:0.85;
 }
-@keyframes venueLightAscend{
-  0%  {transform:translateY(110px) translateX(0px);opacity:0}
+@keyframes s6SparkRise{
+  0%  {top:calc(100% + 7px);opacity:0}
   8%  {opacity:1}
-  25% {transform:translateY(-50px)  translateX(-3px);opacity:1}
-  50% {transform:translateY(-160px) translateX(3px);opacity:1}
-  75% {transform:translateY(-265px) translateX(-2px);opacity:1}
-  88% {opacity:1}
-  100%{transform:translateY(-355px) translateX(0px);opacity:0}
+  92% {opacity:1}
+  100%{top:-7px;opacity:0}
 }
-@keyframes vtNodePulse{
-  0%,100%{border-color:rgba(182,199,233,.45);box-shadow:none;background:rgba(182,199,233,.10)}
-  50%{
-    border-color:rgba(230,190,80,.98);
-    box-shadow:0 0 14px rgba(230,190,80,.80),0 0 28px rgba(230,190,80,.45),0 0 48px rgba(200,150,40,.25);
-    background:rgba(230,190,80,.22)
-  }
-}
-.venue-tl::after{
-  content:'';position:absolute;
-  left:12px;width:15px;height:130px;
-  background:linear-gradient(to top,
-    transparent 0%,
-    rgba(200,158,55,.32) 12%,
-    rgba(255,205,65,.92) 38%,
-    rgba(255,238,145,1) 50%,
-    rgba(255,205,65,.92) 62%,
-    rgba(200,158,55,.32) 88%,
-    transparent 100%
+.s6-spark{
+  position:absolute;
+  left:21px;
+  top:calc(100% + 7px);
+  width:14px;height:14px;
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,225,160,.95) 0%,
+    rgba(212,175,110,.60) 40%,
+    transparent 75%
   );
-  filter:blur(2.8px);border-radius:8px;
-  box-shadow:
-    0 0 12px rgba(255,210,70,.90),
-    0 0 26px rgba(255,180,50,.55),
-    0 0 48px rgba(200,140,30,.28);
-  bottom:22px;transform:translateY(110px);
+  box-shadow:0 0 16px 6px rgba(255,210,130,.50);
   z-index:3;pointer-events:none;
-  animation:venueLightAscend 4.5s cubic-bezier(0.25,0.46,0.45,0.94) infinite;
 }
-.vt-node{animation:vtNodePulse 4.5s cubic-bezier(0.25,0.46,0.45,0.94) infinite}
-.venue-tl .vt-item:nth-child(1) .vt-node{animation-delay:3.4s}
-.venue-tl .vt-item:nth-child(2) .vt-node{animation-delay:2.5s}
-.venue-tl .vt-item:nth-child(3) .vt-node{animation-delay:1.6s}
-.venue-tl .vt-item:nth-child(4) .vt-node{animation-delay:0.6s}
+.s6-spark.animate{
+  animation:s6SparkRise 6s cubic-bezier(0.45,0,0.55,1) infinite;
+}
+.vt-node.glow{
+  border-color:rgba(255,215,140,.95);
+  box-shadow:0 0 22px 4px rgba(255,205,120,.55),0 2px 12px rgba(0,0,0,.25);
+  transform:scale(1.12);
+}
 
 /* ── VESTIMENTA ── */
 #vestimenta{
@@ -720,6 +726,10 @@ footer::before{
   .clock-digits{font-size:clamp(4rem,5.2vw,6rem)}
   .clock-sep{font-size:clamp(3rem,4vw,4.5rem);height:calc(clamp(4rem,5.2vw,6rem) + 0.16em)}
   .garden-z{margin-top:8rem}
+  .vt-node{width:68px;height:68px}
+  .vt-icon{width:38px;height:38px}
+  .s6-spark{left:27px}
+  .venue-tl::before{left:34px}
 }
 
 /* ── VENUE TABLET ── */
@@ -827,6 +837,10 @@ footer::before{
   .venue-center{align-items:center;text-align:center}
   .venue-tl-wrap{justify-content:center;padding-left:0}
   #venue .padres-divider-zone{height:clamp(90px,14vh,150px)}
+  .vt-node{width:48px;height:48px}
+  .vt-icon{width:26px;height:26px}
+  .s6-spark{left:17px}
+  .venue-tl::before{left:24px}
   .regalo-inner{grid-template-columns:1fr}
   .regalo-quote{display:none}
   .padres-grid{grid-template-columns:1fr;gap:2rem}
@@ -1580,10 +1594,11 @@ footer::before{
 
     <div class="venue-tl-wrap reveal reveal-1">
       <div class="venue-tl">
+        <div class="s6-spark" aria-hidden="true"></div>
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/celebracion.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/celebracion.svg" class="vt-icon" width="30" height="30" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Celebración</p>
@@ -1593,7 +1608,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/cena.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/cena.svg" class="vt-icon" width="30" height="30" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Cena</p>
@@ -1603,7 +1618,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/recepcion.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/recepcion.svg" class="vt-icon" width="30" height="30" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Recepción</p>
@@ -1613,7 +1628,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/ceremonia.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/ceremonia.svg" class="vt-icon" width="30" height="30" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Ceremonia</p>
@@ -2086,6 +2101,39 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
   audio.addEventListener('play',  () => setUI(true));
   audio.addEventListener('pause', () => setUI(false));
 
+})();
+</script>
+
+<script>
+/* ── VENUE TIMELINE SPARK ── */
+(function(){
+  var section = document.querySelector('#venue');
+  var spark   = document.querySelector('#venue .s6-spark');
+  var nodes   = Array.from(document.querySelectorAll('#venue .vt-node'));
+  if (!section || !spark || !nodes.length) return;
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { spark.classList.add('animate'); }
+      else { spark.classList.remove('animate'); nodes.forEach(function(n){ n.classList.remove('glow'); }); }
+    });
+  }, { threshold: 0.25 });
+  io.observe(section);
+
+  function loop(){
+    if (spark.classList.contains('animate')) {
+      var sr = spark.getBoundingClientRect();
+      var sparkY = sr.top + sr.height * 0.5;
+      nodes.forEach(function(node){
+        var nr = node.getBoundingClientRect();
+        var nodeY = nr.top + nr.height * 0.5;
+        if (Math.abs(nodeY - sparkY) < 52) { node.classList.add('glow'); }
+        else { node.classList.remove('glow'); }
+      });
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
 })();
 </script>
 </body>
