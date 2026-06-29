@@ -706,41 +706,71 @@ body{
   position:fixed;inset:0;z-index:9000;
   display:flex;align-items:center;justify-content:center;
   opacity:0;visibility:hidden;
-  transition:opacity .28s ease,visibility .28s ease;
+  transition:opacity .3s ease,visibility .3s ease;
   padding:16px;box-sizing:border-box;
 }
 .rsvp-modal.is-open{opacity:1;visibility:visible}
 .rsvp-modal__backdrop{
   position:absolute;inset:0;
-  background:rgba(23,38,68,.74);
-  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  background:rgba(28,44,82,.5);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   cursor:pointer;
 }
 .rsvp-modal__panel{
   position:relative;z-index:1;
   width:min(840px,100%);
-  max-height:88svh;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 42% at 12% 18%, rgba(175,150,118,.08) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 50% at 88% 82%, rgba(175,150,118,.06) 0%, transparent 100%),
+    radial-gradient(circle at 50% 50%, rgba(181,196,221,.04) 0%, transparent 60%),
+    var(--cream);
+  border-radius:6px;
+  border:1px solid rgba(181,196,221,.32);
+  box-shadow:
+    0 4px 6px rgba(18,32,62,.04),
+    0 20px 70px rgba(18,32,62,.28),
+    0 0 0 1px rgba(181,196,221,.14);
+  transform:scale(.97) translateY(10px);
+  transition:transform .32s cubic-bezier(.22,1,.36,1);
+}
+.rsvp-modal.is-open .rsvp-modal__panel{transform:scale(1) translateY(0)}
+.rsvp-modal__scroll{
   overflow-y:auto;
-  background:#F9F5EE;
-  border-radius:4px;
-  border:1px solid rgba(181,196,221,.28);
-  box-shadow:0 24px 80px rgba(18,32,62,.36),0 0 0 1px rgba(181,196,221,.15);
+  max-height:88svh;
   padding:3.5rem 2.5rem 3rem;
   box-sizing:border-box;
   text-align:center;
 }
+.rsvp-olive{position:absolute;pointer-events:none;z-index:0}
+.rsvp-olive-tr{
+  top:-12px;right:-22px;
+  width:clamp(130px,15vw,200px);
+  transform:rotate(-48deg);transform-origin:center;
+  opacity:.3;
+}
+.rsvp-olive-bl{
+  bottom:-12px;left:-22px;
+  width:clamp(110px,13vw,180px);
+  transform:rotate(14deg);transform-origin:bottom left;
+  opacity:.26;
+}
 .rsvp-modal__close{
-  position:absolute;top:.9rem;right:.9rem;
-  width:2.1rem;height:2.1rem;
-  background:rgba(255,255,252,.92);
-  border:1px solid rgba(181,196,221,.5);
-  border-radius:50%;
-  color:var(--dark);font-size:1rem;line-height:1;
+  position:absolute;top:1rem;right:1rem;z-index:10;
+  width:2rem;height:2rem;
+  background:rgba(245,240,230,.86);
+  border:1px solid rgba(181,196,221,.42);
+  border-radius:3px;
+  color:var(--mid);
   cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:background .18s,border-color .18s;
+  transition:background .18s,border-color .18s,color .18s;
 }
-.rsvp-modal__close:hover{background:var(--lav);border-color:var(--lav-dk)}
+.rsvp-modal__close:hover{
+  background:rgba(181,196,221,.22);
+  border-color:var(--lav-dk);
+  color:var(--dark);
+}
 .rsvp-inner{position:relative;z-index:1}
 .rsvp-monogram{
   width:clamp(70px,18vw,100px);display:block;margin:0 auto .6rem;
@@ -761,39 +791,73 @@ body{
 }
 .rsvp-box{
   max-width:500px;margin:0 auto;
-  background:rgba(255,255,252,.96);border-radius:3px;
-  padding:3rem 2.5rem;
-  box-shadow:0 1px 4px rgba(42,42,62,.04),0 6px 40px rgba(42,42,62,.07),0 0 0 1px rgba(184,189,207,.2);
-  backdrop-filter:blur(4px);
+  background:rgba(255,255,252,.7);
+  border-radius:4px;
+  padding:2.5rem 2rem;
+  box-shadow:0 1px 3px rgba(42,42,62,.04),0 4px 24px rgba(42,42,62,.06),0 0 0 1px rgba(184,189,207,.2);
 }
 .rsvp-field{margin-bottom:1.4rem;text-align:left}
 .rsvp-label{
   font-family:var(--cinzel);font-size:.56rem;
   letter-spacing:.2em;text-transform:uppercase;
-  color:var(--mid);margin-bottom:.5rem;display:block;
+  color:var(--mid);margin-bottom:.6rem;display:block;
 }
 .rsvp-input,.rsvp-textarea{
   width:100%;padding:.75rem 1rem;
-  border:1px solid var(--lav);border-radius:2px;
+  border:1px solid rgba(181,196,221,.55);border-radius:3px;
   font-family:var(--body);font-size:.95rem;color:var(--dark);
-  background:#FAFAF7;outline:none;transition:border-color .2s;
+  background:rgba(250,250,247,.9);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  box-sizing:border-box;
 }
-.rsvp-input:focus,.rsvp-textarea:focus{border-color:var(--lav-dk)}
+.rsvp-input:focus,.rsvp-textarea:focus{
+  border-color:var(--lav-dk);
+  box-shadow:0 0 0 3px rgba(139,145,181,.12);
+}
 .rsvp-textarea{resize:vertical;min-height:80px}
-.rsvp-radio-group{display:flex;flex-direction:column;gap:.65rem;margin-top:.3rem}
-.rsvp-radio{display:flex;align-items:center;gap:.65rem;cursor:pointer}
-.rsvp-radio input{accent-color:var(--lav-dk);width:15px;height:15px;cursor:pointer}
+.rsvp-radio-group{display:flex;flex-direction:column;gap:.5rem;margin-top:.4rem}
+.rsvp-radio{
+  position:relative;
+  display:flex;align-items:center;
+  gap:.75rem;cursor:pointer;
+  padding:.55rem .85rem;
+  border:1px solid rgba(181,196,221,.3);
+  border-radius:3px;
+  transition:background .18s,border-color .18s;
+  text-align:left;
+}
+.rsvp-radio:hover{background:rgba(181,196,221,.08);border-color:rgba(181,196,221,.55)}
+.rsvp-radio input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.rsvp-radio__dot{
+  width:14px;height:14px;flex-shrink:0;
+  border:1.5px solid var(--lav);
+  border-radius:50%;
+  position:relative;
+  transition:border-color .18s;
+}
+.rsvp-radio__dot::after{
+  content:'';
+  position:absolute;inset:2.5px;
+  border-radius:50%;
+  background:var(--lav-dk);
+  opacity:0;transform:scale(0);
+  transition:opacity .18s,transform .2s cubic-bezier(.22,1,.36,1);
+}
+.rsvp-radio:has(input:checked) .rsvp-radio__dot{border-color:var(--lav-dk)}
+.rsvp-radio:has(input:checked) .rsvp-radio__dot::after{opacity:1;transform:scale(1)}
+.rsvp-radio:has(input:checked){background:rgba(139,145,181,.07);border-color:rgba(139,145,181,.4)}
 .rsvp-radio span{font-family:var(--body);font-size:.92rem;color:var(--dark)}
 .rsvp-submit{
-  width:100%;padding:.9rem;
-  background:var(--lav-dk);color:#fff;
-  font-family:var(--cinzel);font-size:.62rem;
-  letter-spacing:.25em;text-transform:uppercase;
-  border:none;border-radius:2px;cursor:pointer;
-  transition:background .2s;margin-top:.5rem;
+  width:100%;padding:.95rem;
+  background:var(--dark);color:rgba(245,240,230,.95);
+  font-family:var(--cinzel);font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  border:none;border-radius:3px;cursor:pointer;
+  transition:background .22s,letter-spacing .22s;
+  margin-top:.8rem;
 }
-.rsvp-submit:hover{background:var(--dark)}
-.rsvp-submit:disabled{background:var(--lav);cursor:not-allowed}
+.rsvp-submit:hover{background:var(--lav-dk);letter-spacing:.36em}
+.rsvp-submit:disabled{background:var(--lav);cursor:not-allowed;letter-spacing:.3em}
 .rsvp-success{text-align:center;padding:2rem 1rem;display:none}
 .rsvp-success .check{font-size:2.5rem;margin-bottom:1rem;display:block}
 .rsvp-success p{
@@ -978,7 +1042,10 @@ footer::before{
   .gal-blue    {grid-column:1/-1;grid-row:auto;aspect-ratio:16/10;object-position:center 35%}
   .rsvp-box{padding:2rem 1.25rem}
   .rsvp-modal{padding:8px;align-items:flex-end}
-  .rsvp-modal__panel{width:100%;max-height:92svh;border-radius:8px 8px 0 0;padding:2rem 1.25rem 2.5rem}
+  .rsvp-modal__panel{width:100%;border-radius:8px 8px 0 0}
+  .rsvp-modal__scroll{max-height:92svh;padding:2rem 1.25rem 2.5rem}
+  .rsvp-olive-tr{width:100px;right:-15px;top:-8px;opacity:.2}
+  .rsvp-olive-bl{width:88px;left:-15px;bottom:-8px;opacity:.18}
 }
 /* ── SECTION 4 MOBILE ── */
 @media(max-width:1023px){
@@ -1854,65 +1921,110 @@ footer::before{
 <div id="rsvp-modal" class="rsvp-modal" aria-hidden="true">
   <div class="rsvp-modal__backdrop" data-close-rsvp></div>
   <div class="rsvp-modal__panel" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
-    <button class="rsvp-modal__close" type="button" aria-label="Cerrar formulario" data-close-rsvp>&#x2715;</button>
-    <div class="rsvp-inner">
-      <img class="rsvp-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
-      <h2 class="rsvp-title" id="rsvp-modal-title">Confirmar Asistencia</h2>
-      <p class="rsvp-sub">
-        ¡Qué alegría compartir este momento contigo!<br>
-        Ayúdanos a preparar cada detalle confirmando antes del <strong>27 de octubre de 2026</strong>.
-      </p>
-      <p class="rsvp-note">
-        Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
-      </p>
-      <div class="rsvp-box">
-        <div id="rsvp-form">
-          <div class="rsvp-field">
-            <label class="rsvp-label">Nombre y Apellido *</label>
-            <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
-          </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">WhatsApp o teléfono *</label>
-            <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
-          </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
-            <div class="rsvp-radio-group">
-              <label class="rsvp-radio"><input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/><span>Sí, ¡ahí estaré! 🎉</span></label>
-              <label class="rsvp-radio"><input type="radio" name="asistencia" value="Lamentablemente no podré asistir"/><span>Lamentablemente no podré asistir 🙁</span></label>
+    <img class="rsvp-olive rsvp-olive-tr" src="./assets/olivo-superior-derecho.svg" alt="" aria-hidden="true"/>
+    <img class="rsvp-olive rsvp-olive-bl" src="./assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true"/>
+    <button class="rsvp-modal__close" type="button" aria-label="Cerrar formulario" data-close-rsvp>
+      <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+        <line x1="1" y1="1" x2="10" y2="10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="10" y1="1" x2="1" y2="10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="rsvp-modal__scroll">
+      <div class="rsvp-inner">
+        <img class="rsvp-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
+        <h2 class="rsvp-title" id="rsvp-modal-title">Confirmar Asistencia</h2>
+        <p class="rsvp-sub">
+          ¡Qué alegría compartir este momento contigo!<br>
+          Ayúdanos a preparar cada detalle confirmando antes del <strong>27 de octubre de 2026</strong>.
+        </p>
+        <p class="rsvp-note">
+          Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
+        </p>
+        <div class="rsvp-box">
+          <div id="rsvp-form">
+            <div class="rsvp-field">
+              <label class="rsvp-label">Nombre y Apellido *</label>
+              <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
             </div>
-          </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">¿Cuántos pases confirmas?</label>
-            <div class="rsvp-radio-group">
-              <label class="rsvp-radio"><input type="radio" name="pases" value="1"/><span>1 Pase</span></label>
-              <label class="rsvp-radio"><input type="radio" name="pases" value="2"/><span>2 Pases</span></label>
-              <label class="rsvp-radio"><input type="radio" name="pases" value="3"/><span>3 Pases</span></label>
+            <div class="rsvp-field">
+              <label class="rsvp-label">WhatsApp o teléfono *</label>
+              <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
             </div>
-          </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">Restricciones alimenticias o alergias</label>
-            <div class="rsvp-radio-group">
-              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Ninguna"/><span>Ninguna</span></label>
-              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Vegetariano / Vegano"/><span>Vegetariano / Vegano</span></label>
-              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Intolerante al gluten / Lactosa"/><span>Intolerante al gluten / Lactosa</span></label>
-              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Alergia a mariscos / frutos secos"/><span>Alergia a mariscos / frutos secos</span></label>
+            <div class="rsvp-field">
+              <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
+              <div class="rsvp-radio-group">
+                <label class="rsvp-radio">
+                  <input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Sí, ¡ahí estaré!</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="asistencia" value="Lamentablemente no podré asistir"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Lamentablemente no podré asistir</span>
+                </label>
+              </div>
             </div>
+            <div class="rsvp-field">
+              <label class="rsvp-label">¿Cuántos pases confirmas?</label>
+              <div class="rsvp-radio-group">
+                <label class="rsvp-radio">
+                  <input type="radio" name="pases" value="1"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>1 Pase</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="pases" value="2"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>2 Pases</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="pases" value="3"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>3 Pases</span>
+                </label>
+              </div>
+            </div>
+            <div class="rsvp-field">
+              <label class="rsvp-label">Restricciones alimenticias o alergias</label>
+              <div class="rsvp-radio-group">
+                <label class="rsvp-radio">
+                  <input type="radio" name="restricciones" value="Ninguna"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Ninguna</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="restricciones" value="Vegetariano / Vegano"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Vegetariano / Vegano</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="restricciones" value="Intolerante al gluten / Lactosa"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Intolerante al gluten / Lactosa</span>
+                </label>
+                <label class="rsvp-radio">
+                  <input type="radio" name="restricciones" value="Alergia a mariscos / frutos secos"/>
+                  <span class="rsvp-radio__dot"></span>
+                  <span>Alergia a mariscos / frutos secos</span>
+                </label>
+              </div>
+            </div>
+            <div class="rsvp-field">
+              <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
+              <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
+            </div>
+            <div class="rsvp-field">
+              <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
+              <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
+            </div>
+            <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
+            <button class="rsvp-submit" id="rsvp-submit">Confirmar asistencia →</button>
           </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
-            <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
+          <div class="rsvp-success" id="rsvp-success">
+            <span class="check">💌</span>
+            <p>¡Gracias por confirmar!<br><br>Nieves &amp; Jesús han recibido tu respuesta.<br>Nos emociona saber que estarás presente.</p>
           </div>
-          <div class="rsvp-field">
-            <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
-            <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
-          </div>
-          <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
-          <button class="rsvp-submit" id="rsvp-submit">Confirmar asistencia →</button>
-        </div>
-        <div class="rsvp-success" id="rsvp-success">
-          <span class="check">💌</span>
-          <p>¡Gracias por confirmar!<br><br>Nieves &amp; Jesús han recibido tu respuesta.<br>Nos emociona saber que estarás presente.</p>
         </div>
       </div>
     </div>
