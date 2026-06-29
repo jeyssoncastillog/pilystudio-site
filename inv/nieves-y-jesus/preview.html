@@ -941,8 +941,13 @@ footer::before{
   .regalo-quote{display:none}
   .padres-grid{grid-template-columns:1fr;gap:2rem}
   .vest-grid{grid-template-columns:1fr}
-  .gal-grid{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .gal-night,.gal-sofa,.gal-coffee,.gal-portrait,.gal-blue{grid-column:auto;grid-row:auto;aspect-ratio:3/4}
+  .gal-grid{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:3px}
+  .gal-night,.gal-sofa,.gal-coffee,.gal-portrait{grid-column:auto;grid-row:auto;aspect-ratio:3/4}
+  .gal-night   {object-position:center center}
+  .gal-sofa    {object-position:center center}
+  .gal-coffee  {object-position:center center}
+  .gal-portrait{object-position:center 35%}
+  .gal-blue    {grid-column:1/-1;grid-row:auto;aspect-ratio:16/10;object-position:center 35%}
   .rsvp-box{padding:2rem 1.25rem}
 }
 /* ── SECTION 4 MOBILE ── */
