@@ -90,7 +90,7 @@ body{
 /* ── INVITATION ── */
 #invitacion{
   position:relative;overflow:hidden;
-  min-height:100svh;padding:clamp(1.5rem,4vh,3.5rem) 2rem;text-align:center;
+  min-height:82svh;padding:clamp(1.5rem,4vh,3.5rem) 2rem;text-align:center;
   display:flex;flex-direction:column;align-items:center;
   background:var(--cream);
 }
@@ -140,15 +140,29 @@ body{
 .clock-num{
   font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,5.2rem);
   font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
+  display:inline-block;
 }
 .clock-sep{
   font-family:var(--cinzel);font-size:clamp(1.5rem,3.8vw,4rem);
   color:rgba(182,199,233,.5);line-height:1;padding-bottom:.15rem;
 }
 .clock-label{
-  font-family:var(--cinzel);font-size:clamp(.5rem,.6vw,.7rem);
-  letter-spacing:.25em;text-transform:uppercase;
-  color:#b6c7e9;margin-top:.6rem;opacity:.82;
+  font-family:var(--cinzel);font-size:clamp(.7rem,1vw,.92rem);
+  letter-spacing:.22em;text-transform:uppercase;
+  color:#b6c7e9;margin-top:.4rem;opacity:.7;
+}
+.clock-num-wrap{
+  overflow:hidden;
+  display:inline-block;
+  position:relative;
+  line-height:1;
+}
+@keyframes njRollUp{
+  0%{transform:translateY(45%);opacity:0}
+  100%{transform:translateY(0);opacity:1}
+}
+.clock-num.rolling{
+  animation:njRollUp 0.45s cubic-bezier(0.22,1,0.36,1);
 }
 
 /* ── GARDEN ── */
@@ -690,7 +704,7 @@ footer::before{
 @media(max-width:900px){
   .inv-olive-tr{width:140px;right:-80px;top:0;transform:rotate(-35deg);opacity:.5}
   .inv-olive-bl{width:clamp(150px,35vw,240px);opacity:.7}
-  #invitacion{padding:2rem 1.5rem}
+  #invitacion{padding:2rem 1.5rem;min-height:88svh}
 }
 @media(max-width:520px){
   .inv-olive-tr{width:clamp(150px,44vw,210px);top:1.5rem;right:-1rem;transform:rotate(-22deg);transform-origin:top right;opacity:.75}
@@ -1369,13 +1383,13 @@ footer::before{
     <p class="inv-text">Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.</p>
     <p class="inv-date">Viernes, 27 de noviembre de 2026.</p>
     <div class="clock">
-      <div class="clock-unit"><span class="clock-num" id="cd-d">000</span><span class="clock-label">Días</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-d">000</span></div><span class="clock-label">Días</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><span class="clock-num" id="cd-h">00</span><span class="clock-label">Hrs.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-h">00</span></div><span class="clock-label">Hrs.</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><span class="clock-num" id="cd-m">00</span><span class="clock-label">Mins.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-m">00</span></div><span class="clock-label">Mins.</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><span class="clock-num" id="cd-s">00</span><span class="clock-label">Seg.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-s">00</span></div><span class="clock-label">Seg.</span></div>
     </div>
   </div>
   <div class="padres-divider-zone">
@@ -1667,12 +1681,19 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
 ;(function(){
   const t=new Date('2026-11-27T16:00:00')
   function pad(n,d){return String(n).padStart(d||2,'0')}
+  function updateUnit(el,newVal){
+    if(el.textContent===newVal)return
+    el.textContent=newVal
+    el.classList.remove('rolling')
+    void el.offsetWidth
+    el.classList.add('rolling')
+  }
   function tick(){
     const diff=t-Date.now();if(diff<=0)return
-    document.getElementById('cd-d').textContent=pad(Math.floor(diff/86400000),3)
-    document.getElementById('cd-h').textContent=pad(Math.floor(diff%86400000/3600000))
-    document.getElementById('cd-m').textContent=pad(Math.floor(diff%3600000/60000))
-    document.getElementById('cd-s').textContent=pad(Math.floor(diff%60000/1000))
+    updateUnit(document.getElementById('cd-d'),pad(Math.floor(diff/86400000),3))
+    updateUnit(document.getElementById('cd-h'),pad(Math.floor(diff%86400000/3600000)))
+    updateUnit(document.getElementById('cd-m'),pad(Math.floor(diff%3600000/60000)))
+    updateUnit(document.getElementById('cd-s'),pad(Math.floor(diff%60000/1000)))
   }
   tick();setInterval(tick,1000)
 })()
