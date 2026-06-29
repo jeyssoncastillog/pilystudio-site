@@ -946,20 +946,20 @@ footer::before{
 /* ── SECTION 4 LAPTOP ── */
 @media(min-width:1024px) and (max-width:1599px){
   #section4{
-    min-height:100svh;
+    min-height:130svh;
     display:flex;flex-direction:column;
   }
   .s4-header,.s4-footer{
     flex-shrink:0;
-    min-height:100px;
-    padding:0.75rem clamp(1rem,3vw,3rem);
+    min-height:150px;
+    padding:2rem clamp(1.5rem,3.5vw,4rem);
   }
   .s4-body{
     flex:1;
     display:flex;flex-direction:column;justify-content:center;
-    padding:0.5rem 0.75rem;
+    padding:2rem 0.75rem;
   }
-  .s4-gallery{width:min(88vw,1160px);max-width:none;margin:0 auto;margin-bottom:0;gap:8px;height:calc(100svh - 210px);align-items:stretch}
+  .s4-gallery{width:min(88vw,1160px);max-width:none;margin:0 auto;margin-bottom:0;gap:8px;height:calc(100svh - 170px);align-items:stretch}
   .s4-left{display:flex;flex-direction:column;gap:8px;height:100%;overflow:hidden}
   .s4-img-h{aspect-ratio:unset;flex:1;min-height:0;width:100%;object-fit:cover}
   .s4-right{height:100%;overflow:hidden}
@@ -968,12 +968,13 @@ footer::before{
 
 /* ── SECTION 4 SHORT VIEWPORT ── */
 @media(min-width:1024px) and (max-width:1599px) and (max-height:780px){
+  #section4{min-height:100svh}
   .s4-header,.s4-footer{
-    min-height:80px;
-    padding:0.5rem clamp(1rem,3vw,3rem);
+    min-height:90px;
+    padding:1rem clamp(1rem,3vw,3rem);
   }
-  .s4-body{padding:0.25rem 0.75rem}
-  .s4-gallery{height:calc(100svh - 178px);align-items:stretch}
+  .s4-body{padding:1.5rem 0.75rem}
+  .s4-gallery{height:calc(100svh - 198px);align-items:stretch}
   .s4-left{display:flex;flex-direction:column;height:100%;overflow:hidden}
   .s4-img-h{flex:1;min-height:0;width:100%;object-fit:cover}
   .s4-right{height:100%;overflow:hidden}
@@ -982,10 +983,10 @@ footer::before{
 
 /* ── SECTION 4 LARGE SCREEN ── */
 @media(min-width:1600px){
-  #section4{min-height:100svh;display:flex;flex-direction:column}
+  #section4{min-height:120svh;display:flex;flex-direction:column}
   .s4-header,.s4-footer{flex-shrink:0}
-  .s4-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0.5rem 1rem}
-  .s4-gallery{width:min(84vw,1600px);max-width:none;margin:0 auto;margin-bottom:0;gap:12px;height:calc(100svh - 380px);align-items:stretch}
+  .s4-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2.5rem 1rem}
+  .s4-gallery{width:min(84vw,1600px);max-width:none;margin:0 auto;margin-bottom:0;gap:12px;height:calc(100svh - 360px);align-items:stretch}
   .s4-left{display:flex;flex-direction:column;gap:12px;height:100%;overflow:hidden}
   .s4-img-h{aspect-ratio:unset;flex:1;min-height:0;width:100%;object-fit:cover}
   .s4-right{height:100%;overflow:hidden}
@@ -1737,12 +1738,12 @@ footer::before{
           <img class="s4-img-h" src="./fotos/foto-05.jpg" alt="Nieves y Jesús" loading="lazy" style="object-position:center 25%"/>
         </span>
         <span class="s4-img-wrap">
-          <img class="s4-img-h" src="./fotos/foto-06.jpg" alt="Nieves con ramo fucsias" loading="lazy" style="object-position:center 80%"/>
+          <img class="s4-img-h" src="./fotos/foto-06.jpg" alt="Nieves con ramo fucsias" loading="lazy" style="object-position:center 65%"/>
         </span>
       </div>
       <div class="s4-right">
         <span class="s4-img-wrap">
-          <img class="s4-img-v" src="./fotos/foto-03.jpg" alt="Nieves y Jesús retrato" loading="lazy" style="object-position:center 18%"/>
+          <img class="s4-img-v" src="./fotos/foto-03.jpg" alt="Nieves y Jesús retrato" loading="lazy" style="object-position:center 22%"/>
         </span>
       </div>
     </div>
