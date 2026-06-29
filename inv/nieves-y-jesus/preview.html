@@ -261,11 +261,11 @@ body{
 }
 .seal-spark{
   position:absolute;top:50%;left:50%;
-  width:6px;height:6px;border-radius:50%;
+  width:9px;height:9px;border-radius:50%;
   background:radial-gradient(circle,rgba(255,235,160,1) 0%,rgba(212,175,110,0.8) 60%,transparent 100%);
   box-shadow:0 0 6px 2px rgba(255,220,120,0.6);
   pointer-events:none;z-index:20;
-  animation:sealSpark 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+  animation:sealSpark 1.1s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 
 /* ── PADRES ANIMATIONS ── */
@@ -2389,26 +2389,26 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           const spark = document.createElement('span');
           spark.className = 'seal-spark';
           const angle = (360 / 12) * i;
-          const dist  = 28 + Math.random() * 22;
+          const dist  = 45 + Math.random() * 35;
           const delay = Math.random() * 80;
           spark.style.setProperty('--angle', angle + 'deg');
           spark.style.setProperty('--dist',  dist + 'px');
           spark.style.animationDelay = delay + 'ms';
           seal.appendChild(spark);
-          setTimeout(() => spark.remove(), 700 + delay);
+          setTimeout(() => spark.remove(), 1300 + delay);
         }
       }
 
       if (seal) {
         seal.addEventListener('click', () => {
           burstSparks();
-          setTimeout(openEnvelope, 120);
+          setTimeout(openEnvelope, 350);
         });
       }
       setTimeout(() => {
         overlay.addEventListener('click', () => {
           burstSparks();
-          setTimeout(openEnvelope, 120);
+          setTimeout(openEnvelope, 350);
         }, { once: true });
       }, 2200);
     }
