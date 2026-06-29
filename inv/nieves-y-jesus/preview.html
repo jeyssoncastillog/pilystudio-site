@@ -136,7 +136,7 @@ body{
   margin:clamp(1.5rem,3vh,2.5rem) 0 clamp(1.2rem,2.5vh,2rem);
 }
 .clock{display:flex;gap:clamp(.5rem,1.4vw,1.4rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
-.clock-unit{display:flex;flex-direction:column;align-items:center}
+.clock-unit{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 .clock-num{
   font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,5.2rem);
   font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
@@ -150,12 +150,15 @@ body{
   font-family:var(--cinzel);font-size:clamp(.7rem,1vw,.92rem);
   letter-spacing:.22em;text-transform:uppercase;
   color:#b6c7e9;margin-top:.4rem;opacity:.7;
+  text-align:center;width:100%;
 }
 .clock-num-wrap{
   overflow:hidden;
-  display:inline-block;
-  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   line-height:1;
+  padding:.08em 0;
 }
 @keyframes njRollUp{
   0%{transform:translateY(45%);opacity:0}
