@@ -135,16 +135,27 @@ body{
   letter-spacing:.08em;color:#3a434a;line-height:1.2;
   margin:clamp(1.5rem,3vh,2.5rem) 0 clamp(1.2rem,2.5vh,2rem);
 }
-.clock{display:flex;gap:clamp(.5rem,1.4vw,1.4rem);justify-content:center;align-items:flex-end;margin-bottom:1.5rem}
-.clock-unit{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
-.clock-num{
+.clock{display:flex;gap:clamp(.5rem,1.4vw,1.4rem);justify-content:center;align-items:flex-start;margin-bottom:1.5rem}
+.clock-unit{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-width:clamp(3rem,7vw,6rem)}
+.clock-digits{
   font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,5.2rem);
   font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
-  display:inline-block;
+  display:inline-flex;
+}
+.clock-digit{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  font-family:var(--cinzel);
+  font-size:inherit;
+  line-height:1;
 }
 .clock-sep{
   font-family:var(--cinzel);font-size:clamp(1.5rem,3.8vw,4rem);
-  color:rgba(182,199,233,.5);line-height:1;padding-bottom:.15rem;
+  color:rgba(182,199,233,.5);line-height:1;
+  display:flex;align-items:center;
+  height:clamp(2.6rem,5vw,5.2rem);
+  padding-bottom:0;
 }
 .clock-label{
   font-family:var(--cinzel);font-size:clamp(.7rem,1vw,.92rem);
@@ -164,7 +175,7 @@ body{
   0%{transform:translateY(45%);opacity:0}
   100%{transform:translateY(0);opacity:1}
 }
-.clock-num.rolling{
+.clock-digit.rolling{
   animation:njRollUp 0.45s cubic-bezier(0.22,1,0.36,1);
 }
 
@@ -633,8 +644,8 @@ footer::before{
   .inv-content{flex:1 1 auto;padding-bottom:clamp(130px,18vh,230px)}
   .inv-monogram{width:clamp(160px,12vw,200px)}
   .inv-text,.inv-date{font-size:clamp(1.3rem,1.7vw,1.75rem)}
-  .clock-num{font-size:clamp(4rem,5.2vw,6rem)}
-  .clock-sep{font-size:clamp(3rem,4vw,4.5rem)}
+  .clock-digits{font-size:clamp(4rem,5.2vw,6rem)}
+  .clock-sep{font-size:clamp(3rem,4vw,4.5rem);height:clamp(4rem,5.2vw,6rem)}
   .garden-z{margin-top:8rem}
 }
 
@@ -1386,13 +1397,13 @@ footer::before{
     <p class="inv-text">Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.</p>
     <p class="inv-date">Viernes, 27 de noviembre de 2026.</p>
     <div class="clock">
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-d">000</span></div><span class="clock-label">Días</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-d"></span></div><span class="clock-label">Días</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-h">00</span></div><span class="clock-label">Hrs.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-h"></span></div><span class="clock-label">Hrs.</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-m">00</span></div><span class="clock-label">Mins.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-m"></span></div><span class="clock-label">Mins.</span></div>
       <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-num" id="cd-s">00</span></div><span class="clock-label">Seg.</span></div>
+      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-s"></span></div><span class="clock-label">Seg.</span></div>
     </div>
   </div>
   <div class="padres-divider-zone">
@@ -1684,19 +1695,34 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
 ;(function(){
   const t=new Date('2026-11-27T16:00:00')
   function pad(n,d){return String(n).padStart(d||2,'0')}
-  function updateUnit(el,newVal){
-    if(el.textContent===newVal)return
-    el.textContent=newVal
-    el.classList.remove('rolling')
-    void el.offsetWidth
-    el.classList.add('rolling')
+  function renderDigits(container,str){
+    const existing=container.children
+    if(existing.length!==str.length){
+      container.innerHTML=''
+      for(let i=0;i<str.length;i++){
+        const s=document.createElement('span')
+        s.className='clock-digit'
+        s.textContent=str[i]
+        container.appendChild(s)
+      }
+      return
+    }
+    for(let i=0;i<str.length;i++){
+      const span=existing[i]
+      if(span.textContent!==str[i]){
+        span.textContent=str[i]
+        span.classList.remove('rolling')
+        void span.offsetWidth
+        span.classList.add('rolling')
+      }
+    }
   }
   function tick(){
     const diff=t-Date.now();if(diff<=0)return
-    updateUnit(document.getElementById('cd-d'),pad(Math.floor(diff/86400000),3))
-    updateUnit(document.getElementById('cd-h'),pad(Math.floor(diff%86400000/3600000)))
-    updateUnit(document.getElementById('cd-m'),pad(Math.floor(diff%3600000/60000)))
-    updateUnit(document.getElementById('cd-s'),pad(Math.floor(diff%60000/1000)))
+    renderDigits(document.getElementById('cd-d'),pad(Math.floor(diff/86400000),3))
+    renderDigits(document.getElementById('cd-h'),pad(Math.floor(diff%86400000/3600000)))
+    renderDigits(document.getElementById('cd-m'),pad(Math.floor(diff%3600000/60000)))
+    renderDigits(document.getElementById('cd-s'),pad(Math.floor(diff%60000/1000)))
   }
   tick();setInterval(tick,1000)
 })()
