@@ -530,7 +530,7 @@ body{
 #vestimenta{
   position:relative;overflow:hidden;
   background:var(--cream);
-  padding:clamp(6rem,13vh,9rem) clamp(1.5rem,5vw,3rem) 0;
+  padding:clamp(8rem,15vh,11rem) clamp(1.5rem,5vw,3rem) 0;
   display:flex;flex-direction:column;align-items:center;
   min-height:100svh;text-align:center;
 }
@@ -575,14 +575,14 @@ body{
   filter:drop-shadow(0 2px 14px rgba(0,0,0,.08));
 }
 .vest-role{
-  font-family:var(--cinzel);font-size:.8rem;
-  letter-spacing:.32em;text-transform:uppercase;
-  color:#b6c7e9;font-weight:600;display:block;margin-bottom:.7rem;
+  font-family:var(--cinzel);font-size:1rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:#b6c7e9;font-weight:600;display:block;margin-bottom:.8rem;
 }
-.vest-text{font-size:1rem;color:#3a434a;line-height:1.9;margin-bottom:clamp(1.2rem,2.5vh,2rem)}
+.vest-text{font-size:1rem;color:#3a434a;line-height:1.9;text-align:justify;margin-bottom:clamp(1.2rem,2.5vh,2rem)}
 .vest-palette{display:flex;gap:.6rem;margin-bottom:clamp(.8rem,1.5vh,1.2rem)}
 .swatch{width:32px;height:32px;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,.12)}
-.vest-note{font-size:.87rem;color:var(--mid);line-height:1.95;font-style:italic;text-align:left}
+.vest-note{font-size:.87rem;color:var(--mid);line-height:1.95;font-style:italic;text-align:justify}
 .vest-note strong{color:#3a434a;font-weight:700;font-style:normal}
 .vest-btn{
   display:inline-flex;align-items:center;gap:.5rem;
@@ -619,6 +619,7 @@ body{
   .vest-col-left{order:1;align-items:center;text-align:center;width:100%}
   .vest-col-right{order:2;align-items:center;text-align:center;width:100%}
   .vest-outfit{max-width:clamp(180px,60vw,260px)}
+  .vest-text{text-align:center}
   .vest-note{text-align:center}
   .vest-palette{justify-content:center}
   #vestimenta .padres-divider-zone{height:clamp(80px,12vh,140px)}
