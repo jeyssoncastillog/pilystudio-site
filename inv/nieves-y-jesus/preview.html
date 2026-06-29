@@ -292,7 +292,7 @@ body{
   opacity:0.75;
 }
 #padres-section .padres-content{
-  transform:translateY(clamp(2rem,6vh,4.5rem));
+  margin-bottom:clamp(80px,14vh,180px);
 }
 #padres-section .padres-divider-zone{
   position:absolute;
@@ -313,6 +313,9 @@ body{
   background:#b6c7e9;
   border-radius:1px;
   opacity:0.85;
+}
+@media(min-width:768px){
+  #padres-section{justify-content:center;}
 }
 
 /* ── VENUE ── */
