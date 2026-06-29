@@ -210,14 +210,14 @@ body{
 }
 /* ── GARDEN ANIMATION ── */
 @keyframes s3ClipReveal{
-  from{clip-path:inset(100% 0% 0% 0%);opacity:0.6}
+  from{clip-path:inset(0% 0% 100% 0%);opacity:0.6}
   to{clip-path:inset(0% 0% 0% 0%);opacity:1}
 }
 @keyframes s3TextReveal{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:translateY(0)}
 }
-.s3-anim-photo{clip-path:inset(100% 0% 0% 0%);opacity:0.6}
+.s3-anim-photo{clip-path:inset(0% 0% 100% 0%);opacity:0.6}
 .s3-anim-text{opacity:0}
 .s3-anim-photo.s3-visible{animation:s3ClipReveal 1.4s cubic-bezier(0.76,0,0.24,1) 0.1s forwards}
 .s3-anim-text.s3-visible{animation:s3TextReveal 1s cubic-bezier(0.22,1,0.36,1) 0.9s forwards}
@@ -2473,21 +2473,42 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
 </script>
 <script>
 (function(){
-  const targets = document.querySelectorAll(
-    '.s3-anim-photo, .s3-anim-text'
-  );
-  if (!targets.length) return;
+  const section = document.getElementById('garden');
+
+  const photoEl = document.querySelector('.s3-anim-photo');
+  const textEl  = document.querySelector('.s3-anim-text');
+
+  if (!photoEl) return;
+
+  function triggerS3() {
+    if (photoEl) photoEl.classList.add('s3-visible');
+    if (textEl)  textEl.classList.add('s3-visible');
+  }
+
+  // Observe the section wrapper (has real layout height)
+  const target = section || photoEl;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('s3-visible');
+        triggerS3();
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, {
+    threshold: 0,
+    rootMargin: '0px 0px -5% 0px'
+  });
 
-  targets.forEach(el => observer.observe(el));
+  observer.observe(target);
+
+  // Fallback: if already in viewport on load, trigger immediately
+  setTimeout(() => {
+    const rect = (section || photoEl).getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      triggerS3();
+    }
+  }, 300);
 })();
 </script>
 </body>
