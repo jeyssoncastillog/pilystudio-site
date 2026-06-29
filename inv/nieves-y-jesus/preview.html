@@ -396,10 +396,10 @@ body{
 #venue::before{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:linear-gradient(to right,
-    rgba(10,9,20,.06) 0%,
-    rgba(10,9,20,.28) 22%,
-    rgba(10,9,20,.60) 38%,
-    rgba(10,9,20,.72) 100%
+    rgba(10,9,20,.00) 0%,
+    rgba(10,9,20,.08) 18%,
+    rgba(10,9,20,.36) 36%,
+    rgba(10,9,20,.50) 100%
   );
 }
 .venue-grid{
@@ -411,7 +411,7 @@ body{
   gap:clamp(1.5rem,3vw,3.5rem);
 }
 .venue-left-pad{}
-.venue-center{display:flex;flex-direction:column;align-items:flex-start}
+.venue-center{display:flex;flex-direction:column;align-items:center;text-align:center}
 .venue-monogram{
   width:clamp(72px,7.5vw,115px);display:block;
   margin-bottom:clamp(.8rem,1.5vh,1.5rem);
@@ -421,7 +421,7 @@ body{
   font-family:var(--cinzel);font-size:clamp(1.1rem,2vw,2rem);
   font-weight:500;letter-spacing:.14em;text-transform:uppercase;
   color:#fff;line-height:1.38;margin-bottom:clamp(1.2rem,2.5vh,2.2rem);
-  text-shadow:0 2px 14px rgba(0,0,0,.55);
+  text-shadow:0 2px 14px rgba(0,0,0,.55);text-align:center;
 }
 .venue-btn{
   display:inline-flex;align-items:center;gap:.55rem;
@@ -452,7 +452,7 @@ body{
   display:flex;align-items:center;justify-content:center;
   position:relative;z-index:1;
 }
-.vt-icon{width:22px;height:22px;display:block;object-fit:contain;filter:drop-shadow(0 0 3px rgba(182,199,233,.35));opacity:.88}
+.vt-icon{width:26px;height:26px;display:block;object-fit:contain;opacity:1}
 .vt-name{
   font-family:var(--cinzel);font-size:clamp(.68rem,.95vw,.88rem);
   letter-spacing:.18em;text-transform:uppercase;
@@ -472,34 +472,36 @@ body{
   width:3px;height:100%;background:#b6c7e9;border-radius:1px;opacity:0.85;
 }
 @keyframes venueLightAscend{
-  0%{transform:translateY(80px);opacity:0}
-  10%{opacity:1}
-  90%{opacity:1}
-  100%{transform:translateY(-320px);opacity:0}
+  0%{transform:translateY(100px);opacity:0}
+  8%{opacity:1}
+  88%{opacity:1}
+  100%{transform:translateY(-340px);opacity:0}
 }
 @keyframes vtNodePulse{
-  0%,100%{border-color:rgba(182,199,233,.52);box-shadow:none}
-  50%{border-color:rgba(182,199,233,.9);box-shadow:0 0 10px rgba(182,199,233,.40),0 0 22px rgba(182,199,233,.15)}
+  0%,100%{border-color:rgba(182,199,233,.45);box-shadow:none;background:rgba(182,199,233,.10)}
+  50%{border-color:rgba(220,185,90,.95);box-shadow:0 0 16px rgba(220,185,90,.70),0 0 32px rgba(220,185,90,.35);background:rgba(220,185,90,.18)}
 }
 .venue-tl::after{
   content:'';position:absolute;
-  left:17px;width:5px;height:70px;
+  left:12px;width:15px;height:120px;
   background:linear-gradient(to top,
     transparent 0%,
-    rgba(182,199,233,.2) 25%,
-    rgba(255,255,255,.72) 50%,
-    rgba(182,199,233,.2) 75%,
+    rgba(200,158,55,.30) 16%,
+    rgba(255,210,80,.88) 42%,
+    rgba(255,235,140,1) 50%,
+    rgba(255,210,80,.88) 58%,
+    rgba(200,158,55,.30) 84%,
     transparent 100%
   );
-  filter:blur(2.5px);border-radius:3px;
-  bottom:22px;transform:translateY(80px);
+  filter:blur(4.5px);border-radius:8px;
+  bottom:22px;transform:translateY(100px);
   z-index:3;pointer-events:none;
-  animation:venueLightAscend 3.8s ease-in-out infinite;
+  animation:venueLightAscend 4s cubic-bezier(0.25,0.46,0.45,0.94) infinite;
 }
-.vt-node{animation:vtNodePulse 3.8s ease-in-out infinite}
-.venue-tl .vt-item:nth-child(1) .vt-node{animation-delay:2.9s}
-.venue-tl .vt-item:nth-child(2) .vt-node{animation-delay:2.1s}
-.venue-tl .vt-item:nth-child(3) .vt-node{animation-delay:1.3s}
+.vt-node{animation:vtNodePulse 4s cubic-bezier(0.25,0.46,0.45,0.94) infinite}
+.venue-tl .vt-item:nth-child(1) .vt-node{animation-delay:3.0s}
+.venue-tl .vt-item:nth-child(2) .vt-node{animation-delay:2.2s}
+.venue-tl .vt-item:nth-child(3) .vt-node{animation-delay:1.4s}
 .venue-tl .vt-item:nth-child(4) .vt-node{animation-delay:0.5s}
 
 /* ── VESTIMENTA ── */
@@ -711,7 +713,7 @@ footer::before{
 @media(min-width:641px) and (max-width:1023px){
   .venue-grid{grid-template-columns:1fr 1fr;padding:3.5rem 2.5rem 2.5rem;gap:2rem}
   .venue-left-pad{display:none}
-  .venue-center{align-items:flex-start}
+  .venue-center{align-items:center}
 }
 
 /* ── INVITACIÓN + VENUE LAPTOP ── */
@@ -1568,7 +1570,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/celebracion.svg" class="vt-icon" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/celebracion.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Celebración</p>
@@ -1578,7 +1580,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/cena.svg" class="vt-icon" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/cena.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Cena</p>
@@ -1588,7 +1590,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/recepcion.svg" class="vt-icon" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/recepcion.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Recepción</p>
@@ -1598,7 +1600,7 @@ footer::before{
 
         <div class="vt-item">
           <div class="vt-node">
-            <img src="./assets/timeline/ceremonia.svg" class="vt-icon" alt="" aria-hidden="true"/>
+            <img src="./assets/timeline/ceremonia.svg" class="vt-icon" width="26" height="26" alt="" aria-hidden="true"/>
           </div>
           <div class="vt-text">
             <p class="vt-name">Ceremonia</p>
