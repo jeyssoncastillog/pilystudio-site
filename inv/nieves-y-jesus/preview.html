@@ -701,18 +701,46 @@ body{
 }
 
 /* ── RSVP ── */
-#rsvp{
-  position:relative;overflow:hidden;
-  padding:6.5rem 1.5rem 6rem;text-align:center;
-  background:
-    radial-gradient(ellipse 80% 50% at 15% 25%, rgba(175,150,118,.055) 0%, transparent 100%),
-    radial-gradient(ellipse 65% 45% at 85% 75%, rgba(175,150,118,.05) 0%, transparent 100%),
-    #F9F5EE;
+/* ── RSVP MODAL ── */
+.rsvp-modal{
+  position:fixed;inset:0;z-index:9000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:opacity .28s ease,visibility .28s ease;
+  padding:16px;box-sizing:border-box;
 }
-#rsvp::before{
-  content:'';position:absolute;inset:0;
-  background:url('./fotos/foto-09.jpg') center/cover no-repeat;opacity:.04;
+.rsvp-modal.is-open{opacity:1;visibility:visible}
+.rsvp-modal__backdrop{
+  position:absolute;inset:0;
+  background:rgba(23,38,68,.74);
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  cursor:pointer;
 }
+.rsvp-modal__panel{
+  position:relative;z-index:1;
+  width:min(840px,100%);
+  max-height:88svh;
+  overflow-y:auto;
+  background:#F9F5EE;
+  border-radius:4px;
+  border:1px solid rgba(181,196,221,.28);
+  box-shadow:0 24px 80px rgba(18,32,62,.36),0 0 0 1px rgba(181,196,221,.15);
+  padding:3.5rem 2.5rem 3rem;
+  box-sizing:border-box;
+  text-align:center;
+}
+.rsvp-modal__close{
+  position:absolute;top:.9rem;right:.9rem;
+  width:2.1rem;height:2.1rem;
+  background:rgba(255,255,252,.92);
+  border:1px solid rgba(181,196,221,.5);
+  border-radius:50%;
+  color:var(--dark);font-size:1rem;line-height:1;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s,border-color .18s;
+}
+.rsvp-modal__close:hover{background:var(--lav);border-color:var(--lav-dk)}
 .rsvp-inner{position:relative;z-index:1}
 .rsvp-monogram{
   width:clamp(70px,18vw,100px);display:block;margin:0 auto .6rem;
@@ -949,6 +977,8 @@ footer::before{
   .gal-portrait{object-position:center 35%}
   .gal-blue    {grid-column:1/-1;grid-row:auto;aspect-ratio:16/10;object-position:center 35%}
   .rsvp-box{padding:2rem 1.25rem}
+  .rsvp-modal{padding:8px;align-items:flex-end}
+  .rsvp-modal__panel{width:100%;max-height:92svh;border-radius:8px 8px 0 0;padding:2rem 1.25rem 2.5rem}
 }
 /* ── SECTION 4 MOBILE ── */
 @media(max-width:1023px){
@@ -1820,85 +1850,74 @@ footer::before{
   </div>
 </section>
 
-<!-- ░░ RSVP ░░ -->
-<section id="rsvp">
-  <svg class="botanical botanical-l" style="opacity:.09;top:30%" viewBox="0 0 72 230" fill="none" aria-hidden="true">
-    <path d="M36 222 C33 172 27 138 21 104 C15 70 20 42 35 16" stroke="#8B91B5" stroke-width=".85" stroke-linecap="round"/>
-    <path d="M26 100 C16 93 7 82 5 70 C14 71 24 80 28 92" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M22 132 C10 124 3 110 3 98 C12 100 22 110 24 124" stroke="#8B91B5" stroke-width=".75" stroke-linecap="round"/>
-    <path d="M30 70 C22 60 18 46 20 35 C28 39 33 52 34 65" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
-    <circle cx="35" cy="14" r="2" stroke="#8B91B5" stroke-width=".75" fill="none"/>
-    <circle cx="40" cy="10" r="1.5" stroke="#8B91B5" stroke-width=".65" fill="none"/>
-  </svg>
-  <svg class="botanical botanical-r" style="opacity:.08;top:55%" viewBox="0 0 72 180" fill="none" aria-hidden="true">
-    <path d="M36 172 C39 132 45 108 51 84 C57 60 52 36 37 14" stroke="#8B91B5" stroke-width=".8" stroke-linecap="round"/>
-    <path d="M46 80 C56 74 64 64 65 54 C57 55 48 63 44 74" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
-    <path d="M50 104 C60 98 67 86 66 76 C58 77 50 87 48 98" stroke="#8B91B5" stroke-width=".7" stroke-linecap="round"/>
-    <circle cx="37" cy="12" r="1.8" stroke="#8B91B5" stroke-width=".7" fill="none"/>
-    <circle cx="43" cy="8" r="1.3" stroke="#8B91B5" stroke-width=".6" fill="none"/>
-  </svg>
-  <div class="rsvp-inner">
-    <img class="rsvp-monogram reveal" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
-    <h2 class="rsvp-title reveal reveal-1">Confirmar Asistencia</h2>
-    <p class="rsvp-sub reveal reveal-1">
-      ¡Qué alegría compartir este momento contigo!<br>
-      Ayúdanos a preparar cada detalle confirmando antes del <strong>27 de octubre de 2026</strong>.
-    </p>
-    <p class="rsvp-note reveal reveal-2">
-      Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
-    </p>
-    <div class="rsvp-box reveal reveal-1">
-      <div id="rsvp-form">
-        <div class="rsvp-field">
-          <label class="rsvp-label">Nombre y Apellido *</label>
-          <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
-        </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">WhatsApp o teléfono *</label>
-          <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
-        </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
-          <div class="rsvp-radio-group">
-            <label class="rsvp-radio"><input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/><span>Sí, ¡ahí estaré! 🎉</span></label>
-            <label class="rsvp-radio"><input type="radio" name="asistencia" value="Lamentablemente no podré asistir"/><span>Lamentablemente no podré asistir 🙁</span></label>
+<!-- ░░ RSVP MODAL ░░ -->
+<div id="rsvp-modal" class="rsvp-modal" aria-hidden="true">
+  <div class="rsvp-modal__backdrop" data-close-rsvp></div>
+  <div class="rsvp-modal__panel" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
+    <button class="rsvp-modal__close" type="button" aria-label="Cerrar formulario" data-close-rsvp>&#x2715;</button>
+    <div class="rsvp-inner">
+      <img class="rsvp-monogram" src="./assets/monograma-nj-lavender.png" alt="NJ"/>
+      <h2 class="rsvp-title" id="rsvp-modal-title">Confirmar Asistencia</h2>
+      <p class="rsvp-sub">
+        ¡Qué alegría compartir este momento contigo!<br>
+        Ayúdanos a preparar cada detalle confirmando antes del <strong>27 de octubre de 2026</strong>.
+      </p>
+      <p class="rsvp-note">
+        Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
+      </p>
+      <div class="rsvp-box">
+        <div id="rsvp-form">
+          <div class="rsvp-field">
+            <label class="rsvp-label">Nombre y Apellido *</label>
+            <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
           </div>
-        </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">¿Cuántos pases confirmas?</label>
-          <div class="rsvp-radio-group">
-            <label class="rsvp-radio"><input type="radio" name="pases" value="1"/><span>1 Pase</span></label>
-            <label class="rsvp-radio"><input type="radio" name="pases" value="2"/><span>2 Pases</span></label>
-            <label class="rsvp-radio"><input type="radio" name="pases" value="3"/><span>3 Pases</span></label>
+          <div class="rsvp-field">
+            <label class="rsvp-label">WhatsApp o teléfono *</label>
+            <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
           </div>
-        </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">Restricciones alimenticias o alergias</label>
-          <div class="rsvp-radio-group">
-            <label class="rsvp-radio"><input type="radio" name="restricciones" value="Ninguna"/><span>Ninguna</span></label>
-            <label class="rsvp-radio"><input type="radio" name="restricciones" value="Vegetariano / Vegano"/><span>Vegetariano / Vegano</span></label>
-            <label class="rsvp-radio"><input type="radio" name="restricciones" value="Intolerante al gluten / Lactosa"/><span>Intolerante al gluten / Lactosa</span></label>
-            <label class="rsvp-radio"><input type="radio" name="restricciones" value="Alergia a mariscos / frutos secos"/><span>Alergia a mariscos / frutos secos</span></label>
+          <div class="rsvp-field">
+            <label class="rsvp-label">¿Nos acompañarás en nuestro gran día? *</label>
+            <div class="rsvp-radio-group">
+              <label class="rsvp-radio"><input type="radio" name="asistencia" value="Sí, ¡ahí estaré!"/><span>Sí, ¡ahí estaré! 🎉</span></label>
+              <label class="rsvp-radio"><input type="radio" name="asistencia" value="Lamentablemente no podré asistir"/><span>Lamentablemente no podré asistir 🙁</span></label>
+            </div>
           </div>
+          <div class="rsvp-field">
+            <label class="rsvp-label">¿Cuántos pases confirmas?</label>
+            <div class="rsvp-radio-group">
+              <label class="rsvp-radio"><input type="radio" name="pases" value="1"/><span>1 Pase</span></label>
+              <label class="rsvp-radio"><input type="radio" name="pases" value="2"/><span>2 Pases</span></label>
+              <label class="rsvp-radio"><input type="radio" name="pases" value="3"/><span>3 Pases</span></label>
+            </div>
+          </div>
+          <div class="rsvp-field">
+            <label class="rsvp-label">Restricciones alimenticias o alergias</label>
+            <div class="rsvp-radio-group">
+              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Ninguna"/><span>Ninguna</span></label>
+              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Vegetariano / Vegano"/><span>Vegetariano / Vegano</span></label>
+              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Intolerante al gluten / Lactosa"/><span>Intolerante al gluten / Lactosa</span></label>
+              <label class="rsvp-radio"><input type="radio" name="restricciones" value="Alergia a mariscos / frutos secos"/><span>Alergia a mariscos / frutos secos</span></label>
+            </div>
+          </div>
+          <div class="rsvp-field">
+            <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
+            <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
+          </div>
+          <div class="rsvp-field">
+            <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
+            <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
+          </div>
+          <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
+          <button class="rsvp-submit" id="rsvp-submit">Confirmar asistencia →</button>
         </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
-          <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
+        <div class="rsvp-success" id="rsvp-success">
+          <span class="check">💌</span>
+          <p>¡Gracias por confirmar!<br><br>Nieves &amp; Jesús han recibido tu respuesta.<br>Nos emociona saber que estarás presente.</p>
         </div>
-        <div class="rsvp-field">
-          <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
-          <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
-        </div>
-        <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
-        <button class="rsvp-submit" id="rsvp-submit">Confirmar asistencia →</button>
-      </div>
-      <div class="rsvp-success" id="rsvp-success">
-        <span class="check">💌</span>
-        <p>¡Gracias por confirmar!<br><br>Nieves &amp; Jesús han recibido tu respuesta.<br>Nos emociona saber que estarás presente.</p>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ░░ FOOTER ░░ -->
 <footer>
@@ -1984,6 +2003,42 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
       errorEl.textContent='Ocurrió un error. Por favor intenta de nuevo.'
       errorEl.style.display='block'
     }
+  })
+})()
+
+// RSVP MODAL
+;(function(){
+  const modal=document.getElementById('rsvp-modal')
+  if(!modal) return
+  let savedY=0
+  function openModal(){
+    savedY=window.scrollY
+    modal.classList.add('is-open')
+    modal.setAttribute('aria-hidden','false')
+    document.body.style.cssText='overflow:hidden;position:fixed;top:-'+savedY+'px;width:100%'
+    if(history.replaceState) history.replaceState(null,'','#rsvp')
+    const first=modal.querySelector('.rsvp-input')
+    if(first) setTimeout(function(){first.focus()},60)
+  }
+  function closeModal(){
+    modal.classList.remove('is-open')
+    modal.setAttribute('aria-hidden','true')
+    document.body.style.cssText=''
+    window.scrollTo(0,savedY)
+    if(history.replaceState) history.replaceState(null,'',location.pathname+location.search)
+  }
+  document.querySelectorAll('a[href="#rsvp"],[data-open-rsvp]').forEach(function(el){
+    el.addEventListener('click',function(e){e.preventDefault();openModal()})
+  })
+  document.querySelectorAll('[data-close-rsvp]').forEach(function(el){
+    el.addEventListener('click',closeModal)
+  })
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&modal.classList.contains('is-open')) closeModal()
+  })
+  if(location.hash==='#rsvp') openModal()
+  window.addEventListener('hashchange',function(){
+    if(location.hash==='#rsvp') openModal()
   })
 })()
 
