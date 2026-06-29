@@ -294,6 +294,26 @@ body{
 #padres-section .padres-content{
   margin-bottom:clamp(80px,14vh,180px);
 }
+#invitacion .padres-divider-zone{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  width:100%;
+  height:clamp(130px,18vh,230px);
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  pointer-events:none;
+  z-index:2;
+  min-height:0;
+  flex:none;
+}
+#invitacion .padres-divider{
+  width:3px;
+  height:100%;
+  background:#b6c7e9;
+  border-radius:1px;
+  opacity:0.85;
+}
 #padres-section .padres-divider-zone{
   position:absolute;
   left:0;right:0;bottom:0;
@@ -593,7 +613,7 @@ footer::before{
 
 /* ── LARGE SCREEN ── */
 @media(min-width:1600px){
-  .inv-content{flex:1 1 auto}
+  .inv-content{flex:1 1 auto;padding-bottom:clamp(130px,18vh,230px)}
   .inv-monogram{width:clamp(160px,12vw,200px)}
   .inv-text,.inv-date{font-size:clamp(1.3rem,1.7vw,1.75rem)}
   .clock-num{font-size:clamp(4rem,5.2vw,6rem)}
