@@ -873,13 +873,14 @@ body{
 
 /* ── FOOTER ── */
 footer{
-  background:var(--lav);
+  background:url('./fotos/foto-13.jpg') center/cover no-repeat;
   padding:4.5rem 1.5rem;text-align:center;
   position:relative;overflow:hidden;
 }
 footer::before{
   content:'';position:absolute;inset:0;
-  background:url('./fotos/foto-13.jpg') center/cover no-repeat;opacity:.1;
+  background:rgba(0,0,0,0.31);
+  z-index:0;pointer-events:none;
 }
 .footer-inner{position:relative;z-index:1}
 .footer-monogram{
@@ -2044,7 +2045,6 @@ footer::before{
       Con el corazón lleno de amor y gratitud.<br>
       Esperamos compartir este día contigo.
     </p>
-    <p class="footer-brand">Invitación digital por PilyStudio · pilystudio.net</p>
   </div>
 </footer>
 
