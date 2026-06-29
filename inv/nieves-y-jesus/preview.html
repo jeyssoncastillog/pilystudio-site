@@ -713,10 +713,12 @@ body{
   min-height:100svh;
   padding:clamp(6rem,10vh,9rem) clamp(1.5rem,5vw,4rem);
   display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.31);
+  background:url('./fotos/foto-08.jpg') center 35%/cover no-repeat;
 }
 #regalo::before{
-  display:none;
+  content:'';position:absolute;inset:0;
+  background:rgba(0,0,0,0.31);
+  z-index:0;pointer-events:none;
 }
 .regalo-inner{
   position:relative;z-index:1;
