@@ -564,15 +564,15 @@ body{
   line-height:1.2;color:#3a434a;margin-bottom:clamp(2rem,5vh,4rem);
 }
 .vest-main-grid{
-  display:grid;grid-template-columns:1fr clamp(180px,20vw,280px) 1fr;
+  display:grid;grid-template-columns:1fr clamp(220px,22vw,340px) 1fr;
   gap:clamp(1.5rem,3vw,3.5rem);width:100%;align-items:start;
 }
 .vest-col-left{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
-.vest-col-center{display:flex;align-items:flex-start;justify-content:center}
+.vest-col-center{display:flex;align-items:center;justify-content:center}
 .vest-col-right{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
 .vest-outfit{
   width:100%;display:block;object-fit:contain;
-  filter:drop-shadow(0 2px 14px rgba(0,0,0,.08));
+  background:transparent;border:none;box-shadow:none;filter:none;
 }
 .vest-role{
   font-family:var(--cinzel);font-size:1rem;
@@ -606,7 +606,7 @@ body{
 }
 @media(min-width:1600px){
   .vest-inner{max-width:1300px}
-  .vest-main-grid{grid-template-columns:1fr clamp(240px,22vw,340px) 1fr}
+  .vest-main-grid{grid-template-columns:1fr clamp(260px,24vw,400px) 1fr}
 }
 @media(min-width:1024px) and (max-width:1599px){
   .vest-inner{max-width:960px}
@@ -1721,7 +1721,7 @@ footer::before{
       </div>
 
       <div class="vest-col-center">
-        <img class="vest-outfit" src="./assets/vestimenta/vestimenta-outfits.svg" alt="Vestimenta — Tropical Chic" loading="lazy"/>
+        <img class="vest-outfit" src="./assets/vestimenta/vestimenta-outfits.png" alt="Vestimenta — Tropical Chic" loading="lazy"/>
       </div>
 
       <div class="vest-col-right">
