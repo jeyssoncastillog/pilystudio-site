@@ -254,6 +254,20 @@ body{
   .h2-anim-mono,.h2-anim-p1,.h2-anim-p2,.h2-anim-date{opacity:1;transform:none;filter:none;animation:none}
 }
 
+/* ── SEAL SPARK BURST ── */
+@keyframes sealSpark{
+  0%{transform:translate(-50%,-50%) rotate(var(--angle)) translateX(0) scale(1);opacity:1}
+  100%{transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--dist)) scale(0);opacity:0}
+}
+.seal-spark{
+  position:absolute;top:50%;left:50%;
+  width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,235,160,1) 0%,rgba(212,175,110,0.8) 60%,transparent 100%);
+  box-shadow:0 0 6px 2px rgba(255,220,120,0.6);
+  pointer-events:none;z-index:20;
+  animation:sealSpark 0.55s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+
 /* ── PADRES ANIMATIONS ── */
 @keyframes charReveal{
   from{opacity:0;transform:translateY(12px)}
@@ -2369,9 +2383,33 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     if (seen) {
       overlay.classList.add('nj-env-hidden');
     } else {
-      seal && seal.addEventListener('click', openEnvelope);
+      function burstSparks() {
+        if (!seal) return;
+        for (let i = 0; i < 12; i++) {
+          const spark = document.createElement('span');
+          spark.className = 'seal-spark';
+          const angle = (360 / 12) * i;
+          const dist  = 28 + Math.random() * 22;
+          const delay = Math.random() * 80;
+          spark.style.setProperty('--angle', angle + 'deg');
+          spark.style.setProperty('--dist',  dist + 'px');
+          spark.style.animationDelay = delay + 'ms';
+          seal.appendChild(spark);
+          setTimeout(() => spark.remove(), 700 + delay);
+        }
+      }
+
+      if (seal) {
+        seal.addEventListener('click', () => {
+          burstSparks();
+          setTimeout(openEnvelope, 120);
+        });
+      }
       setTimeout(() => {
-        overlay.addEventListener('click', openEnvelope, { once: true });
+        overlay.addEventListener('click', () => {
+          burstSparks();
+          setTimeout(openEnvelope, 120);
+        }, { once: true });
       }, 2200);
     }
   }
