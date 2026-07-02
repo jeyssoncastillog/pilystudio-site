@@ -501,11 +501,17 @@ body{
   color:#fff;font-family:var(--cinzel);
   font-size:clamp(.78rem,.9vw,1rem);letter-spacing:.20em;text-transform:uppercase;
   border-radius:2px;text-decoration:none;
-  background:rgba(181,196,221,.18);transition:background .22s,border-color .22s;
+  background:rgba(181,196,221,.18);
+  transition:background .22s,border-color .22s,transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s ease,letter-spacing .35s ease;
   text-shadow:0 1px 8px rgba(0,0,0,.40);
   margin-left:auto;margin-right:auto;
+  position:relative;overflow:hidden;
 }
 .venue-btn:hover{background:rgba(181,196,221,.30);border-color:rgba(181,196,221,.9)}
+@media(hover:hover){
+  .venue-btn:hover{transform:translateY(-2px);letter-spacing:.23em;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+}
+.venue-btn:active{transform:translateY(0) scale(0.98)}
 .venue-tl-wrap{display:flex;justify-content:flex-start;padding-left:clamp(.5rem,1.5vw,2rem)}
 .venue-tl{display:flex;flex-direction:column;position:relative}
 .venue-tl::before{
@@ -906,10 +912,15 @@ body{
   font-family:var(--cinzel);font-size:.6rem;
   letter-spacing:.3em;text-transform:uppercase;
   border:none;border-radius:3px;cursor:pointer;
-  transition:background .22s,letter-spacing .22s;
+  transition:background .22s,letter-spacing .22s,transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s ease;
   margin-top:.8rem;
+  position:relative;overflow:hidden;
 }
 .rsvp-submit:hover{background:var(--lav-dk);letter-spacing:.36em}
+@media(hover:hover){
+  .rsvp-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+}
+.rsvp-submit:active:not(:disabled){transform:translateY(0) scale(0.98)}
 .rsvp-submit:disabled{background:var(--lav);cursor:not-allowed;letter-spacing:.3em}
 .rsvp-success{text-align:center;padding:2rem 1rem;display:none}
 .rsvp-success .check{font-size:2.5rem;margin-bottom:1rem;display:block}
@@ -1401,6 +1412,67 @@ footer{
   }
 }
 
+/* ── GRAND OPENING — bloom + hero settle + hero breathing ── */
+@keyframes njGoldenBloom {
+  0%   { opacity:0; transform:translate(-50%,-50%) scale(0.3); }
+  35%  { opacity:0.85; }
+  100% { opacity:0; transform:translate(-50%,-50%) scale(3.2); }
+}
+.nj-bloom {
+  position:absolute; top:50%; left:50%;
+  width:220px; height:220px; border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,240,200,0.9) 0%,
+    rgba(212,175,110,0.45) 45%, transparent 72%);
+  pointer-events:none; z-index:15;
+  animation:njGoldenBloom 1.3s ease-out forwards;
+}
+@keyframes njSettle {
+  from { transform:scale(1.04); }
+  to   { transform:scale(1); }
+}
+.nj-hero-settle {
+  animation:njSettle 1.6s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+#hero.hero-bg-breathing::before {
+  animation:s4Breathe 26s ease-in-out 2s infinite;
+}
+
+/* ── BUTTON MICRO-INTERACTIONS ── */
+@keyframes btnShimmer {
+  0%  { left:-100%; }
+  100%{ left:200%; }
+}
+.venue-btn::after, .rsvp-submit::after {
+  content:'';
+  position:absolute; top:0; left:-100%;
+  width:50%; height:100%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.22) 50%,transparent 60%);
+  pointer-events:none; opacity:0;
+}
+.venue-btn.btn-shine::after, .rsvp-submit.btn-shine::after {
+  opacity:1;
+  animation:btnShimmer 0.9s ease-out forwards;
+}
+
+/* ── PLAYER ENTRANCE ── */
+@keyframes njPlayerIn {
+  from { opacity:0; transform:translateY(16px) scale(0.9); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+.nj-player-in {
+  animation:njPlayerIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+/* ── REDUCED MOTION — all new animations ── */
+@media(prefers-reduced-motion:reduce) {
+  .nj-bloom { animation:none; opacity:0; }
+  .nj-hero-settle { animation:none; transform:none; }
+  #hero.hero-bg-breathing::before { animation:none; }
+  .venue-btn.btn-shine::after, .rsvp-submit.btn-shine::after { animation:none; opacity:0; }
+  .nj-player-in { animation:none; opacity:1; transform:none; }
+}
+
 /* ── Player container ── */
 #nj-player {
   position: fixed;
@@ -1411,6 +1483,8 @@ footer{
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
 }
 
 /* ── Toggle button ── */
@@ -2134,10 +2208,31 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     document.body.scrollTop = 0;
     if (!envelope) return;
     envelope.classList.add('open');
+    // Golden bloom burst
+    const bloom = document.createElement('div');
+    bloom.className = 'nj-bloom';
+    envelope.appendChild(bloom);
+    setTimeout(() => bloom.remove(), 1400);
     setTimeout(startMusic, 700);
     setTimeout(() => {
       overlay.classList.add('nj-env-hiding');
       setTimeout(() => overlay.classList.add('nj-env-hidden'), 980);
+      // Hero scale-settle as overlay fades
+      const hero = document.getElementById('hero');
+      if (hero) {
+        hero.classList.add('nj-hero-settle', 'hero-bg-breathing');
+        hero.addEventListener('animationend', function onSettle(e) {
+          if (e.animationName === 'njSettle') {
+            hero.classList.remove('nj-hero-settle');
+            hero.removeEventListener('animationend', onSettle);
+          }
+        });
+      }
+      // Player entrance
+      setTimeout(() => {
+        const player = document.getElementById('nj-player');
+        if (player) player.classList.add('nj-player-in');
+      }, 300);
     }, 1500);
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
   }
@@ -2147,6 +2242,12 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     try { seen = !!sessionStorage.getItem(SESSION_KEY); } catch(e) {}
     if (seen) {
       overlay.classList.add('nj-env-hidden');
+      const hero = document.getElementById('hero');
+      if (hero) hero.classList.add('hero-bg-breathing');
+      setTimeout(() => {
+        const player = document.getElementById('nj-player');
+        if (player) player.classList.add('nj-player-in');
+      }, 600);
     } else {
       function burstSparks() {
         if (!seal) return;
@@ -2404,6 +2505,35 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
 
     observer.observe(block);
   });
+})();
+</script>
+<script>
+/* ── BTN-SHINE: one-time shimmer when button enters viewport ── */
+(function(){
+  const btns = document.querySelectorAll('.venue-btn');
+  if (!btns.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('btn-shine');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  btns.forEach(b => io.observe(b));
+  // rsvp-submit: shimmer on first modal open
+  let rsvpShone = false;
+  const rsvpModal = document.getElementById('rsvp-modal');
+  const rsvpSubmit = document.getElementById('rsvp-submit');
+  if (rsvpModal && rsvpSubmit) {
+    const mo = new MutationObserver(() => {
+      if (!rsvpShone && rsvpModal.classList.contains('is-open')) {
+        rsvpShone = true;
+        setTimeout(() => rsvpSubmit.classList.add('btn-shine'), 400);
+      }
+    });
+    mo.observe(rsvpModal, { attributes: true, attributeFilter: ['class'] });
+  }
 })();
 </script>
 <script>
