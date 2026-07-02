@@ -9,7 +9,11 @@
 <title>Nieves &amp; Jesús — ¡Nos casamos!</title>
 <meta name="description" content="Nieves &amp; Jesús — La vita è bella; ¡nos casamos! Viernes 27 de noviembre de 2026."/>
 <meta property="og:title" content="Nieves &amp; Jesús — ¡Nos casamos!"/>
-<meta property="og:image" content="./fotos/foto-01.jpg"/>
+<meta property="og:description" content="Viernes 27 de noviembre de 2026 · Acompáñanos en este día tan especial. Confirma tu asistencia."/>
+<meta property="og:image" content="https://www.pilystudio.net/inv/nieves-y-jesus/fotos/foto-03.jpg"/>
+<meta property="og:url" content="https://www.pilystudio.net/inv/nieves-y-jesus/"/>
+<meta property="og:type" content="website"/>
+<link rel="icon" href="/inv/nieves-y-jesus/assets/monograma-nj-navy.png" type="image/png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
@@ -1627,6 +1631,14 @@ footer{
 @media(prefers-reduced-motion:reduce){
   .reveal{transition:none;opacity:1;transform:none}
 }
+@media (prefers-reduced-motion: reduce) {
+  .clock-digit.rolling { animation: none !important; }
+  .seal-spark { display: none !important; }
+  .s6-spark { display: none !important; animation: none !important; }
+  #nj-envelope { animation: njEnvEntrance 0.01s forwards !important; }
+  #nj-env-cta { animation: none !important; opacity: 0.7 !important; }
+  #nj-player-btn.playing .nj-bar { animation: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1881,6 +1893,7 @@ footer{
     <div class="regalo-text">
       <h3 class="regalo-h">Contar con tu presencia es nuestro mejor regalo.</h3>
       <p class="regalo-sub">Si desean hacernos un obsequio, lo recibiremos con mucho cariño a través de las siguientes cuentas:</p>
+<!-- BANK DATA — PENDING REAL INFO FROM PILY
       <p class="banco-name">Banco XXX — Titular</p>
       <div class="banco-info">
         <b>Nieves Almonte Álvarez</b><br>
@@ -1889,6 +1902,7 @@ footer{
         <b>Cuenta Corriente (DOP):</b> xxxxxxx<br>
         <b>Cuenta en Dólares (USD):</b> xxxxxxx
       </div>
+-->
       <a class="venue-btn" href="#rsvp">Confirmar → Asistencia</a>
     </div>
   </div>
@@ -1931,11 +1945,11 @@ footer{
         <div class="rsvp-box">
           <div id="rsvp-form">
             <div class="rsvp-field">
-              <label class="rsvp-label">Nombre y Apellido *</label>
+              <label class="rsvp-label" for="r-nombre">Nombre y Apellido *</label>
               <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
             </div>
             <div class="rsvp-field">
-              <label class="rsvp-label">WhatsApp o teléfono *</label>
+              <label class="rsvp-label" for="r-telefono">WhatsApp o teléfono *</label>
               <input class="rsvp-input" id="r-telefono" type="tel" placeholder="Ej. +1 809 000 0000" required/>
             </div>
             <div class="rsvp-field">
@@ -1999,11 +2013,11 @@ footer{
               </div>
             </div>
             <div class="rsvp-field">
-              <label class="rsvp-label">¿Qué canción no puede faltar en la pista de baile?</label>
+              <label class="rsvp-label" for="r-cancion">¿Qué canción no puede faltar en la pista de baile?</label>
               <input class="rsvp-input" id="r-cancion" type="text" placeholder="Artista y título de la canción"/>
             </div>
             <div class="rsvp-field">
-              <label class="rsvp-label">Déjales un mensaje especial a los anfitriones</label>
+              <label class="rsvp-label" for="r-mensaje">Déjales un mensaje especial a los anfitriones</label>
               <textarea class="rsvp-textarea" id="r-mensaje" placeholder="Tu mensaje de amor y buenos deseos..."></textarea>
             </div>
             <p class="rsvp-error" id="rsvp-error">Por favor completa los campos requeridos.</p>
