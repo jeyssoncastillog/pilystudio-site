@@ -92,22 +92,16 @@ body{
 }
 
 /* ── INVITATION ── */
-#invitacion{
-  position:relative;overflow:hidden;
-  min-height:82svh;padding:clamp(1.5rem,4vh,3.5rem) 2rem;text-align:center;
-  display:flex;flex-direction:column;align-items:center;
-  background:var(--cream);
+#invitacion {
+  position: relative;
+  min-height: 100svh;
+  background: url('/inv/nieves-y-jesus/assets/hoja2-canva.jpg') center center / cover no-repeat;
+  overflow: hidden;
+  display: block;
+  padding: 0;
+  margin: 0;
 }
-#invitacion::before{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url('/inv/nieves-y-jesus/assets/textura-piedra-caliza.webp') center/cover no-repeat;
-  opacity:.15;
-}
-#invitacion::after{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:rgba(255,251,202,.23);
-}
-.inv-content{max-width:780px;width:100%;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+/* shared with #padres-section olive branches */
 .inv-olive{
   position:absolute;pointer-events:none;z-index:1;
   opacity:.88;
@@ -124,64 +118,30 @@ body{
   transform:rotate(12deg);
   transform-origin:bottom left;
 }
-.inv-monogram{
-  width:clamp(105px,11vw,160px);display:block;margin:0 auto clamp(1.4rem,2.5vh,2.8rem);
-  opacity:.88;
+#nj-seed-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
 }
-.inv-text{
-  font-family:var(--cinzel);font-size:clamp(1.05rem,1.6vw,1.55rem);
-  letter-spacing:.08em;color:#3a434a;line-height:1.2;
-  max-width:780px;margin:0 auto;
+.nj-seed { position: absolute; will-change: transform, opacity; }
+.nj-seed-spin { width: 100%; height: 100%; }
+
+@keyframes seedDrift1 { 0%{opacity:0; transform:translate(0,0) scale(1);} 8%{opacity:1;} 25%{transform:translate(170px,-235px) scale(0.92);} 45%{transform:translate(340px,-480px) scale(0.82);} 65%{transform:translate(510px,-720px) scale(0.7);} 78%{opacity:1;} 100%{opacity:0; transform:translate(680px,-930px) scale(0.58);} }
+@keyframes seedDrift2 { 0%{opacity:0; transform:translate(0,0) scale(1);} 10%{opacity:1;} 27%{transform:translate(-155px,-240px) scale(0.92);} 48%{transform:translate(-310px,-485px) scale(0.81);} 68%{transform:translate(-465px,-725px) scale(0.69);} 80%{opacity:1;} 100%{opacity:0; transform:translate(-620px,-940px) scale(0.57);} }
+@keyframes seedDrift3 { 0%{opacity:0; transform:translate(0,0) scale(1);} 12%{opacity:1;} 30%{transform:translate(150px,-240px) scale(0.91);} 50%{transform:translate(300px,-490px) scale(0.8);} 70%{transform:translate(450px,-730px) scale(0.68);} 82%{opacity:1;} 100%{opacity:0; transform:translate(600px,-950px) scale(0.56);} }
+@keyframes seedDriftDown1 { 0%{opacity:0; transform:translate(0,0) scale(1);} 8%{opacity:1;} 25%{transform:translate(-170px,235px) scale(0.92);} 45%{transform:translate(-340px,480px) scale(0.82);} 65%{transform:translate(-510px,720px) scale(0.7);} 78%{opacity:1;} 100%{opacity:0; transform:translate(-680px,930px) scale(0.58);} }
+@keyframes seedDriftDown2 { 0%{opacity:0; transform:translate(0,0) scale(1);} 10%{opacity:1;} 27%{transform:translate(155px,240px) scale(0.92);} 48%{transform:translate(310px,485px) scale(0.81);} 68%{transform:translate(465px,725px) scale(0.69);} 80%{opacity:1;} 100%{opacity:0; transform:translate(620px,940px) scale(0.57);} }
+@keyframes seedDriftDown3 { 0%{opacity:0; transform:translate(0,0) scale(1);} 12%{opacity:1;} 30%{transform:translate(-150px,240px) scale(0.91);} 50%{transform:translate(-300px,490px) scale(0.8);} 70%{transform:translate(-450px,730px) scale(0.68);} 82%{opacity:1;} 100%{opacity:0; transform:translate(-600px,950px) scale(0.56);} }
+@keyframes seedSpinCW { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+@keyframes seedSpinCCW { 0%{transform:rotate(0deg);} 100%{transform:rotate(-360deg);} }
+
+@media (prefers-reduced-motion: reduce) {
+  #nj-seed-overlay { display: none; }
 }
-.inv-text+.inv-text{margin-top:1.6em}
-.inv-date{
-  font-family:var(--cinzel);font-size:clamp(1.05rem,1.6vw,1.55rem);
-  letter-spacing:.08em;color:#3a434a;line-height:1.2;
-  margin:clamp(1.5rem,3vh,2.5rem) 0 clamp(1.2rem,2.5vh,2rem);
-}
-.clock{display:flex;gap:clamp(.5rem,1.4vw,1.4rem);justify-content:center;align-items:stretch;margin-bottom:1.5rem}
-.clock-unit{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-width:clamp(3rem,7vw,6rem)}
-.clock-digits{
-  font-family:var(--cinzel);font-size:clamp(2.6rem,5vw,5.2rem);
-  font-weight:400;color:#b6c7e9;line-height:1;letter-spacing:.02em;
-  display:inline-flex;
-}
-.clock-digit{
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  font-family:var(--cinzel);
-  font-size:inherit;
-  line-height:1;
-}
-.clock-sep{
-  font-family:var(--cinzel);font-size:clamp(1.5rem,3.8vw,4rem);
-  color:rgba(182,199,233,.5);line-height:1;
-  display:flex;align-items:center;
-  align-self:flex-start;
-  height:calc(clamp(2.6rem,5vw,5.2rem) + 0.16em);
-  padding-bottom:0;
-}
-.clock-label{
-  font-family:var(--cinzel);font-size:clamp(.7rem,1vw,.92rem);
-  letter-spacing:.22em;text-transform:uppercase;
-  color:#b6c7e9;margin-top:.4rem;opacity:.7;
-  text-align:center;width:100%;text-indent:.22em;
-}
-.clock-num-wrap{
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  line-height:1;
-  padding:.08em 0;
-}
-@keyframes njRollUp{
-  0%{transform:translateY(45%);opacity:0}
-  100%{transform:translateY(0);opacity:1}
-}
-.clock-digit.rolling{
-  animation:njRollUp 0.45s cubic-bezier(0.22,1,0.36,1);
+@media (max-width: 767px) {
+  #nj-seed-overlay { display: none; }
 }
 
 /* ── GARDEN ── */
@@ -383,26 +343,6 @@ body{
 }
 #padres-section .padres-content{
   margin-bottom:clamp(80px,14vh,180px);
-}
-#invitacion .padres-divider-zone{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  width:100%;
-  height:clamp(130px,18vh,230px);
-  display:flex;
-  justify-content:center;
-  align-items:stretch;
-  pointer-events:none;
-  z-index:2;
-  min-height:0;
-  flex:none;
-}
-#invitacion .padres-divider{
-  width:3px;
-  height:100%;
-  background:#b6c7e9;
-  border-radius:1px;
-  opacity:0.85;
 }
 #padres-section .padres-divider-zone{
   position:absolute;
@@ -967,11 +907,6 @@ footer{
 
 /* ── LARGE SCREEN ── */
 @media(min-width:1600px){
-  .inv-content{flex:1 1 auto;padding-bottom:clamp(130px,18vh,230px)}
-  .inv-monogram{width:clamp(160px,12vw,200px)}
-  .inv-text,.inv-date{font-size:clamp(1.3rem,1.7vw,1.75rem)}
-  .clock-digits{font-size:clamp(4rem,5.2vw,6rem)}
-  .clock-sep{font-size:clamp(3rem,4vw,4.5rem);height:calc(clamp(4rem,5.2vw,6rem) + 0.16em)}
   .garden-z{margin-top:8rem}
   .vt-node{width:68px;height:68px}
   .vt-icon{width:60%;height:60%}
@@ -986,11 +921,8 @@ footer{
   .venue-center{align-items:center}
 }
 
-/* ── INVITACIÓN + VENUE LAPTOP ── */
+/* ── VENUE LAPTOP ── */
 @media(min-width:1024px) and (max-width:1599px){
-  #invitacion{min-height:88svh}
-  #invitacion .padres-divider-zone{height:clamp(95px,13vh,150px)}
-  #invitacion .clock{margin-bottom:clamp(1.8rem,3vh,2.5rem)}
   .venue-grid{grid-template-columns:34% 1fr 1fr}
   #venue{background-size:130% auto;background-position:52% center;background-repeat:no-repeat}
   .venue-name{font-size:clamp(1.2rem,1.9vw,1.6rem)}
@@ -1006,7 +938,7 @@ footer{
 }
 
 
-/* ── INTRO RESPONSIVE ── */
+/* ── PADRES OLIVE RESPONSIVE ── */
 @media(max-width:1536px){
   .inv-olive-tr{width:clamp(260px,24vw,370px);right:-30px;top:-10px;transform:rotate(-45deg)}
   .inv-olive-bl{width:clamp(200px,32vw,400px)}
@@ -1018,12 +950,10 @@ footer{
 @media(max-width:900px){
   .inv-olive-tr{width:140px;right:-80px;top:0;transform:rotate(-35deg);opacity:.5}
   .inv-olive-bl{width:clamp(150px,35vw,240px);opacity:.7}
-  #invitacion{padding:2rem 1.5rem;min-height:88svh}
 }
 @media(max-width:520px){
   .inv-olive-tr{width:clamp(150px,44vw,210px);top:1.5rem;right:-1rem;transform:rotate(-22deg);transform-origin:top right;opacity:.75}
   .inv-olive-bl{width:clamp(160px,50vw,200px);left:-4.5rem;transform:rotate(10deg);opacity:.72}
-  #invitacion{padding:2rem 1.2rem}
 }
 
 /* ── MOBILE ── */
@@ -1632,7 +1562,6 @@ footer{
   .reveal{transition:none;opacity:1;transform:none}
 }
 @media (prefers-reduced-motion: reduce) {
-  .clock-digit.rolling { animation: none !important; }
   .seal-spark { display: none !important; }
   .s6-spark { display: none !important; animation: none !important; }
   #nj-envelope { animation: njEnvEntrance 0.01s forwards !important; }
@@ -1716,27 +1645,7 @@ footer{
 
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
-  <img class="inv-olive inv-olive-tr" src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="" aria-hidden="true" loading="eager"/>
-  <img class="inv-olive inv-olive-bl" src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true" loading="eager"/>
-
-  <div class="inv-content">
-    <img class="inv-monogram h2-anim-mono" src="/inv/nieves-y-jesus/assets/monograma-nj-lavender.png" alt="Monograma NJ"/>
-    <p class="inv-text h2-anim-p1">Estamos muy felices de compartir<br>este día tan especial contigo.</p>
-    <p class="inv-text h2-anim-p2">Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.</p>
-    <p class="inv-date h2-anim-date">Viernes, 27 de noviembre de 2026.</p>
-    <div class="clock">
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-d"></span></div><span class="clock-label">Días</span></div>
-      <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-h"></span></div><span class="clock-label">Hrs.</span></div>
-      <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-m"></span></div><span class="clock-label">Mins.</span></div>
-      <span class="clock-sep">:</span>
-      <div class="clock-unit"><div class="clock-num-wrap"><span class="clock-digits" id="cd-s"></span></div><span class="clock-label">Seg.</span></div>
-    </div>
-  </div>
-  <div class="padres-divider-zone">
-    <div class="padres-divider"></div>
-  </div>
+  <div id="nj-seed-overlay" aria-hidden="true"></div>
 </section>
 
 <!-- ░░ GARDEN ░░ -->
@@ -2050,42 +1959,6 @@ footer{
 const SUPA_URL='https://ngiqppkflzfvtcykfaqk.supabase.co'
 const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5naXFwcGtmbHpmdnRjeWtmYXFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxOTc1MDksImV4cCI6MjA5NDc3MzUwOX0.Yx-JvS99fAi5mMPgOV8LGNilm5NTpo0r4z96ZOqUREQ'
 const db=supabase.createClient(SUPA_URL,SUPA_KEY)
-
-// COUNTDOWN
-;(function(){
-  const t=new Date('2026-11-27T16:00:00')
-  function pad(n,d){return String(n).padStart(d||2,'0')}
-  function renderDigits(container,str){
-    const existing=container.children
-    if(existing.length!==str.length){
-      container.innerHTML=''
-      for(let i=0;i<str.length;i++){
-        const s=document.createElement('span')
-        s.className='clock-digit'
-        s.textContent=str[i]
-        container.appendChild(s)
-      }
-      return
-    }
-    for(let i=0;i<str.length;i++){
-      const span=existing[i]
-      if(span.textContent!==str[i]){
-        span.textContent=str[i]
-        span.classList.remove('rolling')
-        void span.offsetWidth
-        span.classList.add('rolling')
-      }
-    }
-  }
-  function tick(){
-    const diff=t-Date.now();if(diff<=0)return
-    renderDigits(document.getElementById('cd-d'),pad(Math.floor(diff/86400000),3))
-    renderDigits(document.getElementById('cd-h'),pad(Math.floor(diff%86400000/3600000)))
-    renderDigits(document.getElementById('cd-m'),pad(Math.floor(diff%3600000/60000)))
-    renderDigits(document.getElementById('cd-s'),pad(Math.floor(diff%60000/1000)))
-  }
-  tick();setInterval(tick,1000)
-})()
 
 // RSVP
 ;(function(){
@@ -2570,6 +2443,71 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       });
     }, { threshold: 0.12 });
     io.observe(el.closest('section') || el);
+  });
+})();
+</script>
+<script>
+(function () {
+  var overlay = document.getElementById('nj-seed-overlay');
+  if (!overlay) return;
+  if (window.matchMedia('(max-width: 767px)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var seedColor = '#9db8dd';
+  var speed = 0.8;
+  var anims = ['seedDrift1', 'seedDrift2', 'seedDrift3'];
+  var animsDown = ['seedDriftDown1', 'seedDriftDown2', 'seedDriftDown3'];
+  var spins = ['seedSpinCW', 'seedSpinCCW'];
+
+  var base = [
+    {xp:80.6,yp:22.4,size:44,dur:9,tilt:-35},
+    {xp:84.2,yp:16.8,size:34,dur:11,tilt:-15},
+    {xp:87.6,yp:25.6,size:41,dur:10,tilt:-50},
+    {xp:90.1,yp:18.0,size:31,dur:8,tilt:-25},
+    {xp:83.6,yp:32.5,size:37,dur:12,tilt:-40},
+    {xp:13.1,yp:57.3,size:43,dur:10,tilt:20},
+    {xp:16.9,yp:61.7,size:32,dur:9,tilt:35},
+    {xp:20.0,yp:56.1,size:37,dur:11,tilt:10},
+    {xp:11.5,yp:67.7,size:31,dur:8,tilt:30},
+    {xp:18.2,yp:65.7,size:35,dur:12,tilt:15},
+    {xp:87.6,yp:6.4,size:28,dur:13,tilt:-60},
+    {xp:93.9,yp:14.0,size:36,dur:9.5,tilt:-5},
+    {xp:79.9,yp:38.1,size:31,dur:10.5,tilt:-70},
+    {xp:92.6,yp:30.9,size:26,dur:8.5,tilt:5},
+    {xp:7.4,yp:76.5,size:28,dur:11.5,tilt:45},
+    {xp:21.4,yp:72.5,size:34,dur:9.5,tilt:60},
+    {xp:4.7,yp:64.1,size:26,dur:13,tilt:5},
+    {xp:23.4,yp:62.1,size:31,dur:10,tilt:50}
+  ];
+
+  base.forEach(function (b, i) {
+    var isRight = b.xp > 72;
+    var anim = isRight ? animsDown[i % animsDown.length] : anims[i % anims.length];
+    var dur = +((b.dur * 1.8) / speed).toFixed(2);
+    var delay = +(i * 0.9).toFixed(2);
+    var spin = spins[i % spins.length];
+    var spinDur = +((5 + (i % 5) * 1.6) / speed).toFixed(2);
+    var spinDelay = +((b.tilt / 360) * spinDur).toFixed(2);
+
+    var outer = document.createElement('div');
+    outer.className = 'nj-seed';
+    outer.style.cssText =
+      'left:' + b.xp + '%; top:' + b.yp + '%; width:' + b.size + 'px; height:' + b.size + 'px;' +
+      'animation:' + anim + ' ' + dur + 's ease-in-out ' + delay + 's infinite;';
+
+    var inner = document.createElement('div');
+    inner.className = 'nj-seed-spin';
+    inner.style.cssText = 'animation:' + spin + ' ' + spinDur + 's linear ' + spinDelay + 's infinite;';
+    inner.innerHTML =
+      '<svg viewBox="0 0 40 24" width="100%" height="100%" style="overflow:visible;">' +
+      '<g stroke="' + seedColor + '" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.85">' +
+      '<line x1="1" y1="20" x2="30" y2="8"></line><line x1="30" y1="8" x2="38" y2="1"></line>' +
+      '<line x1="30" y1="8" x2="39" y2="6"></line><line x1="30" y1="8" x2="40" y2="10"></line>' +
+      '<line x1="30" y1="8" x2="38" y2="14"></line><line x1="30" y1="8" x2="34" y2="18"></line>' +
+      '<line x1="30" y1="8" x2="29" y2="20"></line></g></svg>';
+
+    outer.appendChild(inner);
+    overlay.appendChild(outer);
   });
 })();
 </script>
