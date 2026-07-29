@@ -97,8 +97,39 @@ body{
   min-height: 100svh;
   background: url('/inv/nieves-y-jesus/assets/hoja2-canva.jpg') center center / cover no-repeat;
   overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0;
+  margin: 0;
+}
+.inv2-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(1.6rem, 3.5vh, 2.6rem);
+  /* push below the monogram baked into the background image */
+  margin-top: clamp(6rem, 18vh, 12rem);
+  padding: 0 1.5rem;
+}
+.inv2-text {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.85rem, 1.55vw, 1.25rem);
+  letter-spacing: 0.0775em;
+  line-height: 1.9;
+  color: #7d7d75;
+  margin: 0;
+}
+.inv2-names {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  letter-spacing: 0.0269em;
+  line-height: 1.2;
+  color: #7d7d75;
   margin: 0;
 }
 /* shared with #padres-section olive branches */
@@ -1646,6 +1677,11 @@ footer{
 <!-- ░░ INVITACIÓN ░░ -->
 <section id="invitacion">
   <div id="nj-seed-overlay" aria-hidden="true"></div>
+  <div class="inv2-content">
+    <p class="inv2-text">Estamos muy felices de compartir<br>este día tan especial contigo.</p>
+    <p class="inv2-text">Gracias por formar parte de nuestra<br>historia y acompañarnos desde el inicio.</p>
+    <p class="inv2-names">Nieves &amp; Jesús</p>
+  </div>
 </section>
 
 <!-- ░░ GARDEN ░░ -->
