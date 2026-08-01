@@ -72,8 +72,8 @@ body{
 }
 .carta.en-vista .linea{
   animation-name:pluma-revela;
-  animation-duration:.55s;
-  animation-timing-function:cubic-bezier(0.25,0.1,0.25,1);
+  animation-duration:1.15s;
+  animation-timing-function:cubic-bezier(0.33,0,0.15,1);
   animation-fill-mode:forwards;
 }
 .linea .en-negrita,
@@ -97,7 +97,7 @@ body{
 }
 .carta.en-vista .logo-sello{
   animation:sello-aparece .6s ease forwards;
-  animation-delay:8.6s;
+  animation-delay:17.3s;
 }
 @keyframes sello-aparece{
   from{opacity:0;}
@@ -106,9 +106,10 @@ body{
 
 /* ── BOTÓN OMITIR ── */
 .leer-completo{
-  position:absolute;
+  position:fixed;
   right:14px;
-  bottom:10px;
+  bottom:14px;
+  z-index:10;
   background:none;
   border:none;
   font-family:Georgia, serif;
@@ -170,27 +171,27 @@ body{
       <div class="linea" style="animation-delay:0s">Querida mamá:</div>
       <div class="espaciador"></div>
 
-      <div class="linea" style="animation-delay:0.84s">Si hoy sientes miedo o cansancio, recuerda</div>
-      <div class="linea" style="animation-delay:1.26s">que no estás sola. Yo también estuve ahí y</div>
-      <div class="linea" style="animation-delay:1.68s">entendí que la maternidad no necesita</div>
-      <div class="linea" style="animation-delay:2.10s">madres perfectas, sino mujeres que aman,</div>
-      <div class="linea" style="animation-delay:2.52s">aprenden y piden ayuda.</div>
+      <div class="linea" style="animation-delay:1.40s">Si hoy sientes miedo o cansancio, recuerda</div>
+      <div class="linea" style="animation-delay:2.35s">que no estás sola. Yo también estuve ahí y</div>
+      <div class="linea" style="animation-delay:3.30s">entendí que la maternidad no necesita</div>
+      <div class="linea" style="animation-delay:4.25s">madres perfectas, sino mujeres que aman,</div>
+      <div class="linea" style="animation-delay:5.20s">aprenden y piden ayuda.</div>
       <div class="espaciador"></div>
 
-      <div class="linea" style="animation-delay:3.36s">La lactancia requiere paciencia y guía, pero</div>
-      <div class="linea" style="animation-delay:3.78s">con acompañamiento se convierte en una</div>
-      <div class="linea" style="animation-delay:4.20s">etapa hermosa. Gracias por regalarte este</div>
-      <div class="linea" style="animation-delay:4.62s">espacio para aprender.</div>
+      <div class="linea" style="animation-delay:6.60s">La lactancia requiere paciencia y guía, pero</div>
+      <div class="linea" style="animation-delay:7.55s">con acompañamiento se convierte en una</div>
+      <div class="linea" style="animation-delay:8.50s">etapa hermosa. Gracias por regalarte este</div>
+      <div class="linea" style="animation-delay:9.45s">espacio para aprender.</div>
       <div class="espaciador"></div>
 
-      <div class="linea" style="animation-delay:5.46s">Cuando cierres esta carta, recuerda una sola</div>
-      <div class="linea" style="animation-delay:5.88s">cosa: <span class="en-negrita">Tu bebé no necesita una mamá perfecta,</span></div>
-      <div class="linea en-negrita" style="animation-delay:6.30s">necesita a su mamá.</div>
+      <div class="linea" style="animation-delay:10.85s">Cuando cierres esta carta, recuerda una sola</div>
+      <div class="linea" style="animation-delay:11.80s">cosa: <span class="en-negrita">Tu bebé no necesita una mamá perfecta,</span></div>
+      <div class="linea en-negrita" style="animation-delay:12.75s">necesita a su mamá.</div>
       <div class="espaciador"></div>
 
-      <div class="linea" style="animation-delay:7.14s">Con cariño,</div>
-      <div class="linea" style="animation-delay:7.56s">Dra. Jasmely Castillo</div>
-      <div class="linea" style="animation-delay:7.98s">Médico Pediatra</div>
+      <div class="linea" style="animation-delay:14.15s">Con cariño,</div>
+      <div class="linea" style="animation-delay:15.10s">Dra. Jasmely Castillo</div>
+      <div class="linea" style="animation-delay:16.05s">Médico Pediatra</div>
 
       <div class="logo-sello"></div>
 
