@@ -46,7 +46,6 @@ body{
   aspect-ratio:900/1600;
   height:min(86svh, 900px);
   position:relative;
-  perspective:1400px;
   cursor:pointer;
 }
 
@@ -63,9 +62,10 @@ body{
 .sobre-base{ z-index:1; }
 .solapa{
   z-index:2;
-  transform-origin:center top;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
+  transform-origin:top center;
+  transform-style:preserve-3d;
+  transition:transform 1.1s cubic-bezier(0.4, 0, 0.2, 1),
+             opacity 0.3s ease 0.8s;
   will-change:transform, opacity;
 }
 .sello{ z-index:3; animation:sello-pulso 2.6s ease-in-out infinite; }
@@ -85,13 +85,8 @@ body{
 }
 
 .sobre-wrap.abierto .solapa{
-  animation:solapa-abre .95s cubic-bezier(0.32,0,0.28,1) forwards;
-  animation-delay:.35s;
-}
-@keyframes solapa-abre{
-  0%{ transform:rotateX(0deg); opacity:1; filter:brightness(1); }
-  65%{ transform:rotateX(-68deg); opacity:1; filter:brightness(0.9); }
-  100%{ transform:rotateX(-96deg); opacity:0; filter:brightness(0.86); }
+  transform:rotateX(-90deg);
+  opacity:0;
 }
 
 .pista{
@@ -342,7 +337,7 @@ body{
     } else {
       setTimeout(function(){
         if (hoja2) hoja2.scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 1800); // .35s (flap start) + .95s (flap open) + .5s (pausa) = 1.8s
+      }, 1950); // .35s (flap start) + 1.1s (flap open) + .5s (pausa) = 1.95s
     }
   }
 
