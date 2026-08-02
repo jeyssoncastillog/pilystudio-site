@@ -61,7 +61,13 @@ body{
   pointer-events:none;
 }
 .sobre-base{ z-index:1; }
-.solapa{ z-index:2; transform-origin:center top; }
+.solapa{
+  z-index:2;
+  transform-origin:center top;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  will-change:transform, opacity;
+}
 .sello{ z-index:3; animation:sello-pulso 2.6s ease-in-out infinite; }
 
 @keyframes sello-pulso{
@@ -79,14 +85,13 @@ body{
 }
 
 .sobre-wrap.abierto .solapa{
-  animation:solapa-abre 1.2s cubic-bezier(0.34,0.02,0.24,1) forwards;
+  animation:solapa-abre .95s cubic-bezier(0.32,0,0.28,1) forwards;
   animation-delay:.35s;
 }
 @keyframes solapa-abre{
-  0%{ transform:rotateX(0deg); }
-  50%{ z-index:0; }
-  60%{ filter:brightness(0.94); }
-  100%{ transform:rotateX(-172deg); filter:brightness(1); z-index:0; }
+  0%{ transform:rotateX(0deg); opacity:1; filter:brightness(1); }
+  65%{ transform:rotateX(-68deg); opacity:1; filter:brightness(0.9); }
+  100%{ transform:rotateX(-96deg); opacity:0; filter:brightness(0.86); }
 }
 
 .pista{
@@ -337,7 +342,7 @@ body{
     } else {
       setTimeout(function(){
         if (hoja2) hoja2.scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 2050); // .35s (flap start) + 1.2s (flap open) + .5s (pausa) = 2.05s
+      }, 1800); // .35s (flap start) + .95s (flap open) + .5s (pausa) = 1.8s
     }
   }
 
