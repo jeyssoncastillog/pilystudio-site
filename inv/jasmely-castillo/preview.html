@@ -29,6 +29,94 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
+/* ── HOJA 1 — SOBRE ── */
+#hoja1{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1.1rem;
+  background:url('/inv/jasmely-castillo/fotos/fondo-textura.jpg') center center / cover no-repeat;
+  padding:5vh 6vw;
+}
+
+.sobre-wrap{
+  aspect-ratio:900/1600;
+  height:min(86svh, 900px);
+  position:relative;
+  perspective:1400px;
+  cursor:pointer;
+}
+
+.sobre-base,
+.solapa,
+.sello{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+}
+.sobre-base{ z-index:1; }
+.solapa{ z-index:2; transform-origin:center top; }
+.sello{ z-index:3; animation:sello-pulso 2.6s ease-in-out infinite; }
+
+@keyframes sello-pulso{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.045); }
+}
+
+.sobre-wrap.abierto .sello{
+  animation:sello-rompe .68s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes sello-rompe{
+  0%{ transform:scale(1); opacity:1; }
+  26.5%{ transform:scale(1.12); opacity:1; }
+  100%{ transform:translateY(26px) rotate(-9deg) scale(0.92); opacity:0; }
+}
+
+.sobre-wrap.abierto .solapa{
+  animation:solapa-abre 1.2s cubic-bezier(0.34,0.02,0.24,1) forwards;
+  animation-delay:.35s;
+}
+@keyframes solapa-abre{
+  0%{ transform:rotateX(0deg); }
+  50%{ z-index:0; }
+  60%{ filter:brightness(0.94); }
+  100%{ transform:rotateX(-172deg); filter:brightness(1); z-index:0; }
+}
+
+.pista{
+  font-family:var(--fuente-carta);
+  font-size:.85rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#8a8a8a;
+  animation:pista-fade 2.6s ease-in-out infinite;
+  transition:opacity .3s;
+}
+@keyframes pista-fade{
+  0%,100%{ opacity:.5; }
+  50%{ opacity:1; }
+}
+.pista.oculta{
+  animation:none;
+  opacity:0;
+  pointer-events:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .sello{ animation:none; }
+  .pista{ animation:none; opacity:.8; }
+  .sobre-wrap.abierto .sello,
+  .sobre-wrap.abierto .solapa{
+    display:none;
+  }
+}
+
 /* ── HOJA 2 — SECCIÓN ── */
 #hoja2{
   position:relative;
@@ -118,10 +206,15 @@ body{
   color:#9a9a9a;
   cursor:pointer;
   padding:.3rem .5rem;
-  opacity:.75;
-  transition:opacity .2s, color .2s;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s, color .2s;
 }
-.leer-completo:hover{
+.leer-completo.visible{
+  opacity:.75;
+  pointer-events:auto;
+}
+.leer-completo.visible:hover{
   opacity:1;
   color:#6b6b6b;
 }
@@ -140,6 +233,10 @@ body{
 
 /* ── BREAKPOINT: MÓVIL (prioridad) — hasta 1023px ── */
 @media (max-width:1023px){
+  #hoja1{padding:4vh 9vw;}
+  .sobre-wrap{height:min(90svh, 700px);}
+  .pista{font-size:.72rem;}
+
   #hoja2{padding:5vh 4vw;}
   .carta-borde-placeholder{max-width:100%;padding:14px;}
   .carta{padding:20px;}
@@ -149,6 +246,8 @@ body{
 
 /* ── BREAKPOINT: LAPTOP — 1024px a 1599px ── */
 @media (min-width:1024px) and (max-width:1599px){
+  .sobre-wrap{height:min(86svh, 900px);}
+
   .carta-borde-placeholder{max-width:640px;padding:20px;}
   .carta{padding:28px;}
   .logo-sello{width:120px;height:120px;}
@@ -156,6 +255,9 @@ body{
 
 /* ── BREAKPOINT: PANTALLA GRANDE — 1600px en adelante ── */
 @media (min-width:1600px){
+  .sobre-wrap{height:min(86svh, 960px);}
+  .pista{font-size:.95rem;}
+
   .carta-borde-placeholder{max-width:760px;padding:26px;}
   .carta{padding:40px;}
   .logo-sello{width:140px;height:140px;}
@@ -163,6 +265,16 @@ body{
 </style>
 </head>
 <body>
+
+<section id="hoja1">
+  <div class="sobre-wrap" tabindex="0" role="button" aria-label="Toca para abrir la carta">
+    <img class="sobre-base" src="/inv/jasmely-castillo/fotos/sobre-base.webp" alt=""/>
+    <img class="solapa" src="/inv/jasmely-castillo/fotos/sobre-solapa.webp" alt=""/>
+    <img class="sello" src="/inv/jasmely-castillo/fotos/sello.webp" alt=""/>
+  </div>
+  <div class="pista">Toca para abrir</div>
+  <audio id="musica" src="/inv/jasmely-castillo/fotos/musica.mp3" loop preload="none"></audio>
+</section>
 
 <section id="hoja2">
   <div class="carta-borde-placeholder">
@@ -202,11 +314,51 @@ body{
 
 <script>
 (function(){
+  var mediaReducido = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ── HOJA 1: SOBRE ──
+  var sobre = document.querySelector('.sobre-wrap');
+  var musica = document.getElementById('musica');
+  var pista = document.querySelector('.pista');
+  var hoja2 = document.getElementById('hoja2');
+  var sobreAbierto = false;
+
+  function abrirSobre(){
+    if (sobreAbierto) return;
+    sobreAbierto = true;
+
+    musica.play().catch(function(){});
+
+    if (pista) pista.classList.add('oculta');
+    sobre.classList.add('abierto');
+
+    if (mediaReducido.matches){
+      if (hoja2) hoja2.scrollIntoView({ behavior:'auto', block:'start' });
+    } else {
+      setTimeout(function(){
+        if (hoja2) hoja2.scrollIntoView({ behavior:'smooth', block:'start' });
+      }, 2050); // .35s (flap start) + 1.2s (flap open) + .5s (pausa) = 2.05s
+    }
+  }
+
+  if (sobre){
+    sobre.addEventListener('click', abrirSobre);
+    sobre.addEventListener('keydown', function(evento){
+      if (evento.key === 'Enter' || evento.key === ' '){
+        evento.preventDefault();
+        abrirSobre();
+      }
+    });
+  }
+
+  // ── HOJA 2: CARTA ──
   var carta = document.querySelector('.carta');
   var lineas = document.querySelectorAll('.linea');
   var sello = document.querySelector('.logo-sello');
   var boton = document.querySelector('.leer-completo');
   var yaRevelado = false;
+  var DURACION_CARTA_MS = 17200; // última línea (16.05s) + duración (1.15s)
+  var temporizadorBoton = null;
 
   function revelarTodoInstantaneo(){
     yaRevelado = true;
@@ -217,6 +369,13 @@ body{
     if (sello){
       sello.style.animation = 'none';
       sello.style.opacity = '1';
+    }
+    if (boton){
+      boton.classList.remove('visible');
+    }
+    if (temporizadorBoton){
+      clearTimeout(temporizadorBoton);
+      temporizadorBoton = null;
     }
   }
 
@@ -229,6 +388,13 @@ body{
       entradas.forEach(function(entrada){
         if (entrada.isIntersecting && !yaRevelado){
           carta.classList.add('en-vista');
+          if (boton){
+            boton.classList.add('visible');
+            var espera = mediaReducido.matches ? 0 : DURACION_CARTA_MS;
+            temporizadorBoton = setTimeout(function(){
+              boton.classList.remove('visible');
+            }, espera);
+          }
           obs.disconnect();
         }
       });
