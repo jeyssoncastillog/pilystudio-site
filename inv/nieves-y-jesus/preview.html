@@ -562,13 +562,40 @@ body{
   color:#fff;line-height:1.4;margin-bottom:1.2rem;
 }
 .regalo-sub{font-size:.95rem;color:rgba(255,255,255,.82);line-height:1.95;margin-bottom:1.4rem}
-.banco-name{
-  font-family:var(--body);font-size:12.6px;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(255,255,255,.58);margin-bottom:.35rem;
+.banco-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2.5rem;
+  margin-bottom:1.6rem;
 }
-.banco-info{font-family:var(--body);font-size:12.6px;color:rgba(255,255,255,.88);line-height:1.85;margin-bottom:1.5rem}
-.banco-info b{color:#fff;font-weight:500}
+.banco-col{display:flex;flex-direction:column}
+.banco-name{
+  font-family:var(--cinzel);font-size:.82rem;
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:#fff;margin-bottom:.4rem;
+}
+.banco-info{
+  font-family:var(--body);font-size:.85rem;
+  color:rgba(255,255,255,.82);line-height:1.7;
+  margin-bottom:.3rem;
+}
+.banco-info:last-child{margin-bottom:0}
+.banco-info b{color:#fff;font-weight:600}
+.banco-copy{
+  background:none;border:none;padding:0;margin:0;
+  font:inherit;color:inherit;cursor:pointer;
+  text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;
+}
+.banco-copy:hover{color:#fff}
+.banco-copy:focus-visible{outline:2px solid #7fa3d4;outline-offset:3px;border-radius:2px}
+.banco-copy.is-copied{color:#a3d9a5;text-decoration:none}
+#regalo .venue-btn{
+  display:block;width:fit-content;
+  margin:1.8rem 0 0;
+  min-width:0;
+}
+@media(max-width:1023px){
+  .banco-grid{grid-template-columns:1fr;gap:1.6rem}
+}
 
 /* ── GALERÍA ── */
 #galeria{padding:0;overflow:hidden;background:var(--cream)}
@@ -1685,16 +1712,22 @@ footer{
     <div class="regalo-text">
       <h3 class="regalo-h">Contar con tu presencia es nuestro mejor regalo.</h3>
       <p class="regalo-sub">Si desean hacernos un obsequio, lo recibiremos con mucho cariño a través de las siguientes cuentas:</p>
-<!-- BANK DATA — PENDING REAL INFO FROM PILY
-      <p class="banco-name">Banco XXX — Titular</p>
-      <div class="banco-info">
-        <b>Nieves Almonte Álvarez</b><br>
-        Cédula: 4xx-250xxxxx-x<br>
-        Correo: xxxxx@gmail.com<br>
-        <b>Cuenta Corriente (DOP):</b> xxxxxxx<br>
-        <b>Cuenta en Dólares (USD):</b> xxxxxxx
+      <div class="banco-grid">
+        <div class="banco-col">
+          <p class="banco-name">Jesús Moronta</p>
+          <p class="banco-info">Scotiabank · Ahorros · <b>RD$</b></p>
+          <p class="banco-info">Cuenta <button type="button" class="banco-copy" data-copy="03208004962">03208004962</button></p>
+          <p class="banco-info">Cédula 092-0010480-1</p>
+        </div>
+        <div class="banco-col">
+          <p class="banco-name">Nieves Almonte</p>
+          <p class="banco-info">Banco BHD · Ahorros · <b>US$</b></p>
+          <p class="banco-info">Cuenta <button type="button" class="banco-copy" data-copy="31634080020">31634080020</button></p>
+          <p class="banco-info">Cédula 097-0021247-6</p>
+          <p class="banco-info">Interbancaria DO83BCBH0000000031634080020</p>
+        </div>
       </div>
--->
+      <a class="venue-btn" href="https://listaderegalos.casacuesta.com/Event/NievesDayiris-Jes%C3%BAsMaria?utm_source=share" target="_blank" rel="noopener noreferrer" aria-label="Ver lista de regalos en Casa Cuesta">REGALOS → LISTA</a>
     </div>
   </div>
 </section>
@@ -2527,6 +2560,29 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     }, { threshold: 0.25 });
     padresSeedObserver.observe(padresSection);
   }
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.banco-copy').forEach(function (btn) {
+    var original = btn.textContent;
+    var timer = null;
+    btn.addEventListener('click', async function () {
+      var digits = (btn.getAttribute('data-copy') || '').replace(/\D/g, '');
+      try {
+        await navigator.clipboard.writeText(digits);
+        btn.textContent = 'Copiado';
+        btn.classList.add('is-copied');
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove('is-copied');
+        }, 1600);
+      } catch (err) {
+        // clipboard unavailable — no feedback shown
+      }
+    });
+  });
 })();
 </script>
 </body>
