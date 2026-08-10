@@ -143,6 +143,9 @@ body{
 #padres-seed-overlay { z-index: 2; }
 .nj-seed { position: absolute; }
 .nj-seed-spin { width: 100%; height: 100%; }
+#padres-seed-overlay .nj-seed {
+  animation-fill-mode: backwards !important;
+}
 
 @keyframes seedDrift1 { 0%{opacity:0; transform:translate(0,0) scale(1);} 8%{opacity:1;} 25%{transform:translate(170px,-235px) scale(0.92);} 45%{transform:translate(340px,-480px) scale(0.82);} 65%{transform:translate(510px,-720px) scale(0.7);} 78%{opacity:1;} 100%{opacity:0; transform:translate(680px,-930px) scale(0.58);} }
 @keyframes seedDrift2 { 0%{opacity:0; transform:translate(0,0) scale(1);} 10%{opacity:1;} 27%{transform:translate(-155px,-240px) scale(0.92);} 48%{transform:translate(-310px,-485px) scale(0.81);} 68%{transform:translate(-465px,-725px) scale(0.69);} 80%{opacity:1;} 100%{opacity:0; transform:translate(-620px,-940px) scale(0.57);} }
