@@ -288,30 +288,10 @@ body{
   color:#fff;line-height:1.6;
 }
 
-/* ── SECTION 4 ── */
-#section4{
-  padding:0;margin:0;background:none;
-  min-height:unset;overflow:hidden;display:block;
-}
-.s4-pic{display:block;overflow:hidden}
-.s4-canva-img{
-  width:100%;height:auto;display:block;opacity:0;
-}
-@keyframes s4Enter{
-  from{opacity:0;transform:scale(1.05)}
-  to{opacity:1;transform:scale(1)}
-}
+/* used by #hero.hero-bg-breathing::before */
 @keyframes s4Breathe{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.02)}
-}
-.s4-canva-img.s4-in{
-  animation:
-    s4Enter 1.6s cubic-bezier(0.22,1,0.36,1) forwards,
-    s4Breathe 22s ease-in-out 1.7s infinite;
-}
-@media(prefers-reduced-motion:reduce){
-  .s4-canva-img{opacity:1;animation:none !important}
 }
 
 /* ── GALLERY 2-COL ── */
@@ -1644,19 +1624,6 @@ footer{
   </div>
 </section>
 
-<!-- ░░ SECTION 4 ░░ -->
-<section id="section4">
-  <picture class="s4-pic">
-    <source media="(max-width: 767px)" srcset="/inv/nieves-y-jesus/assets/seccion4-movil.webp" type="image/webp">
-    <source media="(max-width: 767px)" srcset="/inv/nieves-y-jesus/assets/seccion4-movil.jpg">
-    <source srcset="/inv/nieves-y-jesus/assets/seccion4-desktop.webp" type="image/webp">
-    <img class="s4-canva-img"
-         src="/inv/nieves-y-jesus/assets/seccion4-desktop.jpg"
-         alt="Y deseamos que compartas este momento especial con nosotros"
-         loading="lazy">
-  </picture>
-</section>
-
 <!-- ░░ PADRES ░░ -->
 <section id="padres-section">
   <div id="padres-seed-overlay" aria-hidden="true"></div>
@@ -2494,7 +2461,6 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
 <script>
 (function(){
   const pairs = [
-    ['.s4-canva-img',    's4-in'],
     ['.close-canva-img', 'close-in']
   ];
   pairs.forEach(([sel, cls]) => {
