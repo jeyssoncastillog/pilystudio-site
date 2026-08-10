@@ -802,7 +802,13 @@ body{
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  #hero::before{background-position:62% center}
+  #hero{padding:1.6rem 1.2rem 3rem}
+  #hero::before{background-position:54% 30%}
+  #hero::after{background:linear-gradient(to top,
+      rgba(20,18,30,.58) 0%, rgba(20,18,30,.18) 45%,
+      transparent 75%)}
+  .hero-names{text-shadow:0 2px 6px rgba(0,0,0,.55)}
+  .hero-tagline{text-shadow:0 2px 6px rgba(0,0,0,.55)}
   #garden{min-height:72vh;padding:3rem 1.75rem;align-items:flex-start;justify-content:center}
   .venue-grid{grid-template-columns:1fr;padding:3rem 1.5rem 2.5rem;gap:2.5rem;min-height:auto}
   .venue-left-pad{display:none}
