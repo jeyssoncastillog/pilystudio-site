@@ -486,87 +486,37 @@ body{
 #vestimenta{
   position:relative;overflow:hidden;
   background:var(--cream);
-  padding:clamp(8rem,15vh,11rem) clamp(1.5rem,5vw,3rem) 0;
-  display:flex;flex-direction:column;align-items:center;
-  min-height:100svh;text-align:center;
+  height:100svh;
 }
-#vestimenta::before{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url('/inv/nieves-y-jesus/assets/textura-piedra-caliza.webp') center/cover no-repeat;
-  opacity:.15;
+.vest-bg-pic{
+  position:absolute;inset:0;z-index:0;
+  display:block;overflow:hidden;
 }
-#vestimenta::after{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:rgba(255,251,202,.23);
+.vest-bg-img{
+  width:100%;height:100%;object-fit:cover;display:block;
 }
-.vest-olive{position:absolute;pointer-events:none;z-index:1;opacity:.82}
-.vest-olive-tr{
-  top:-10px;right:-18px;width:clamp(200px,25vw,380px);
-  transform:rotate(-50deg);transform-origin:center center;
+.vest-overlay{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  pointer-events:none;
 }
-.vest-olive-bl{
-  bottom:0;left:-4rem;width:clamp(160px,22vw,320px);
-  transform:rotate(12deg);transform-origin:bottom left;
+.vest-caja{
+  aspect-ratio:2049/1152;
+  min-width:100%;min-height:100%;
+  position:relative;
 }
-.vest-inner{
-  position:relative;z-index:2;
-  width:100%;max-width:1100px;
-  display:flex;flex-direction:column;align-items:center;
-  margin-bottom:clamp(100px,14vh,200px);
+.vest-link{
+  position:absolute;
+  left:12.98%;
+  top:58.07%;
+  width:21.86%;
+  height:10.5%;
+  display:block;
+  pointer-events:auto;
+  border-radius:2px;
 }
-.vest-sec-heading{
-  font-family:var(--cinzel);font-size:clamp(1.6rem,3.2vw,2.8rem);
-  font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  line-height:1.2;color:#3a434a;margin-bottom:clamp(2rem,5vh,4rem);
-}
-.vest-main-grid{
-  display:grid;grid-template-columns:1fr clamp(220px,22vw,340px) 1fr;
-  gap:clamp(1.5rem,3vw,3.5rem);width:100%;align-items:start;
-}
-.vest-col-left{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
-.vest-col-center{display:flex;align-items:center;justify-content:center}
-.vest-col-right{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
-.vest-outfit{
-  width:100%;display:block;object-fit:contain;
-  background:transparent;border:none;box-shadow:none;filter:none;
-}
-.vest-role{
-  font-family:var(--cinzel);font-size:1rem;
-  letter-spacing:.28em;text-transform:uppercase;
-  color:#b6c7e9;font-weight:600;display:block;margin-bottom:.8rem;
-}
-.vest-text{font-size:1rem;color:#3a434a;line-height:1.9;text-align:justify;margin-bottom:clamp(1.2rem,2.5vh,2rem)}
-.vest-palette{display:flex;gap:.6rem;margin-bottom:clamp(.8rem,1.5vh,1.2rem)}
-.swatch{width:32px;height:32px;border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,.12)}
-.vest-note{font-size:.87rem;color:var(--mid);line-height:1.95;font-style:italic;text-align:justify}
-.vest-note strong{color:#3a434a;font-weight:700;font-style:normal}
-.vest-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.75rem 1.8rem;
-  background:#b5c4dd;color:#fff;
-  font-family:var(--cinzel);font-size:.58rem;
-  letter-spacing:.22em;text-transform:uppercase;
-  border-radius:2px;text-decoration:none;border:none;
-  box-shadow:0 2px 10px rgba(181,196,221,.35);
-  transition:background .2s,box-shadow .2s;
-}
-.vest-btn:hover{background:#9aadc8;box-shadow:0 4px 16px rgba(181,196,221,.50)}
-#vestimenta .padres-divider-zone{
-  position:absolute;left:0;right:0;bottom:0;
-  width:100%;height:clamp(100px,14vh,180px);
-  display:flex;justify-content:center;align-items:stretch;
-  pointer-events:none;z-index:3;min-height:0;flex:none;
-}
-#vestimenta .padres-divider{
-  width:2px;height:100%;background:#b6c7e9;border-radius:1px;opacity:0.75;
-}
-@media(min-width:1600px){
-  .vest-inner{max-width:1300px}
-  .vest-main-grid{grid-template-columns:1fr clamp(260px,24vw,400px) 1fr}
-}
-@media(min-width:1024px) and (max-width:1599px){
-  .vest-inner{max-width:960px}
-}
+.vest-link:hover{filter:brightness(1.06)}
+.vest-link:focus-visible{outline:2px solid #7fa3d4;outline-offset:3px}
 @media(max-width:640px){
   #vestimenta{padding:3rem 1.5rem 0;min-height:auto}
   .vest-inner{margin-bottom:clamp(80px,12vh,140px)}
@@ -1706,41 +1656,22 @@ footer{
 
 <!-- ░░ VESTIMENTA ░░ -->
 <section id="vestimenta">
-  <img class="vest-olive vest-olive-tr" src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="" aria-hidden="true" loading="lazy"/>
-  <img class="vest-olive vest-olive-bl" src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true" loading="lazy"/>
-
-  <div class="vest-inner reveal">
-    <h2 class="vest-sec-heading">Etiqueta/Tropical Chic</h2>
-
-    <div class="vest-main-grid">
-
-      <div class="vest-col-left">
-        <span class="vest-role">Caballeros:</span>
-        <p class="vest-text">Pueden optar por chachabanas, trajes en tonos claros o una combinación de camisa, pantalón de vestir y blazer. La corbata o corbatín es opcional, permitiéndose el uso de colores o estampados discretos.</p>
-        <a class="vest-btn" href="https://www.pinterest.com/pilylach/vestimenta-nj/?invite_code=8ba0f2c831a34947b037792c9a3d28e6&sender=723109421328189020" target="_blank" rel="noopener">Vestimenta ➜ Inspiración</a>
-      </div>
-
-      <div class="vest-col-center">
-        <img class="vest-outfit" src="/inv/nieves-y-jesus/assets/vestimenta/vestimenta-outfits.png" alt="Vestimenta — Tropical Chic" loading="lazy"/>
-      </div>
-
-      <div class="vest-col-right">
-        <span class="vest-role">Damas:</span>
-        <p class="vest-text">Se sugiere la elección de vestidos largos o de corte midi. El uso de calzado de tacón es imprescindible para completar la etiqueta de la ocasión.</p>
-        <div class="vest-palette">
-          <div class="swatch" style="background:#c8ddef" title="Baby Blue"></div>
-          <div class="swatch" style="background:#b5c4dd" title="Soft Blue"></div>
-          <div class="swatch" style="background:#fff8bc;border:1px solid #e8e0a0" title="Butter Yellow"></div>
-          <div class="swatch" style="background:#ffffff;border:1px solid #ddd" title="Blanco"></div>
-        </div>
-        <p class="vest-note">Con el fin de mantener la armonía visual de la celebración, reservamos los tonos <strong>blanco</strong>, <strong>baby blue (azul pastel)</strong> y <strong>butter yellow (amarillo pastel)</strong> <strong>exclusivamente</strong> para el concepto del evento. Agradecemos su gentil colaboración al evitar estos colores en su atuendo.</p>
-      </div>
-
+  <picture class="vest-bg-pic">
+    <source media="(min-width: 1024px)"
+            srcset="/inv/nieves-y-jesus/assets/seccion-vestimenta-desktop.webp"
+            type="image/webp">
+    <img class="vest-bg-img"
+         src="/inv/nieves-y-jesus/assets/seccion-vestimenta-desktop.webp"
+         alt="Etiqueta Tropical Chic — Caballeros y Damas">
+  </picture>
+  <div class="vest-overlay">
+    <div class="vest-caja">
+      <a class="vest-link"
+         href="https://www.pinterest.com/pilylach/vestimenta-nj/?invite_code=8ba0f2c831a34947b037792c9a3d28e6&amp;sender=723109421328189020"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Ver inspiración de vestimenta en Pinterest"></a>
     </div>
-  </div>
-
-  <div class="padres-divider-zone">
-    <div class="padres-divider"></div>
   </div>
 </section>
 
