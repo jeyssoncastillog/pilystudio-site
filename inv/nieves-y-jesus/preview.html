@@ -132,23 +132,6 @@ body{
   color: #7d7d75;
   margin: 0;
 }
-/* shared with #padres-section olive branches */
-.inv-olive{
-  position:absolute;pointer-events:none;z-index:1;
-  opacity:.88;
-}
-.inv-olive-tr{
-  top:-10px;right:-18px;
-  width:clamp(356px,35vw,546px);
-  transform:rotate(-50deg);
-  transform-origin:center center;
-}
-.inv-olive-bl{
-  bottom:0;left:-7rem;
-  width:clamp(220px,40vw,500px);
-  transform:rotate(12deg);
-  transform-origin:bottom left;
-}
 #nj-seed-overlay,
 #padres-seed-overlay {
   position: absolute;
@@ -295,24 +278,6 @@ body{
   animation:sealSpark 1.1s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 
-/* ── PADRES ANIMATIONS ── */
-@keyframes charReveal{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes padresTitleReveal{
-  from{opacity:0;letter-spacing:0.5em}
-  to{opacity:1}
-}
-.padres-title-anim{opacity:0;display:inline-block}
-.padres-title-anim.pt-visible{animation:padresTitleReveal 1.1s cubic-bezier(0.22,1,0.36,1) forwards}
-.padres-char{display:inline-block;opacity:0}
-.padres-char.pc-visible{animation:charReveal 0.35s cubic-bezier(0.22,1,0.36,1) forwards}
-@media(prefers-reduced-motion:reduce){
-  .padres-title-anim{opacity:1;letter-spacing:inherit;animation:none}
-  .padres-char{opacity:1;transform:none;animation:none}
-}
-
 /* ── LAVENDER BANNER ── */
 #lav-banner{
   background:var(--lav);padding:3rem 1.5rem;text-align:center;
@@ -358,19 +323,7 @@ body{
 #padres-section{
   position:relative;overflow:hidden;
   background:var(--cream);
-  padding:clamp(4rem,8vh,6.5rem) clamp(1.5rem,5vw,3rem) 0;
-  text-align:center;
-  display:flex;flex-direction:column;align-items:center;
-  min-height:100svh;
-}
-#padres-section::before{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url('/inv/nieves-y-jesus/assets/textura-piedra-caliza.webp') center/cover no-repeat;
-  opacity:.15;
-}
-#padres-section::after{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:rgba(255,251,202,.23);
+  height:100svh;
 }
 .padres-bg-pic{
   position:absolute;inset:0;z-index:0;
@@ -379,24 +332,6 @@ body{
 .padres-bg-img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
-.padres-content{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;
-  gap:clamp(2.5rem,5vh,4rem);
-  max-width:820px;width:100%;
-}
-.padres-block{display:flex;flex-direction:column;gap:.75rem}
-.padres-title{
-  font-family:var(--cinzel);font-size:clamp(1.05rem,1.35vw,1.38rem);
-  letter-spacing:.3em;text-transform:uppercase;line-height:1.25;
-  color:#b6c7e9;display:block;
-}
-.padres-name{
-  font-family:var(--cinzel);font-size:clamp(1.15rem,1.65vw,1.55rem);
-  font-weight:400;letter-spacing:.07em;
-  color:#3a434a;line-height:1.35;
-}
-.padres-dagger{color:#3a434a;font-size:.85em}
 .padres-divider-zone{
   width:100%;
   flex:1;
@@ -410,46 +345,6 @@ body{
   background:#b6c7e9;
   border-radius:1px;
   opacity:0.75;
-}
-#padres-section .padres-content{
-  margin-bottom:clamp(80px,14vh,180px);
-}
-#padres-section .padres-divider-zone{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  width:100%;
-  height:clamp(130px,18vh,230px);
-  display:flex;
-  justify-content:center;
-  align-items:stretch;
-  pointer-events:none;
-  z-index:2;
-  min-height:0;
-  flex:none;
-}
-#padres-section .padres-divider{
-  width:3px;
-  height:100%;
-  background:#b6c7e9;
-  border-radius:1px;
-  opacity:0.85;
-}
-@media(min-width:768px){
-  #padres-section{justify-content:center;}
-}
-@media(min-width:1920px){
-  #padres-section .padres-title{font-size:clamp(1.1rem,1.3vw,1.6rem);letter-spacing:.35em;}
-  #padres-section .padres-name{font-size:clamp(1.8rem,2.2vw,3rem);line-height:1.5;}
-  #padres-section .padres-content{gap:clamp(3rem,5vh,5rem);max-width:1100px;margin-bottom:clamp(120px,12vh,240px);}
-  #padres-section .padres-divider-zone{height:clamp(180px,16vh,300px);}
-  #padres-section .padres-divider{width:3px;}
-}
-@media(min-width:2560px){
-  #padres-section .padres-title{font-size:1.9rem;letter-spacing:.4em;}
-  #padres-section .padres-name{font-size:3.6rem;line-height:1.55;}
-  #padres-section .padres-content{max-width:1400px;gap:5.5rem;}
-  #padres-section .padres-divider{width:4px;height:100%;}
-  #padres-section .padres-divider-zone{height:clamp(260px,18vh,420px);}
 }
 @media(max-width:767px){
   #padres-section{justify-content:center;}
@@ -999,24 +894,6 @@ footer{
 }
 
 
-
-/* ── PADRES OLIVE RESPONSIVE ── */
-@media(max-width:1536px){
-  .inv-olive-tr{width:clamp(260px,24vw,370px);right:-30px;top:-10px;transform:rotate(-45deg)}
-  .inv-olive-bl{width:clamp(200px,32vw,400px)}
-}
-@media(max-width:1366px){
-  .inv-olive-tr{width:180px;right:-70px;top:-10px;transform:rotate(-40deg);opacity:.65}
-  .inv-olive-bl{width:clamp(180px,28vw,300px);opacity:.8}
-}
-@media(max-width:900px){
-  .inv-olive-tr{width:140px;right:-80px;top:0;transform:rotate(-35deg);opacity:.5}
-  .inv-olive-bl{width:clamp(150px,35vw,240px);opacity:.7}
-}
-@media(max-width:520px){
-  .inv-olive-tr{width:clamp(150px,44vw,210px);top:1.5rem;right:-1rem;transform:rotate(-22deg);transform-origin:top right;opacity:.75}
-  .inv-olive-bl{width:clamp(160px,50vw,200px);left:-4.5rem;transform:rotate(10deg);opacity:.72}
-}
 
 /* ── MOBILE ── */
 @media(max-width:640px){
@@ -1782,6 +1659,7 @@ footer{
 
 <!-- ░░ PADRES ░░ -->
 <section id="padres-section">
+  <div id="padres-seed-overlay" aria-hidden="true"></div>
   <picture class="padres-bg-pic">
     <source media="(min-width: 1024px)"
             srcset="/inv/nieves-y-jesus/assets/seccion-padres-desktop.webp"
@@ -1790,23 +1668,6 @@ footer{
          src="/inv/nieves-y-jesus/assets/seccion-padres-desktop.webp"
          alt="Con la bendición de nuestros padres">
   </picture>
-  <img class="inv-olive inv-olive-tr" src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="" aria-hidden="true" loading="lazy"/>
-  <img class="inv-olive inv-olive-bl" src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true" loading="lazy"/>
-  <div id="padres-seed-overlay" aria-hidden="true"></div>
-
-  <div class="padres-content">
-    <div class="padres-block">
-      <span class="padres-title padres-title-anim" style="animation-delay:0ms">Padres de la Novia:</span>
-      <p class="padres-name"><span class="padres-char" style="animation-delay:0ms">J</span><span class="padres-char" style="animation-delay:12ms">u</span><span class="padres-char" style="animation-delay:24ms">l</span><span class="padres-char" style="animation-delay:36ms">i</span><span class="padres-char" style="animation-delay:48ms">o</span><span class="padres-char" style="animation-delay:60ms">&nbsp;</span><span class="padres-char" style="animation-delay:72ms">A</span><span class="padres-char" style="animation-delay:84ms">l</span><span class="padres-char" style="animation-delay:96ms">b</span><span class="padres-char" style="animation-delay:108ms">e</span><span class="padres-char" style="animation-delay:120ms">r</span><span class="padres-char" style="animation-delay:132ms">t</span><span class="padres-char" style="animation-delay:144ms">o</span><span class="padres-char" style="animation-delay:156ms">&nbsp;</span><span class="padres-char" style="animation-delay:168ms">A</span><span class="padres-char" style="animation-delay:180ms">l</span><span class="padres-char" style="animation-delay:192ms">m</span><span class="padres-char" style="animation-delay:204ms">o</span><span class="padres-char" style="animation-delay:216ms">n</span><span class="padres-char" style="animation-delay:228ms">t</span><span class="padres-char" style="animation-delay:240ms">e</span><span class="padres-char" style="animation-delay:252ms">&nbsp;</span><span class="padres-char" style="animation-delay:264ms">d</span><span class="padres-char" style="animation-delay:276ms">e</span><span class="padres-char" style="animation-delay:288ms">&nbsp;</span><span class="padres-char" style="animation-delay:300ms">l</span><span class="padres-char" style="animation-delay:312ms">a</span><span class="padres-char" style="animation-delay:324ms">&nbsp;</span><span class="padres-char" style="animation-delay:336ms">C</span><span class="padres-char" style="animation-delay:348ms">r</span><span class="padres-char" style="animation-delay:360ms">u</span><span class="padres-char" style="animation-delay:372ms">z</span><br><span class="padres-char" style="animation-delay:384ms">N</span><span class="padres-char" style="animation-delay:396ms">i</span><span class="padres-char" style="animation-delay:408ms">e</span><span class="padres-char" style="animation-delay:420ms">v</span><span class="padres-char" style="animation-delay:432ms">e</span><span class="padres-char" style="animation-delay:444ms">s</span><span class="padres-char" style="animation-delay:456ms">&nbsp;</span><span class="padres-char" style="animation-delay:468ms">Á</span><span class="padres-char" style="animation-delay:480ms">l</span><span class="padres-char" style="animation-delay:492ms">v</span><span class="padres-char" style="animation-delay:504ms">a</span><span class="padres-char" style="animation-delay:516ms">r</span><span class="padres-char" style="animation-delay:528ms">e</span><span class="padres-char" style="animation-delay:540ms">z</span><span class="padres-char" style="animation-delay:552ms">&nbsp;</span><span class="padres-char" style="animation-delay:564ms">M</span><span class="padres-char" style="animation-delay:576ms">e</span><span class="padres-char" style="animation-delay:588ms">n</span><span class="padres-char" style="animation-delay:600ms">a</span></p>
-    </div>
-    <div class="padres-block">
-      <span class="padres-title padres-title-anim" style="animation-delay:0ms">Padres del Novio:</span>
-      <p class="padres-name"><span class="padres-char" style="animation-delay:0ms">S</span><span class="padres-char" style="animation-delay:12ms">i</span><span class="padres-char" style="animation-delay:24ms">m</span><span class="padres-char" style="animation-delay:36ms">ó</span><span class="padres-char" style="animation-delay:48ms">n</span><span class="padres-char" style="animation-delay:60ms">&nbsp;</span><span class="padres-char" style="animation-delay:72ms">R</span><span class="padres-char" style="animation-delay:84ms">a</span><span class="padres-char" style="animation-delay:96ms">f</span><span class="padres-char" style="animation-delay:108ms">a</span><span class="padres-char" style="animation-delay:120ms">e</span><span class="padres-char" style="animation-delay:132ms">l</span><span class="padres-char" style="animation-delay:144ms">&nbsp;</span><span class="padres-char" style="animation-delay:156ms">M</span><span class="padres-char" style="animation-delay:168ms">o</span><span class="padres-char" style="animation-delay:180ms">r</span><span class="padres-char" style="animation-delay:192ms">o</span><span class="padres-char" style="animation-delay:204ms">n</span><span class="padres-char" style="animation-delay:216ms">t</span><span class="padres-char" style="animation-delay:228ms">a</span><span class="padres-char" style="animation-delay:240ms">&nbsp;</span><span class="padres-char" style="animation-delay:252ms">Q</span><span class="padres-char" style="animation-delay:264ms">u</span><span class="padres-char" style="animation-delay:276ms">i</span><span class="padres-char" style="animation-delay:288ms">ñ</span><span class="padres-char" style="animation-delay:300ms">ó</span><span class="padres-char" style="animation-delay:312ms">n</span><span class="padres-char" style="animation-delay:324ms">e</span><span class="padres-char" style="animation-delay:336ms">z</span><span class="padres-char" style="animation-delay:348ms">&nbsp;</span><span class="padres-dagger padres-char" style="animation-delay:360ms">†</span><br><span class="padres-char" style="animation-delay:372ms">Y</span><span class="padres-char" style="animation-delay:384ms">l</span><span class="padres-char" style="animation-delay:396ms">u</span><span class="padres-char" style="animation-delay:408ms">m</span><span class="padres-char" style="animation-delay:420ms">i</span><span class="padres-char" style="animation-delay:432ms">n</span><span class="padres-char" style="animation-delay:444ms">a</span><span class="padres-char" style="animation-delay:456ms">d</span><span class="padres-char" style="animation-delay:468ms">a</span><span class="padres-char" style="animation-delay:480ms">&nbsp;</span><span class="padres-char" style="animation-delay:492ms">L</span><span class="padres-char" style="animation-delay:504ms">u</span><span class="padres-char" style="animation-delay:516ms">g</span><span class="padres-char" style="animation-delay:528ms">o</span></p>
-    </div>
-  </div>
-  <div class="padres-divider-zone">
-    <div class="padres-divider"></div>
-  </div>
 </section>
 
 <!-- ░░ VENUE ░░ -->
