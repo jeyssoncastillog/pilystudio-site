@@ -138,8 +138,9 @@ body{
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 1;
 }
+#nj-seed-overlay { z-index: 1; }
+#padres-seed-overlay { z-index: 2; }
 .nj-seed { position: absolute; }
 .nj-seed-spin { width: 100%; height: 100%; }
 
@@ -306,7 +307,7 @@ body{
   height:100svh;
 }
 .padres-bg-pic{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;inset:0;z-index:1;
   display:block;overflow:hidden;
 }
 .padres-bg-img{
@@ -2490,8 +2491,11 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
                    'seedCross2','seedCross3','seedWobble'];
   var spins = ['seedSpinCW', 'seedSpinCCW'];
 
-  function spawnSeeds(overlay, base) {
+  function spawnSeeds(overlay, base, opts) {
     if (!overlay) return;
+    opts = opts || {};
+    var color = opts.color || seedColor;
+    var opacity = opts.opacity != null ? opts.opacity : 0.85;
 
     var isMobile = window.matchMedia('(max-width: 767px)').matches;
     var seedList = isMobile ? base.filter(function(_, i){ return i % 3 === 0; }) : base;
@@ -2516,7 +2520,7 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       inner.style.cssText = 'animation:' + spin + ' ' + spinDur + 's linear ' + spinDelay + 's infinite;';
       inner.innerHTML =
         '<svg viewBox="0 0 40 24" width="100%" height="100%" style="overflow:visible;">' +
-        '<g stroke="' + seedColor + '" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.85">' +
+        '<g stroke="' + color + '" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="' + opacity + '">' +
         '<line x1="1" y1="20" x2="30" y2="8"></line><line x1="30" y1="8" x2="38" y2="1"></line>' +
         '<line x1="30" y1="8" x2="39" y2="6"></line><line x1="30" y1="8" x2="40" y2="10"></line>' +
         '<line x1="30" y1="8" x2="38" y2="14"></line><line x1="30" y1="8" x2="34" y2="18"></line>' +
@@ -2558,18 +2562,25 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
      lower-left corners — bias these toward centre/upper-left so the
      drifting seeds read as fluff blown off those flowers, not overlap. */
   var padresBase = [
-    {xp:8,yp:10,size:22,dur:16,tilt:20},  {xp:14,yp:20,size:18,dur:18,tilt:-15},
-    {xp:6,yp:32,size:24,dur:14,tilt:35},  {xp:20,yp:8,size:19,dur:17,tilt:-30},
-    {xp:26,yp:24,size:20,dur:15,tilt:10}, {xp:12,yp:44,size:17,dur:19,tilt:-45},
-    {xp:34,yp:14,size:21,dur:13,tilt:25}, {xp:18,yp:36,size:16,dur:20,tilt:-10},
-    {xp:40,yp:30,size:19,dur:16,tilt:40}, {xp:46,yp:12,size:18,dur:18,tilt:-20},
-    {xp:30,yp:42,size:17,dur:15,tilt:15}, {xp:52,yp:24,size:20,dur:17,tilt:-35},
-    {xp:38,yp:48,size:16,dur:19,tilt:5},  {xp:58,yp:16,size:18,dur:14,tilt:-50},
-    {xp:44,yp:6,size:15,dur:21,tilt:30},  {xp:24,yp:52,size:19,dur:16,tilt:-25}
+    {xp:4,yp:6,size:20,dur:14,tilt:15},   {xp:10,yp:14,size:24,dur:12,tilt:-20},
+    {xp:16,yp:4,size:18,dur:16,tilt:30},  {xp:22,yp:12,size:28,dur:11,tilt:-10},
+    {xp:6,yp:22,size:22,dur:15,tilt:40},  {xp:30,yp:6,size:16,dur:18,tilt:-35},
+    {xp:36,yp:16,size:26,dur:13,tilt:5},  {xp:14,yp:26,size:20,dur:17,tilt:-45},
+    {xp:42,yp:8,size:19,dur:14,tilt:25},  {xp:48,yp:18,size:23,dur:12,tilt:-15},
+    {xp:8,yp:36,size:17,dur:19,tilt:50},  {xp:26,yp:22,size:38,dur:10,tilt:-25},
+    {xp:54,yp:10,size:15,dur:21,tilt:35}, {xp:20,yp:34,size:21,dur:16,tilt:-5},
+    {xp:32,yp:28,size:25,dur:13,tilt:20}, {xp:4,yp:46,size:18,dur:18,tilt:-40},
+    {xp:44,yp:24,size:27,dur:11,tilt:10}, {xp:12,yp:44,size:16,dur:20,tilt:-30},
+    {xp:38,yp:36,size:22,dur:15,tilt:45}, {xp:52,yp:30,size:19,dur:17,tilt:-20},
+    {xp:24,yp:42,size:24,dur:13,tilt:15}, {xp:2,yp:52,size:14,dur:22,tilt:-50},
+    {xp:18,yp:50,size:20,dur:16,tilt:30}, {xp:46,yp:38,size:17,dur:19,tilt:-10},
+    {xp:30,yp:48,size:23,dur:14,tilt:25}, {xp:56,yp:44,size:15,dur:21,tilt:-35},
+    {xp:8,yp:16,size:36,dur:10,tilt:0},   {xp:34,yp:44,size:18,dur:18,tilt:40},
+    {xp:58,yp:20,size:21,dur:15,tilt:-15},{xp:16,yp:8,size:34,dur:11,tilt:20}
   ];
 
   spawnSeeds(document.getElementById('nj-seed-overlay'), hoja2Base);
-  spawnSeeds(document.getElementById('padres-seed-overlay'), padresBase);
+  spawnSeeds(document.getElementById('padres-seed-overlay'), padresBase, { color: '#7fa3d4', opacity: 1 });
 })();
 </script>
 </body>
