@@ -196,6 +196,62 @@ body{
   .s3-anim-photo{clip-path:none;opacity:1;animation:none}
 }
 
+/* ── GARDEN COUNTDOWN ── */
+#garden .s3-overlay{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  pointer-events:none;
+  z-index:2;
+}
+#garden .s3-caja{
+  aspect-ratio:2049/1152;
+  min-width:100%;
+  min-height:100%;
+  position:relative;
+}
+.s3-countdown{
+  position:absolute;top:57%;left:28.3%;
+  transform:translateX(-50%);
+  display:flex;align-items:flex-start;gap:.5em;
+}
+.cd-grupo{display:flex;flex-direction:column;align-items:center}
+.cd-digitos{
+  display:flex;
+  font-family:var(--cinzel);font-weight:400;color:#fff;
+  font-size:clamp(2rem,3.4vw,3.6rem);letter-spacing:normal;line-height:1;
+  text-shadow:0 1px 12px rgba(0,0,0,.35);
+}
+.cd-digito{
+  position:relative;overflow:hidden;
+  height:1em;width:.62em;display:inline-block;
+}
+.cd-digito span{position:absolute;inset:0;display:grid;place-items:center}
+.cd-sep{
+  font-family:var(--cinzel);font-weight:400;color:#fff;
+  font-size:clamp(2rem,3.4vw,3.6rem);line-height:1;
+  text-shadow:0 1px 12px rgba(0,0,0,.35);
+  opacity:.75;
+}
+.cd-label{
+  font-family:var(--cinzel);
+  font-size:clamp(0.6rem,0.85vw,0.8rem);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;opacity:.9;margin-top:.5em;
+  text-shadow:0 1px 12px rgba(0,0,0,.35);
+}
+@keyframes cdSale{ to{transform:translateY(-100%);opacity:0} }
+@keyframes cdEntra{ from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+.cd-digito span.cd-exit{
+  animation:cdSale .45s cubic-bezier(0.33,0,0.15,1) forwards;
+}
+.cd-digito span.cd-current.cd-anim-in{
+  animation:cdEntra .45s cubic-bezier(0.33,0,0.15,1) forwards;
+}
+@media(prefers-reduced-motion:reduce){
+  .cd-digito span.cd-exit{animation:none;display:none}
+  .cd-digito span.cd-current.cd-anim-in{animation:none}
+}
+
 /* ── HERO + INVITATION ANIMATIONS ── */
 @keyframes heroFadeRise{
   from{opacity:0;transform:translateY(28px)}
@@ -1663,6 +1719,44 @@ footer{
          src="/inv/nieves-y-jesus/assets/seccion3-desktop.jpg"
          alt="El gran día está cada vez más cerca — viernes, 27 de noviembre de 2026">
   </picture>
+  <div class="s3-overlay">
+    <div class="s3-caja">
+      <div class="s3-countdown" id="s3-countdown" role="timer" aria-label="Cuenta regresiva para el gran día">
+        <div class="cd-grupo">
+          <div class="cd-digitos" data-cd="dias">
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+          </div>
+          <p class="cd-label">DÍAS</p>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-grupo">
+          <div class="cd-digitos" data-cd="horas">
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+          </div>
+          <p class="cd-label">HRS.</p>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-grupo">
+          <div class="cd-digitos" data-cd="minutos">
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+          </div>
+          <p class="cd-label">MINS.</p>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-grupo">
+          <div class="cd-digitos" data-cd="segundos">
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+            <span class="cd-digito"><span class="cd-current">0</span></span>
+          </div>
+          <p class="cd-label">SEG.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ░░ SECTION 4 ░░ -->
@@ -2330,6 +2424,92 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       triggerS3();
     }
   }, 300);
+})();
+</script>
+<script>
+(function(){
+  const TARGET = new Date('2026-11-27T16:00:00-04:00').getTime();
+  const section = document.getElementById('garden');
+  const root = document.getElementById('s3-countdown');
+  if (!root) return;
+
+  const groups = {
+    dias:     { cells: root.querySelectorAll('[data-cd="dias"] .cd-digito'),     digits: 3 },
+    horas:    { cells: root.querySelectorAll('[data-cd="horas"] .cd-digito'),    digits: 2 },
+    minutos:  { cells: root.querySelectorAll('[data-cd="minutos"] .cd-digito'),  digits: 2 },
+    segundos: { cells: root.querySelectorAll('[data-cd="segundos"] .cd-digito'), digits: 2 }
+  };
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setDigit(cell, val, animate) {
+    const current = cell.querySelector('.cd-current');
+    if (current.textContent === val) return;
+
+    if (!animate || reduceMotion) {
+      current.textContent = val;
+      return;
+    }
+
+    const exiting = current.cloneNode(true);
+    exiting.classList.remove('cd-current');
+    exiting.classList.add('cd-exit');
+    exiting.addEventListener('animationend', () => exiting.remove(), { once: true });
+    cell.appendChild(exiting);
+
+    current.textContent = val;
+    current.classList.remove('cd-anim-in');
+    void current.offsetWidth;
+    current.classList.add('cd-anim-in');
+    current.addEventListener('animationend', () => current.classList.remove('cd-anim-in'), { once: true });
+  }
+
+  function renderGroup(group, value, animate) {
+    const str = String(Math.max(0, value)).padStart(group.digits, '0');
+    group.cells.forEach((cell, i) => setDigit(cell, str[i], animate));
+  }
+
+  let timer = null;
+  let done = false;
+
+  function tick(animate) {
+    const diff = TARGET - Date.now();
+
+    if (diff <= 0) {
+      renderGroup(groups.dias, 0, animate);
+      renderGroup(groups.horas, 0, animate);
+      renderGroup(groups.minutos, 0, animate);
+      renderGroup(groups.segundos, 0, animate);
+      if (timer) { clearInterval(timer); timer = null; }
+      done = true;
+      return;
+    }
+
+    const totalSec = Math.floor(diff / 1000);
+    renderGroup(groups.dias, Math.floor(totalSec / 86400), animate);
+    renderGroup(groups.horas, Math.floor((totalSec % 86400) / 3600), animate);
+    renderGroup(groups.minutos, Math.floor((totalSec % 3600) / 60), animate);
+    renderGroup(groups.segundos, totalSec % 60, animate);
+  }
+
+  function start() {
+    if (done || timer) return;
+    tick(false); // resync immediately, no roll — must be correct on return, not stale
+    timer = setInterval(() => tick(true), 1000);
+  }
+
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  const cdObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) start();
+      else stop();
+    });
+  }, { threshold: 0 });
+
+  cdObserver.observe(section);
 })();
 </script>
 <script>
