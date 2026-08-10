@@ -2580,7 +2580,19 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
   ];
 
   spawnSeeds(document.getElementById('nj-seed-overlay'), hoja2Base);
-  spawnSeeds(document.getElementById('padres-seed-overlay'), padresBase, { color: '#7fa3d4', opacity: 1 });
+
+  var padresSection = document.getElementById('padres-section');
+  if (padresSection) {
+    var padresSeedObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          spawnSeeds(document.getElementById('padres-seed-overlay'), padresBase, { color: '#7fa3d4', opacity: 1 });
+          padresSeedObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    padresSeedObserver.observe(padresSection);
+  }
 })();
 </script>
 </body>
