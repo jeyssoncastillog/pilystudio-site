@@ -316,24 +316,8 @@ body{
 .padres-bg-img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
-.padres-divider-zone{
-  width:100%;
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:stretch;
-  min-height:80px;
-}
-.padres-divider{
-  width:2px;
-  background:#b6c7e9;
-  border-radius:1px;
-  opacity:0.75;
-}
 @media(max-width:767px){
   #padres-section{justify-content:center;}
-  #padres-section .padres-content{margin-bottom:clamp(60px,16vh,160px);}
-  #padres-section .padres-divider-zone{height:clamp(90px,14vh,150px);}
 }
 
 /* ── VENUE ── */
@@ -518,20 +502,6 @@ body{
 }
 .vest-link:hover{filter:brightness(1.06)}
 .vest-link:focus-visible{outline:2px solid #7fa3d4;outline-offset:3px}
-@media(max-width:640px){
-  #vestimenta{padding:3rem 1.5rem 0;min-height:auto}
-  .vest-inner{margin-bottom:clamp(80px,12vh,140px)}
-  .vest-main-grid{display:flex;flex-direction:column;align-items:center;gap:2rem}
-  .vest-col-center{order:0}
-  .vest-col-left{order:1;align-items:center;text-align:center;width:100%}
-  .vest-col-right{order:2;align-items:center;text-align:center;width:100%}
-  .vest-outfit{max-width:clamp(180px,60vw,260px)}
-  .vest-text{text-align:center}
-  .vest-note{text-align:center}
-  .vest-palette{justify-content:center}
-  #vestimenta .padres-divider-zone{height:clamp(80px,12vh,140px)}
-}
-
 /* ── REGALO ── */
 #regalo{
   position:relative;overflow:hidden;
@@ -834,30 +804,18 @@ body{
 @media(max-width:640px){
   #hero::before{background-position:62% center}
   #garden{min-height:72vh;padding:3rem 1.75rem;align-items:flex-start;justify-content:center}
-  #garden::before{background:linear-gradient(to bottom,rgba(10,9,20,.62) 0%,rgba(10,9,20,.22) 42%,transparent 68%)}
-  .garden-text{text-shadow:0 2px 8px rgba(0,0,0,.68),0 4px 22px rgba(0,0,0,.42)}
-  .garden-monogram{width:clamp(90px,24vw,115px);filter:drop-shadow(0 2px 14px rgba(0,0,0,.52))}
   .venue-grid{grid-template-columns:1fr;padding:3rem 1.5rem 2.5rem;gap:2.5rem;min-height:auto}
   .venue-left-pad{display:none}
   .venue-center{align-items:center;text-align:center}
   .venue-tl-wrap{justify-content:center;padding-left:0}
-  #venue .padres-divider-zone{height:clamp(90px,14vh,150px)}
   .vt-node{width:48px;height:48px}
   .vt-icon{width:60%;height:60%}
   .s6-spark{left:17px}
   .venue-tl::before{left:24px}
+  #vestimenta{padding:3rem 1.5rem 0;min-height:auto}
   #regalo{min-height:auto;padding:5rem 1.5rem}
   .regalo-inner{grid-template-columns:1fr}
   .regalo-quote{display:none}
-  .padres-grid{grid-template-columns:1fr;gap:2rem}
-  .vest-grid{grid-template-columns:1fr}
-  .gal-grid{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:3px}
-  .gal-night,.gal-sofa,.gal-coffee,.gal-portrait{grid-column:auto;grid-row:auto;aspect-ratio:3/4}
-  .gal-night   {object-position:center center}
-  .gal-sofa    {object-position:center center}
-  .gal-coffee  {object-position:center center}
-  .gal-portrait{object-position:center 35%}
-  .gal-blue    {grid-column:1/-1;grid-row:auto;aspect-ratio:16/10;object-position:center 35%}
   .rsvp-box{padding:2rem 1.25rem}
   .rsvp-modal{padding:8px;align-items:flex-end}
   .rsvp-modal__panel{width:100%;border-radius:8px 8px 0 0}
