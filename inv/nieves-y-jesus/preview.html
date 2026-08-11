@@ -240,6 +240,18 @@ body{
   .cd-digito span.cd-current.cd-anim-in{animation:none}
 }
 
+/* ── GARDEN COUNTDOWN MOBILE ── */
+@media(max-width:1023px){
+  #garden .s3-caja{aspect-ratio:1170/2080}
+  .s3-countdown{
+    top:23%;left:50.67%;
+    transform:translateX(-50%);
+  }
+  .cd-digitos{font-size:2rem}
+  .cd-sep{font-size:2rem}
+  .cd-label{font-size:.62rem}
+}
+
 /* ── HERO + INVITATION ANIMATIONS ── */
 @keyframes heroFadeRise{
   from{opacity:0;transform:translateY(28px)}
@@ -1496,6 +1508,9 @@ body{
 <!-- ░░ GARDEN ░░ -->
 <section id="garden">
   <picture class="s3-anim-photo">
+    <source media="(max-width: 1023px)"
+            srcset="/inv/nieves-y-jesus/assets/seccion3-movil.webp"
+            type="image/webp">
     <source media="(min-width: 1024px)"
             srcset="/inv/nieves-y-jesus/assets/seccion3-desktop.webp"
             type="image/webp">
