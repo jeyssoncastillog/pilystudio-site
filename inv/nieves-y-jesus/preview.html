@@ -1750,10 +1750,17 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       const debugMode = new URLSearchParams(location.search).get('debug') === '1';
       let debugEl = null;
       let debugEvents = [];
-      let playResultText = 'not attempted';
+      let audioPlayResult = 'pending';
+      let videoPlayResult = 'pending';
+      let readyStateAtPlay = null;
+      let loadingWasShown  = false;
+      const debugStartTime = window.performance ? performance.now() : Date.now();
+      function debugNow() {
+        return Math.round((window.performance ? performance.now() : Date.now()) - debugStartTime);
+      }
       function debugLog(msg) {
         if (!debugMode) return;
-        debugEvents.push(msg);
+        debugEvents.push({ t: debugNow(), evt: msg });
         if (debugEvents.length > 5) debugEvents.shift();
       }
       function renderDebug() {
@@ -1763,9 +1770,11 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           ' networkState=' + video.networkState +
           ' currentTime=' + video.currentTime.toFixed(2) +
           ' duration=' + (video.duration || 0).toFixed(2) +
-          ' paused=' + video.paused +
-          ' play()=' + playResultText + '\n' +
-          'events: ' + debugEvents.join(' | ');
+          ' paused=' + video.paused + '\n' +
+          'audio play()=' + audioPlayResult + '   video play()=' + videoPlayResult + '\n' +
+          'readyState @ play() call=' + (readyStateAtPlay === null ? 'n/a' : readyStateAtPlay) +
+          '   loading state shown=' + loadingWasShown + '\n' +
+          'events: ' + debugEvents.map(function (e) { return '+' + e.t + 'ms ' + e.evt; }).join(' | ');
       }
       if (debugMode && video) {
         debugEl = document.createElement('div');
@@ -1783,7 +1792,16 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
         if (musicStarted) return;
         musicStarted = true;
         const audio = document.getElementById('audio');
-        if (audio) audio.play().catch(() => {});
+        if (audio) {
+          audio.play().then(function () {
+            audioPlayResult = 'resolved';
+            renderDebug();
+          }).catch(function (err) {
+            audioPlayResult = 'rejected: ' + (err && err.name);
+            debugLog('audio play() rejected: ' + (err && err.name));
+            renderDebug();
+          });
+        }
       }
 
       function armFailsafe() {
@@ -1803,37 +1821,78 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
         runPostOpenSequence();
       }
 
+      let videoPlayAttempts = 0;
+
+      function attemptVideoPlay() {
+        if (!video) return;
+        const attemptNum = ++videoPlayAttempts;
+        readyStateAtPlay = video.readyState;
+        let shouldRetry  = false;
+        let canPlayArmed = false;
+
+        function armCanPlay() {
+          if (canPlayArmed) return;
+          canPlayArmed = true;
+          loadingWasShown = true;
+          if (loadingEl) loadingEl.classList.add('visible');
+          video.addEventListener('canplay', function onCanPlay() {
+            video.removeEventListener('canplay', onCanPlay);
+            if (loadingEl) loadingEl.classList.remove('visible');
+            if (shouldRetry) attemptVideoPlay();
+          }, { once: true });
+        }
+
+        if (video.readyState < 3) {
+          video.load(); // nudges iOS out of the preload="auto"-ignoring suspended state
+          armCanPlay();
+        }
+
+        const playPromise = video.play();
+        if (playPromise && playPromise.catch) {
+          playPromise.then(function () {
+            videoPlayResult = 'resolved';
+            debugLog('video play() resolved (attempt ' + attemptNum + ')');
+            renderDebug();
+          }).catch(function (err) {
+            videoPlayResult = 'rejected: ' + (err && err.name);
+            debugLog('video play() rejected: ' + (err && err.name) + ' (attempt ' + attemptNum + ')');
+            renderDebug();
+            if (attemptNum === 1) {
+              // Do not dismiss on the first rejection — retry once the
+              // browser says it can actually play.
+              shouldRetry = true;
+              armCanPlay();
+            } else if (err && err.name === 'NotAllowedError') {
+              // Second attempt, device is refusing playback outright —
+              // stranding the guest on a blank tap target is worse.
+              dismissIntro();
+            }
+          });
+        }
+      }
+
       function startIntro() {
-        startMusicOnce();
+        // Both play() calls are issued synchronously, back to back, as
+        // the first two statements — no await, no .then chaining one
+        // off the other, so both stay inside iOS's single-tap gesture
+        // window regardless of how strict the device is about it.
+        const audioEl = document.getElementById('audio');
+        if (audioEl) {
+          audioEl.play().then(function () {
+            audioPlayResult = 'resolved';
+            renderDebug();
+          }).catch(function (err) {
+            audioPlayResult = 'rejected: ' + (err && err.name);
+            debugLog('audio play() rejected: ' + (err && err.name));
+            renderDebug();
+          });
+        }
+        musicStarted = true;
+
         if (cta) cta.style.display = 'none';
         if (reduceMotion) { dismissIntro(); return; }
 
-        if (video) {
-          if (video.readyState < 3) {
-            if (loadingEl) loadingEl.classList.add('visible');
-            video.addEventListener('canplay', function onCanPlay() {
-              video.removeEventListener('canplay', onCanPlay);
-              if (loadingEl) loadingEl.classList.remove('visible');
-            });
-          }
-          const playPromise = video.play();
-          if (playPromise && playPromise.catch) {
-            playPromise.then(function () {
-              playResultText = 'resolved';
-              debugLog('play() resolved');
-              renderDebug();
-            }).catch(function (err) {
-              playResultText = 'rejected: ' + (err && err.name);
-              debugLog('play() rejected: ' + (err && err.name));
-              renderDebug();
-              // Do not dismiss here — a rejected play() can still recover
-              // (autoplay-policy quirks, timing). The failsafe below is
-              // the only thing allowed to give up, and only once nothing
-              // has actually progressed for the full window.
-            });
-          }
-        }
-
+        if (video) attemptVideoPlay();
         armFailsafe();
       }
 
