@@ -1660,13 +1660,34 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   }
   if(modal) modal.addEventListener('rsvp:open',loadGuestList)
 
+  function positionResultsDropdown(){
+    const scrollWrap=document.querySelector('.rsvp-modal__scroll')
+    if(!scrollWrap) return
+    const vv=window.visualViewport
+    const viewportBottom=function(){ return vv?(vv.height+vv.offsetTop):window.innerHeight }
+    let wrapBottom=Math.min(scrollWrap.getBoundingClientRect().bottom,viewportBottom())
+    let available=wrapBottom-searchInput.getBoundingClientRect().bottom-10
+    if(available<160){
+      searchInput.scrollIntoView({block:'start'})
+      wrapBottom=Math.min(scrollWrap.getBoundingClientRect().bottom,viewportBottom())
+      available=wrapBottom-searchInput.getBoundingClientRect().bottom-10
+    }
+    resultsEl.style.maxHeight=Math.max(0,Math.min(240,available))+'px'
+  }
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',function(){
+      if(!resultsEl.hidden) positionResultsDropdown()
+    })
+  }
+
   function renderGuestResults(query){
     const q=normalizeText(query)
     if(!q){ resultsEl.hidden=true; resultsEl.innerHTML=''; return }
-    const matches=guestList.filter(function(g){ return g.b.indexOf(q)!==-1 }).slice(0,6)
+    const matches=guestList.filter(function(g){ return g.b.indexOf(q)!==-1 }).slice(0,10)
     if(!matches.length){
       resultsEl.innerHTML='<div class="rsvp-guest-empty">No encontramos coincidencias</div>'
       resultsEl.hidden=false
+      positionResultsDropdown()
       return
     }
     resultsEl.innerHTML=matches.map(function(g){
@@ -1676,6 +1697,7 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
         +'</button>'
     }).join('')
     resultsEl.hidden=false
+    positionResultsDropdown()
   }
 
   function selectGroup(g){
