@@ -133,7 +133,8 @@ body{
   margin: 0;
 }
 #nj-seed-overlay,
-#padres-seed-overlay {
+#padres-seed-overlay,
+#vest-seed-overlay {
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -141,9 +142,13 @@ body{
 }
 #nj-seed-overlay { z-index: 1; }
 #padres-seed-overlay { z-index: 2; }
+#vest-seed-overlay { z-index: 2; }
 .nj-seed { position: absolute; }
 .nj-seed-spin { width: 100%; height: 100%; }
 #padres-seed-overlay .nj-seed {
+  animation-fill-mode: backwards !important;
+}
+#vest-seed-overlay .nj-seed {
   animation-fill-mode: backwards !important;
 }
 
@@ -162,7 +167,7 @@ body{
 @keyframes seedSpinCCW { 0%{transform:rotate(0deg);} 100%{transform:rotate(-360deg);} }
 
 @media (prefers-reduced-motion: reduce) {
-  #nj-seed-overlay, #padres-seed-overlay { display: none; }
+  #nj-seed-overlay, #padres-seed-overlay, #vest-seed-overlay { display: none; }
 }
 
 /* ── GARDEN ── */
@@ -486,14 +491,14 @@ body{
   height:100svh;
 }
 .vest-bg-pic{
-  position:absolute;inset:0;z-index:0;
+  position:absolute;inset:0;z-index:1;
   display:block;overflow:hidden;
 }
 .vest-bg-img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .vest-overlay{
-  position:absolute;inset:0;
+  position:absolute;inset:0;z-index:3;
   display:grid;place-items:center;
   pointer-events:none;
 }
@@ -1649,6 +1654,7 @@ body{
 
 <!-- ░░ VESTIMENTA ░░ -->
 <section id="vestimenta">
+  <div id="vest-seed-overlay"></div>
   <picture class="vest-bg-pic">
     <source media="(max-width: 1023px)"
             srcset="/inv/nieves-y-jesus/assets/seccion-vestimenta-movil.webp"
@@ -2530,6 +2536,61 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       });
     }, { threshold: 0.25 });
     padresSeedObserver.observe(padresSection);
+  }
+
+  /* Vestimenta desktop crop (2049x1152): drawn dandelions cluster
+     bottom-left (~0-18%/52-100%) and top-right (~72-100%/0-25%); the
+     CABALLEROS/DAMAS text columns and centre figures fill the middle.
+     Seeds are biased into the open left/right margins and the thin
+     top/mid/bottom gaps between those blocks. */
+  var vestBase = [
+    {xp:3,yp:4,size:22,dur:14,tilt:15},   {xp:7,yp:10,size:28,dur:12,tilt:-25},
+    {xp:4,yp:18,size:18,dur:17,tilt:35},  {xp:8,yp:26,size:25,dur:13,tilt:-10},
+    {xp:3,yp:34,size:16,dur:19,tilt:45},  {xp:6,yp:44,size:21,dur:15,tilt:-30},
+    {xp:90,yp:30,size:24,dur:13,tilt:20}, {xp:95,yp:38,size:17,dur:18,tilt:-15},
+    {xp:88,yp:46,size:27,dur:12,tilt:40}, {xp:93,yp:54,size:19,dur:16,tilt:-35},
+    {xp:97,yp:62,size:15,dur:21,tilt:10}, {xp:89,yp:72,size:23,dur:14,tilt:-50},
+    {xp:94,yp:82,size:18,dur:17,tilt:25}, {xp:25,yp:4,size:20,dur:15,tilt:-20},
+    {xp:40,yp:8,size:16,dur:19,tilt:30},  {xp:55,yp:3,size:22,dur:13,tilt:-40},
+    {xp:65,yp:9,size:18,dur:17,tilt:15},  {xp:22,yp:20,size:19,dur:16,tilt:-15},
+    {xp:35,yp:24,size:15,dur:20,tilt:35}, {xp:50,yp:23,size:21,dur:14,tilt:-25},
+    {xp:42,yp:85,size:20,dur:15,tilt:20}, {xp:44,yp:92,size:16,dur:18,tilt:-35},
+    {xp:56,yp:80,size:24,dur:13,tilt:40}
+  ];
+
+  /* Vestimenta mobile crop (1350x2400), measured live via a frozen-animation
+     render at 390x844: top dandelion cluster ~47-100%/0-19%, a single
+     bottom-left dandelion whose long stems run ~0-31%/68-100% (not just the
+     flower heads), the man figure ~0-21%/30-56%, the woman figure ~82-100%/
+     54-76%, and the CABALLEROS/DAMAS text column ~24-75%/26-76%. Seeds sit
+     in the open top-left, the right margin beside the figures, the narrow
+     gap between the man figure and the bottom dandelion, and the open
+     pocket below the button/right of the divider. */
+  var vestBaseMobile = [
+    {xp:4,yp:9,size:20,dur:14,tilt:10},   {xp:16,yp:9,size:16,dur:18,tilt:-25},
+    {xp:30,yp:8,size:24,dur:12,tilt:30},  {xp:38,yp:14,size:17,dur:17,tilt:-15},
+    {xp:12,yp:16,size:22,dur:13,tilt:40}, {xp:24,yp:11,size:15,dur:20,tilt:-30},
+    {xp:5,yp:61,size:16,dur:16,tilt:20},  {xp:80,yp:24,size:23,dur:13,tilt:-20},
+    {xp:92,yp:29,size:16,dur:18,tilt:30}, {xp:84,yp:37,size:19,dur:16,tilt:-35},
+    {xp:96,yp:44,size:15,dur:20,tilt:25}, {xp:88,yp:50,size:21,dur:14,tilt:-10},
+    {xp:72,yp:80,size:21,dur:14,tilt:15}, {xp:85,yp:83,size:17,dur:17,tilt:-25},
+    {xp:95,yp:87,size:24,dur:12,tilt:40}, {xp:75,yp:92,size:18,dur:16,tilt:-15},
+    {xp:88,yp:96,size:15,dur:19,tilt:30}, {xp:70,yp:97,size:20,dur:15,tilt:-40},
+    {xp:40,yp:90,size:18,dur:16,tilt:-15},{xp:58,yp:92,size:15,dur:19,tilt:25}
+  ];
+
+  var vestSection = document.getElementById('vestimenta');
+  if (vestSection) {
+    var vestSeedObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var vestBaseForViewport = window.matchMedia('(max-width: 1023px)').matches ? vestBaseMobile : vestBase;
+          spawnSeeds(document.getElementById('vest-seed-overlay'), vestBaseForViewport, { color: '#7fa3d4', opacity: 1 });
+          vestSeedObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    vestSeedObserver.observe(vestSection);
   }
 })();
 </script>
