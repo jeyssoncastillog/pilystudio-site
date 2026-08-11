@@ -881,25 +881,33 @@ body{
   object-fit: cover;
   display: block;
 }
+#intro-scrim {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 22%;
+  background: linear-gradient(to top, rgba(20,25,45,.42) 0%, rgba(20,25,45,0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
 #intro-fade {
   position: absolute; inset: 0;
   background: #fff;
   opacity: 0;
   pointer-events: none;
   transition: opacity .1s linear;
-  z-index: 1;
+  z-index: 2;
 }
 #intro-cta {
   position: absolute;
   left: 50%; bottom: clamp(1.5rem, 6vh, 3rem);
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   margin: 0;
   text-align: center;
   font-family: 'Cinzel', serif;
   text-transform: uppercase;
   letter-spacing: .14em;
-  font-size: clamp(.82rem, 2.6vw, 1rem);
+  font-size: clamp(1.05rem, 4.4vw, 1.45rem);
   color: rgba(255,255,255,.92);
   text-shadow: 0 2px 14px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4);
   pointer-events: none;
@@ -921,14 +929,14 @@ body{
   position: absolute;
   left: 50%; bottom: clamp(1.5rem, 6vh, 3rem);
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   margin: 0;
   display: none;
   text-align: center;
   font-family: 'Cinzel', serif;
   text-transform: uppercase;
   letter-spacing: .14em;
-  font-size: clamp(.82rem, 2.6vw, 1rem);
+  font-size: clamp(1.05rem, 4.4vw, 1.45rem);
   color: rgba(255,255,255,.92);
   text-shadow: 0 2px 14px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4);
   pointer-events: none;
@@ -952,7 +960,7 @@ body{
   display: none;
   position: absolute;
   top: 1rem; right: 1rem;
-  z-index: 3;
+  z-index: 4;
   min-width: 44px; min-height: 44px;
   padding: .5rem 1rem;
   background: rgba(255,255,255,.14);
@@ -1183,6 +1191,7 @@ body{
 <div id="intro-overlay">
   <video id="intro-video"
          muted playsinline preload="auto"></video>
+  <div id="intro-scrim" aria-hidden="true"></div>
   <div id="intro-fade" aria-hidden="true"></div>
   <p id="intro-cta">Toca para comenzar</p>
   <p id="intro-loading">Cargando…</p>
