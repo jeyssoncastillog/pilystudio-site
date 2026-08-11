@@ -514,6 +514,15 @@ body{
 }
 .vest-link:hover{filter:brightness(1.06)}
 .vest-link:focus-visible{outline:2px solid #7fa3d4;outline-offset:3px}
+@media(max-width:1023px){
+  .vest-caja{aspect-ratio:1350/2400}
+  .vest-link{
+    left:36.15%;
+    top:78.96%;
+    width:27.63%;
+    height:4.21%;
+  }
+}
 /* ── REGALO ── */
 #regalo{
   position:relative;overflow:hidden;
@@ -831,7 +840,6 @@ body{
   .vt-icon{width:60%;height:60%}
   .s6-spark{left:17px}
   .venue-tl::before{left:24px}
-  #vestimenta{padding:3rem 1.5rem 0;min-height:auto}
   #regalo{min-height:auto;padding:5rem 1.5rem}
   .regalo-inner{grid-template-columns:1fr}
   .regalo-quote{display:none}
@@ -1642,6 +1650,9 @@ body{
 <!-- ░░ VESTIMENTA ░░ -->
 <section id="vestimenta">
   <picture class="vest-bg-pic">
+    <source media="(max-width: 1023px)"
+            srcset="/inv/nieves-y-jesus/assets/seccion-vestimenta-movil.webp"
+            type="image/webp">
     <source media="(min-width: 1024px)"
             srcset="/inv/nieves-y-jesus/assets/seccion-vestimenta-desktop.webp"
             type="image/webp">
