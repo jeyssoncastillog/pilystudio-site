@@ -1563,6 +1563,9 @@ body{
 <section id="padres-section">
   <div id="padres-seed-overlay" aria-hidden="true"></div>
   <picture class="padres-bg-pic">
+    <source media="(max-width: 1023px)"
+            srcset="/inv/nieves-y-jesus/assets/seccion-padres-movil.webp"
+            type="image/webp">
     <source media="(min-width: 1024px)"
             srcset="/inv/nieves-y-jesus/assets/seccion-padres-desktop.webp"
             type="image/webp">
@@ -2480,6 +2483,28 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     {xp:58,yp:20,size:21,dur:15,tilt:-15},{xp:16,yp:8,size:34,dur:11,tilt:20}
   ];
 
+  /* Mobile export's drawn dandelions sit in different spots than the
+     desktop crop (upper-right ~31-61%/0-14%, lower-left ~0-17%/43-63%).
+     Reposition just the points that would land on them; desktop's
+     padresBase above is untouched. */
+  var padresBaseMobile = [
+    {xp:4,yp:6,size:20,dur:14,tilt:15},   {xp:10,yp:14,size:24,dur:12,tilt:-20},
+    {xp:16,yp:4,size:18,dur:16,tilt:30},  {xp:22,yp:12,size:28,dur:11,tilt:-10},
+    {xp:6,yp:22,size:22,dur:15,tilt:40},  {xp:30,yp:24,size:16,dur:18,tilt:-35},
+    {xp:36,yp:24,size:26,dur:13,tilt:5},  {xp:14,yp:26,size:20,dur:17,tilt:-45},
+    {xp:42,yp:24,size:19,dur:14,tilt:25}, {xp:48,yp:24,size:23,dur:12,tilt:-15},
+    {xp:8,yp:36,size:17,dur:19,tilt:50},  {xp:26,yp:22,size:38,dur:10,tilt:-25},
+    {xp:54,yp:26,size:15,dur:21,tilt:35}, {xp:20,yp:34,size:21,dur:16,tilt:-5},
+    {xp:32,yp:28,size:25,dur:13,tilt:20}, {xp:4,yp:70,size:18,dur:18,tilt:-40},
+    {xp:44,yp:24,size:27,dur:11,tilt:10}, {xp:12,yp:72,size:16,dur:20,tilt:-30},
+    {xp:38,yp:36,size:22,dur:15,tilt:45}, {xp:52,yp:30,size:19,dur:17,tilt:-20},
+    {xp:24,yp:74,size:24,dur:13,tilt:15}, {xp:2,yp:76,size:14,dur:22,tilt:-50},
+    {xp:18,yp:78,size:20,dur:16,tilt:30}, {xp:46,yp:38,size:17,dur:19,tilt:-10},
+    {xp:30,yp:48,size:23,dur:14,tilt:25}, {xp:56,yp:44,size:15,dur:21,tilt:-35},
+    {xp:8,yp:16,size:36,dur:10,tilt:0},   {xp:34,yp:44,size:18,dur:18,tilt:40},
+    {xp:58,yp:20,size:21,dur:15,tilt:-15},{xp:16,yp:8,size:34,dur:11,tilt:20}
+  ];
+
   spawnSeeds(document.getElementById('nj-seed-overlay'), hoja2Base);
 
   var padresSection = document.getElementById('padres-section');
@@ -2487,7 +2512,8 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
     var padresSeedObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          spawnSeeds(document.getElementById('padres-seed-overlay'), padresBase, { color: '#7fa3d4', opacity: 1 });
+          var padresBaseForViewport = window.matchMedia('(max-width: 1023px)').matches ? padresBaseMobile : padresBase;
+          spawnSeeds(document.getElementById('padres-seed-overlay'), padresBaseForViewport, { color: '#7fa3d4', opacity: 1 });
           padresSeedObserver.unobserve(entry.target);
         }
       });
