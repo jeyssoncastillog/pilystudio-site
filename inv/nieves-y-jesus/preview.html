@@ -895,18 +895,58 @@ body{
   transform: translateX(-50%);
   z-index: 2;
   margin: 0;
+  text-align: center;
   font-family: 'Cinzel', serif;
   text-transform: uppercase;
   letter-spacing: .14em;
-  font-size: clamp(.65rem, 1.8vw, .8rem);
+  font-size: clamp(.82rem, 2.6vw, 1rem);
   color: rgba(255,255,255,.92);
-  text-shadow: 0 2px 10px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
+  text-shadow: 0 2px 14px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4);
   pointer-events: none;
   animation: introCtaPulse 2.6s ease-in-out infinite;
 }
+#intro-cta::after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  margin: .55em auto 0;
+  background: rgba(255,255,255,.75);
+}
 @keyframes introCtaPulse {
-  0%, 100% { opacity: .5; }
+  0%, 100% { opacity: .72; }
   50%       { opacity: 1; }
+}
+#intro-loading {
+  position: absolute;
+  left: 50%; bottom: clamp(1.5rem, 6vh, 3rem);
+  transform: translateX(-50%);
+  z-index: 2;
+  margin: 0;
+  display: none;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: clamp(.82rem, 2.6vw, 1rem);
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 2px 14px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4);
+  pointer-events: none;
+}
+#intro-loading.visible { display: block; }
+#intro-debug {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 999999;
+  padding: .5rem .6rem;
+  background: rgba(0,0,0,.82);
+  color: #7fff9a;
+  font-family: 'SF Mono', 'Courier New', monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  pointer-events: none;
 }
 #intro-skip {
   display: none;
@@ -1144,6 +1184,7 @@ body{
          muted playsinline preload="auto"></video>
   <div id="intro-fade" aria-hidden="true"></div>
   <p id="intro-cta">Toca para comenzar</p>
+  <p id="intro-loading">Cargando…</p>
   <button id="intro-skip" type="button">Saltar</button>
 </div>
 
@@ -1696,10 +1737,47 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           : '/inv/nieves-y-jesus/assets/intro-movil.mp4';
       }
 
-      let musicStarted = false;
-      let dismissed     = false;
-      let failsafeTimer = null;
+      const loadingEl = document.getElementById('intro-loading');
+      const FAILSAFE_MS = 15000;
+      let musicStarted     = false;
+      let dismissed        = false;
+      let failsafeTimer    = null;
+      let lastProgressTime = -1;
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Debug readout, only when ?debug=1 is present — otherwise this
+      // whole block never runs: no element, no listeners, no timer. ──
+      const debugMode = new URLSearchParams(location.search).get('debug') === '1';
+      let debugEl = null;
+      let debugEvents = [];
+      let playResultText = 'not attempted';
+      function debugLog(msg) {
+        if (!debugMode) return;
+        debugEvents.push(msg);
+        if (debugEvents.length > 5) debugEvents.shift();
+      }
+      function renderDebug() {
+        if (!debugEl || !video) return;
+        debugEl.textContent =
+          'readyState=' + video.readyState +
+          ' networkState=' + video.networkState +
+          ' currentTime=' + video.currentTime.toFixed(2) +
+          ' duration=' + (video.duration || 0).toFixed(2) +
+          ' paused=' + video.paused +
+          ' play()=' + playResultText + '\n' +
+          'events: ' + debugEvents.join(' | ');
+      }
+      if (debugMode && video) {
+        debugEl = document.createElement('div');
+        debugEl.id = 'intro-debug';
+        document.body.appendChild(debugEl);
+        ['loadstart','loadedmetadata','loadeddata','canplay','canplaythrough',
+         'playing','waiting','stalled','suspend','abort','error','ended','pause','play']
+          .forEach(function (evt) {
+            video.addEventListener(evt, function () { debugLog(evt); renderDebug(); });
+          });
+        setInterval(renderDebug, 250);
+      }
 
       function startMusicOnce() {
         if (musicStarted) return;
@@ -1708,11 +1786,17 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
         if (audio) audio.play().catch(() => {});
       }
 
+      function armFailsafe() {
+        if (failsafeTimer) clearTimeout(failsafeTimer);
+        failsafeTimer = setTimeout(dismissIntro, FAILSAFE_MS);
+      }
+
       function dismissIntro() {
         if (dismissed) return;
         dismissed = true;
         if (failsafeTimer) clearTimeout(failsafeTimer);
         startMusicOnce();
+        if (loadingEl) loadingEl.classList.remove('visible');
         overlay.classList.add('intro-hiding');
         setTimeout(() => overlay.remove(), 650);
         try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
@@ -1723,8 +1807,34 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
         startMusicOnce();
         if (cta) cta.style.display = 'none';
         if (reduceMotion) { dismissIntro(); return; }
-        if (video) video.play().catch(() => {});
-        failsafeTimer = setTimeout(dismissIntro, 9000);
+
+        if (video) {
+          if (video.readyState < 3) {
+            if (loadingEl) loadingEl.classList.add('visible');
+            video.addEventListener('canplay', function onCanPlay() {
+              video.removeEventListener('canplay', onCanPlay);
+              if (loadingEl) loadingEl.classList.remove('visible');
+            });
+          }
+          const playPromise = video.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.then(function () {
+              playResultText = 'resolved';
+              debugLog('play() resolved');
+              renderDebug();
+            }).catch(function (err) {
+              playResultText = 'rejected: ' + (err && err.name);
+              debugLog('play() rejected: ' + (err && err.name));
+              renderDebug();
+              // Do not dismiss here — a rejected play() can still recover
+              // (autoplay-policy quirks, timing). The failsafe below is
+              // the only thing allowed to give up, and only once nothing
+              // has actually progressed for the full window.
+            });
+          }
+        }
+
+        armFailsafe();
       }
 
       overlay.addEventListener('click', startIntro, { once: true });
@@ -1737,6 +1847,13 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           const remaining = video.duration - video.currentTime;
           const p = remaining <= 0.55 ? 1 - (remaining / 0.55) : 0;
           fadeEl.style.opacity = Math.min(1, Math.max(0, p));
+
+          // Real progress means playback isn't stuck — push the failsafe
+          // deadline forward instead of racing a flat timer against it.
+          if (failsafeTimer && video.currentTime > lastProgressTime + 0.05) {
+            lastProgressTime = video.currentTime;
+            armFailsafe();
+          }
         });
       }
 
