@@ -1754,6 +1754,7 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       let videoPlayResult = 'pending';
       let readyStateAtPlay = null;
       let loadingWasShown  = false;
+      let handlerErrorText = null;
       const debugStartTime = window.performance ? performance.now() : Date.now();
       function debugNow() {
         return Math.round((window.performance ? performance.now() : Date.now()) - debugStartTime);
@@ -1765,16 +1766,20 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       }
       function renderDebug() {
         if (!debugEl || !video) return;
-        debugEl.textContent =
+        var lines = [
           'readyState=' + video.readyState +
-          ' networkState=' + video.networkState +
-          ' currentTime=' + video.currentTime.toFixed(2) +
-          ' duration=' + (video.duration || 0).toFixed(2) +
-          ' paused=' + video.paused + '\n' +
-          'audio play()=' + audioPlayResult + '   video play()=' + videoPlayResult + '\n' +
+            ' networkState=' + video.networkState +
+            ' currentTime=' + video.currentTime.toFixed(2) +
+            ' duration=' + (video.duration || 0).toFixed(2) +
+            ' paused=' + video.paused,
+          'audio play()=' + audioPlayResult + '   video play()=' + videoPlayResult,
           'readyState @ play() call=' + (readyStateAtPlay === null ? 'n/a' : readyStateAtPlay) +
-          '   loading state shown=' + loadingWasShown + '\n' +
-          'events: ' + debugEvents.map(function (e) { return '+' + e.t + 'ms ' + e.evt; }).join(' | ');
+            '   loading state shown=' + loadingWasShown,
+          'prefers-reduced-motion=' + reduceMotion,
+          'events: ' + debugEvents.map(function (e) { return '+' + e.t + 'ms ' + e.evt; }).join(' | ')
+        ];
+        if (handlerErrorText) lines.push('HANDLER ERROR: ' + handlerErrorText);
+        debugEl.textContent = lines.join('\n');
       }
       if (debugMode && video) {
         debugEl = document.createElement('div');
@@ -1785,6 +1790,19 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           .forEach(function (evt) {
             video.addEventListener(evt, function () { debugLog(evt); renderDebug(); });
           });
+        window.addEventListener('error', function (e) {
+          handlerErrorText = (e.message || 'unknown error') +
+            ' @ ' + (e.filename || '?') + ':' + (e.lineno || '?');
+          debugLog('window error: ' + handlerErrorText);
+          renderDebug();
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          var reason = e.reason;
+          var msg = (reason && reason.message) ? (reason.name + ': ' + reason.message) : String(reason);
+          handlerErrorText = 'unhandled rejection: ' + msg;
+          debugLog(handlerErrorText);
+          renderDebug();
+        });
         setInterval(renderDebug, 250);
       }
 
@@ -1872,28 +1890,39 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
       }
 
       function startIntro() {
-        // Both play() calls are issued synchronously, back to back, as
-        // the first two statements — no await, no .then chaining one
-        // off the other, so both stay inside iOS's single-tap gesture
-        // window regardless of how strict the device is about it.
-        const audioEl = document.getElementById('audio');
-        if (audioEl) {
-          audioEl.play().then(function () {
-            audioPlayResult = 'resolved';
-            renderDebug();
-          }).catch(function (err) {
-            audioPlayResult = 'rejected: ' + (err && err.name);
-            debugLog('audio play() rejected: ' + (err && err.name));
-            renderDebug();
-          });
+        try {
+          // Both play() calls are issued synchronously, back to back, as
+          // the first two statements — no await, no .then chaining one
+          // off the other, so both stay inside iOS's single-tap gesture
+          // window regardless of how strict the device is about it.
+          const audioEl = document.getElementById('audio');
+          if (audioEl) {
+            audioEl.play().then(function () {
+              audioPlayResult = 'resolved';
+              renderDebug();
+            }).catch(function (err) {
+              audioPlayResult = 'rejected: ' + (err && err.name);
+              debugLog('audio play() rejected: ' + (err && err.name));
+              renderDebug();
+            });
+          }
+          musicStarted = true;
+
+          if (cta) cta.style.display = 'none';
+          if (reduceMotion) { dismissIntro(); return; }
+
+          if (video) attemptVideoPlay();
+          armFailsafe();
+        } catch (err) {
+          // Whatever this is, the guest still needs to reach the
+          // invitation — surface it to the debug readout and fall
+          // through to the same recovery path the failsafe uses.
+          handlerErrorText = (err && err.name ? err.name + ': ' : '') +
+            (err && err.message ? err.message : String(err));
+          debugLog('startIntro() threw: ' + handlerErrorText);
+          renderDebug();
+          dismissIntro();
         }
-        musicStarted = true;
-
-        if (cta) cta.style.display = 'none';
-        if (reduceMotion) { dismissIntro(); return; }
-
-        if (video) attemptVideoPlay();
-        armFailsafe();
       }
 
       overlay.addEventListener('click', startIntro, { once: true });
