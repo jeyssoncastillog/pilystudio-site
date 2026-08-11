@@ -803,6 +803,53 @@ body{
   margin-top:.5rem;display:none;text-align:center;
 }
 
+/* ── RSVP GUEST SEARCH ── */
+.rsvp-guest-search{position:relative}
+.rsvp-guest-search .rsvp-input{padding-right:2.4rem}
+.rsvp-guest-clear{
+  position:absolute;top:50%;right:.6rem;transform:translateY(-50%);
+  width:1.6rem;height:1.6rem;border:none;background:rgba(139,145,181,.14);
+  border-radius:50%;color:var(--mid);cursor:pointer;font-size:.7rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s;
+}
+.rsvp-guest-clear:hover{background:rgba(139,145,181,.28)}
+.rsvp-guest-results{
+  position:absolute;left:0;right:0;top:calc(100% + .3rem);z-index:20;
+  background:#fff;border:1px solid rgba(181,196,221,.55);border-radius:3px;
+  box-shadow:0 8px 24px rgba(42,42,62,.14);
+  max-height:15rem;overflow-y:auto;
+}
+.rsvp-guest-result{
+  display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+  width:100%;padding:.6rem .85rem;background:none;border:none;
+  border-bottom:1px solid rgba(181,196,221,.2);
+  font-family:var(--body);font-size:.86rem;color:var(--dark);
+  text-align:left;cursor:pointer;transition:background .15s;
+}
+.rsvp-guest-result:last-child{border-bottom:none}
+.rsvp-guest-result:hover,.rsvp-guest-result:focus-visible{background:rgba(139,145,181,.1)}
+.rsvp-guest-result-name{flex:1;min-width:0}
+.rsvp-guest-result-pases{
+  flex-shrink:0;font-family:var(--cinzel);font-size:.62rem;letter-spacing:.06em;
+  color:var(--lav-dk);text-transform:uppercase;white-space:nowrap;
+}
+.rsvp-guest-empty{padding:.75rem .85rem;font-size:.85rem;color:var(--mid);font-style:italic}
+.rsvp-guest-toggle{
+  display:inline-block;margin-top:.55rem;
+  background:none;border:none;padding:0;
+  font-family:var(--body);font-size:.78rem;color:var(--lav-dk);
+  text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;
+  cursor:pointer;
+}
+.rsvp-guest-toggle:hover{color:var(--dark)}
+.rsvp-guest-fallback{margin-top:.7rem}
+.rsvp-pases-hint{
+  font-size:.82rem;color:var(--mid);font-style:italic;
+  margin-top:.4rem;line-height:1.6;
+}
+.rsvp-guest-clear[hidden],.rsvp-guest-toggle[hidden],.rsvp-radio-group[hidden]{display:none}
+
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
 .reveal.visible{opacity:1;transform:none}
@@ -1474,8 +1521,18 @@ body{
         <div class="rsvp-box">
           <div id="rsvp-form">
             <div class="rsvp-field">
-              <label class="rsvp-label" for="r-nombre">Nombre y Apellido *</label>
-              <input class="rsvp-input" id="r-nombre" type="text" placeholder="Tu nombre completo" required/>
+              <label class="rsvp-label" for="r-nombre-search">Nombre y Apellido *</label>
+              <div class="rsvp-guest-search" id="rsvp-guest-search">
+                <input class="rsvp-input" id="r-nombre-search" type="text" autocomplete="off"
+                       placeholder="Escribe tu nombre o el de tu familia"/>
+                <button type="button" class="rsvp-guest-clear" id="rsvp-guest-clear" hidden aria-label="Cambiar selección">✕</button>
+                <div class="rsvp-guest-results" id="rsvp-guest-results" hidden></div>
+              </div>
+              <button type="button" class="rsvp-guest-toggle" id="rsvp-guest-fallback-toggle">No encuentro mi nombre</button>
+              <div class="rsvp-guest-fallback" id="rsvp-guest-fallback" hidden>
+                <input class="rsvp-input" id="r-nombre-fallback" type="text" placeholder="Tu nombre completo"/>
+                <button type="button" class="rsvp-guest-toggle" id="rsvp-guest-fallback-back">Buscar en la lista</button>
+              </div>
             </div>
             <div class="rsvp-field">
               <label class="rsvp-label" for="r-telefono">WhatsApp o teléfono *</label>
@@ -1496,25 +1553,10 @@ body{
                 </label>
               </div>
             </div>
-            <div class="rsvp-field">
-              <label class="rsvp-label">¿Cuántos pases confirmas?</label>
-              <div class="rsvp-radio-group">
-                <label class="rsvp-radio">
-                  <input type="radio" name="pases" value="1"/>
-                  <span class="rsvp-radio__dot"></span>
-                  <span>1 Pase</span>
-                </label>
-                <label class="rsvp-radio">
-                  <input type="radio" name="pases" value="2"/>
-                  <span class="rsvp-radio__dot"></span>
-                  <span>2 Pases</span>
-                </label>
-                <label class="rsvp-radio">
-                  <input type="radio" name="pases" value="3"/>
-                  <span class="rsvp-radio__dot"></span>
-                  <span>3 Pases</span>
-                </label>
-              </div>
+            <div class="rsvp-field" id="rsvp-pases-field">
+              <label class="rsvp-label" id="rsvp-pases-label">¿Cuántos pases confirmas? *</label>
+              <p class="rsvp-pases-hint" id="rsvp-pases-hint">Selecciona tu nombre para ver tus pases disponibles.</p>
+              <div class="rsvp-radio-group" id="rsvp-pases-options" hidden></div>
             </div>
             <div class="rsvp-field">
               <label class="rsvp-label">Restricciones alimenticias o alergias</label>
@@ -1573,23 +1615,218 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   const errorEl=document.getElementById('rsvp-error')
   const formEl=document.getElementById('rsvp-form')
   const successEl=document.getElementById('rsvp-success')
+  const modal=document.getElementById('rsvp-modal')
+
+  const searchInput=document.getElementById('r-nombre-search')
+  const clearBtn=document.getElementById('rsvp-guest-clear')
+  const resultsEl=document.getElementById('rsvp-guest-results')
+  const searchWrap=document.getElementById('rsvp-guest-search')
+  const fallbackToggle=document.getElementById('rsvp-guest-fallback-toggle')
+  const fallbackBack=document.getElementById('rsvp-guest-fallback-back')
+  const fallbackWrap=document.getElementById('rsvp-guest-fallback')
+  const fallbackInput=document.getElementById('r-nombre-fallback')
+  const pasesField=document.getElementById('rsvp-pases-field')
+  const pasesLabel=document.getElementById('rsvp-pases-label')
+  const pasesHint=document.getElementById('rsvp-pases-hint')
+  const pasesOptions=document.getElementById('rsvp-pases-options')
+
+  const NO_ASISTE='Lamentablemente no podré asistir'
+
+  let guestList=[]
+  let guestListLoaded=false
+  let selectedGroup=null
+  let usingFallback=false
+
+  function normalizeText(s){
+    return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim()
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    })
+  }
+  function getChecked(name){
+    const el=formEl.querySelector('input[name="'+name+'"]:checked')
+    return el?el.value:null
+  }
+
+  function loadGuestList(){
+    if(guestListLoaded) return
+    guestListLoaded=true
+    fetch('/inv/nieves-y-jesus/assets/invitados.json')
+      .then(function(r){ return r.json() })
+      .then(function(data){ guestList=Array.isArray(data)?data:[] })
+      .catch(function(){ guestList=[] })
+  }
+  if(modal) modal.addEventListener('rsvp:open',loadGuestList)
+
+  function renderGuestResults(query){
+    const q=normalizeText(query)
+    if(!q){ resultsEl.hidden=true; resultsEl.innerHTML=''; return }
+    const matches=guestList.filter(function(g){ return g.b.indexOf(q)!==-1 }).slice(0,6)
+    if(!matches.length){
+      resultsEl.innerHTML='<div class="rsvp-guest-empty">No encontramos coincidencias</div>'
+      resultsEl.hidden=false
+      return
+    }
+    resultsEl.innerHTML=matches.map(function(g){
+      return '<button type="button" class="rsvp-guest-result" data-id="'+g.id+'">'
+        +'<span class="rsvp-guest-result-name">'+escapeHtml(g.n)+'</span>'
+        +'<span class="rsvp-guest-result-pases">'+g.p+' pase'+(g.p===1?'':'s')+'</span>'
+        +'</button>'
+    }).join('')
+    resultsEl.hidden=false
+  }
+
+  function selectGroup(g){
+    selectedGroup=g
+    usingFallback=false
+    searchInput.value=g.n
+    searchInput.readOnly=true
+    clearBtn.hidden=false
+    resultsEl.hidden=true; resultsEl.innerHTML=''
+    fallbackToggle.hidden=true
+    fallbackWrap.hidden=true
+    fallbackInput.value=''
+    updatePasesSection()
+  }
+
+  function clearSelection(){
+    selectedGroup=null
+    usingFallback=false
+    searchInput.value=''
+    searchInput.readOnly=false
+    clearBtn.hidden=true
+    searchWrap.hidden=false
+    fallbackToggle.hidden=false
+    fallbackWrap.hidden=true
+    fallbackInput.value=''
+    updatePasesSection()
+    searchInput.focus()
+  }
+
+  function enterFallback(){
+    usingFallback=true
+    selectedGroup=null
+    searchWrap.hidden=true
+    fallbackToggle.hidden=true
+    fallbackWrap.hidden=false
+    resultsEl.hidden=true; resultsEl.innerHTML=''
+    updatePasesSection()
+    fallbackInput.focus()
+  }
+
+  function exitFallback(){
+    usingFallback=false
+    fallbackWrap.hidden=true
+    fallbackInput.value=''
+    searchWrap.hidden=false
+    fallbackToggle.hidden=false
+    updatePasesSection()
+    searchInput.focus()
+  }
+
+  function renderPasesOptions(max){
+    const current=getChecked('pases')
+    let html=''
+    for(let i=1;i<=max;i++){
+      html+='<label class="rsvp-radio"><input type="radio" name="pases" value="'+i+'"'
+        +(String(i)===current?' checked':'')+'/><span class="rsvp-radio__dot"></span>'
+        +'<span>'+i+(i===1?' Pase':' Pases')+'</span></label>'
+    }
+    pasesOptions.innerHTML=html
+  }
+
+  function updatePasesSection(){
+    const asistencia=getChecked('asistencia')
+    if(asistencia===NO_ASISTE){
+      pasesField.hidden=true
+      return
+    }
+    pasesField.hidden=false
+    const max=selectedGroup?selectedGroup.p:(usingFallback?4:0)
+    if(max>0){
+      pasesHint.hidden=true
+      pasesOptions.hidden=false
+      pasesLabel.textContent=selectedGroup
+        ?('Tienes '+max+' pase'+(max===1?'':'s')+' asignado'+(max===1?'':'s')+' *')
+        :'¿Cuántos pases confirmas? *'
+      renderPasesOptions(max)
+    }else{
+      pasesHint.hidden=false
+      pasesOptions.hidden=true
+      pasesOptions.innerHTML=''
+      pasesLabel.textContent='¿Cuántos pases confirmas? *'
+    }
+  }
+
+  searchInput.addEventListener('input',function(){
+    if(selectedGroup) return
+    renderGuestResults(searchInput.value)
+  })
+  searchInput.addEventListener('focus',function(){
+    if(!selectedGroup&&searchInput.value) renderGuestResults(searchInput.value)
+  })
+  resultsEl.addEventListener('click',function(e){
+    const btn=e.target.closest('.rsvp-guest-result')
+    if(!btn) return
+    const id=parseInt(btn.getAttribute('data-id'),10)
+    const g=guestList.find(function(x){ return x.id===id })
+    if(g) selectGroup(g)
+  })
+  clearBtn.addEventListener('click',clearSelection)
+  fallbackToggle.addEventListener('click',enterFallback)
+  fallbackBack.addEventListener('click',exitFallback)
+  document.addEventListener('click',function(e){
+    if(!searchWrap.contains(e.target)) resultsEl.hidden=true
+  })
+  document.querySelectorAll('input[name="asistencia"]').forEach(function(el){
+    el.addEventListener('change',updatePasesSection)
+  })
+
   submitBtn.addEventListener('click',async function(){
-    const nombre=document.getElementById('r-nombre').value.trim()
-    const asistencia=document.querySelector('input[name="asistencia"]:checked')?.value
-    const pases=document.querySelector('input[name="pases"]:checked')?.value
-    const restricc=document.querySelector('input[name="restricciones"]:checked')?.value
+    const asistencia=getChecked('asistencia')
+    const telefono=document.getElementById('r-telefono').value.trim()
+    const restricc=getChecked('restricciones')
     const cancion=document.getElementById('r-cancion').value.trim()
     const mensaje=document.getElementById('r-mensaje').value.trim()
-    const telefono=document.getElementById('r-telefono').value.trim()
-    if(!nombre||!telefono||!asistencia){errorEl.style.display='block';return}
+
+    const fueraDeLista=usingFallback
+    const grupoId=selectedGroup?selectedGroup.id:null
+    const pasesAsignados=selectedGroup?selectedGroup.p:null
+
+    let nombre=''
+    if(selectedGroup) nombre=selectedGroup.n
+    else if(usingFallback) nombre=fallbackInput.value.trim()
+
+    const noAsiste=asistencia===NO_ASISTE
+    let pases=null
+    if(noAsiste){
+      pases=0
+    }else{
+      const pasesChecked=getChecked('pases')
+      pases=pasesChecked?parseInt(pasesChecked,10):null
+    }
+
+    const hasIdentity=!!(selectedGroup||(usingFallback&&nombre))
+    const validPases=noAsiste||(pases!=null)
+    const withinAllotment=pasesAsignados==null||pases==null||pases<=pasesAsignados
+
+    if(!hasIdentity||!telefono||!asistencia||!validPases||!withinAllotment){
+      errorEl.style.display='block'
+      return
+    }
     errorEl.style.display='none'
     submitBtn.disabled=true;submitBtn.textContent='Enviando...'
     try{
       const{error}=await db.from('rsvp').insert({
         invitacion:'nieves-y-jesus',nombre,telefono,asistencia,
-        pases:pases?parseInt(pases):null,
+        pases,
         restricciones:restricc||'Ninguna',
-        cancion:cancion||null,mensaje:mensaje||null
+        cancion:cancion||null,mensaje:mensaje||null,
+        grupo_id:grupoId,
+        pases_asignados:pasesAsignados,
+        fuera_de_lista:fueraDeLista
       })
       if(error)throw error
       formEl.style.display='none';successEl.style.display='block'
@@ -1599,6 +1836,8 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
       errorEl.style.display='block'
     }
   })
+
+  updatePasesSection()
 })()
 
 // RSVP MODAL
@@ -1612,6 +1851,7 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
     modal.setAttribute('aria-hidden','false')
     document.body.style.cssText='overflow:hidden;position:fixed;top:-'+savedY+'px;width:100%'
     if(history.replaceState) history.replaceState(null,'','#rsvp')
+    modal.dispatchEvent(new CustomEvent('rsvp:open'))
     const first=modal.querySelector('.rsvp-input')
     if(first) setTimeout(function(){first.focus()},60)
   }
