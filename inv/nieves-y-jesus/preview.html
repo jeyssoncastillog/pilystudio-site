@@ -671,11 +671,11 @@ body{
   position:relative;z-index:1;
   width:min(840px,100%);
   overflow:hidden;
-  background:
-    radial-gradient(ellipse 70% 42% at 12% 18%, rgba(175,150,118,.08) 0%, transparent 100%),
-    radial-gradient(ellipse 60% 50% at 88% 82%, rgba(175,150,118,.06) 0%, transparent 100%),
-    radial-gradient(circle at 50% 50%, rgba(181,196,221,.04) 0%, transparent 60%),
-    var(--cream);
+  background-image:url('/inv/nieves-y-jesus/assets/rsvp-fondo-desktop.webp');
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-color:var(--cream);
   border-radius:6px;
   border:1px solid rgba(181,196,221,.32);
   box-shadow:
@@ -685,6 +685,9 @@ body{
   transform:scale(.97) translateY(10px);
   transition:transform .32s cubic-bezier(.22,1,.36,1);
 }
+@media(max-width:1023px){
+  .rsvp-modal__panel{background-image:url('/inv/nieves-y-jesus/assets/rsvp-fondo-movil.webp')}
+}
 .rsvp-modal.is-open .rsvp-modal__panel{transform:scale(1) translateY(0)}
 .rsvp-modal__scroll{
   overflow-y:auto;
@@ -692,19 +695,6 @@ body{
   padding:3.5rem 2.5rem 3rem;
   box-sizing:border-box;
   text-align:center;
-}
-.rsvp-olive{position:absolute;pointer-events:none;z-index:0}
-.rsvp-olive-tr{
-  top:-12px;right:-22px;
-  width:clamp(130px,15vw,200px);
-  transform:rotate(-48deg);transform-origin:center;
-  opacity:.3;
-}
-.rsvp-olive-bl{
-  bottom:-12px;left:-22px;
-  width:clamp(110px,13vw,180px);
-  transform:rotate(14deg);transform-origin:bottom left;
-  opacity:.26;
 }
 .rsvp-modal__close{
   position:absolute;top:1rem;right:1rem;z-index:10;
@@ -884,8 +874,6 @@ body{
   .rsvp-modal{padding:8px;align-items:flex-end}
   .rsvp-modal__panel{width:100%;border-radius:8px 8px 0 0}
   .rsvp-modal__scroll{max-height:92svh;padding:2rem 1.25rem 2.5rem}
-  .rsvp-olive-tr{width:100px;right:-15px;top:-8px;opacity:.2}
-  .rsvp-olive-bl{width:88px;left:-15px;bottom:-8px;opacity:.18}
 }
 /* ── Overlay ── */
 #nj-envelope-overlay {
@@ -1772,8 +1760,6 @@ body{
 <div id="rsvp-modal" class="rsvp-modal" aria-hidden="true">
   <div class="rsvp-modal__backdrop" data-close-rsvp></div>
   <div class="rsvp-modal__panel" role="dialog" aria-modal="true" aria-labelledby="rsvp-modal-title">
-    <img class="rsvp-olive rsvp-olive-tr" src="/inv/nieves-y-jesus/assets/olivo-superior-derecho.svg" alt="" aria-hidden="true"/>
-    <img class="rsvp-olive rsvp-olive-bl" src="/inv/nieves-y-jesus/assets/olivo-inferior-izquierdo.svg" alt="" aria-hidden="true"/>
     <button class="rsvp-modal__close" type="button" aria-label="Cerrar formulario" data-close-rsvp>
       <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
         <line x1="1" y1="1" x2="10" y2="10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
