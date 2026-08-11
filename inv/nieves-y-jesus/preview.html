@@ -968,7 +968,8 @@ body{
 }
 #intro-skip:hover { background: rgba(255,255,255,.26); }
 @media(prefers-reduced-motion:reduce) {
-  #intro-cta { animation: none; opacity: .85; }
+  #intro-cta { animation: none; opacity: 1; }
+  #intro-skip { display: block; }
 }
 
 /* ── GRAND OPENING — hero settle + hero breathing ── */
@@ -1909,8 +1910,13 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
           musicStarted = true;
 
           if (cta) cta.style.display = 'none';
-          if (reduceMotion) { dismissIntro(); return; }
 
+          // A 5-second watercolour pull-back isn't the kind of motion
+          // prefers-reduced-motion exists to suppress — the video plays
+          // for every guest. Reduced motion instead removes the CTA's
+          // pulse, the hero's entrance/breathing, and the seed drift
+          // (see the corresponding CSS/JS), and exposes the skip button
+          // as the real way out for anyone who still wants one.
           if (video) attemptVideoPlay();
           armFailsafe();
         } catch (err) {
