@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no"/>
 <title>Nieves &amp; Jesús — ¡Nos casamos!</title>
 <meta name="description" content="Nieves &amp; Jesús — La vita è bella; ¡nos casamos! Viernes 27 de noviembre de 2026."/>
 <meta property="og:title" content="Nieves &amp; Jesús — ¡Nos casamos!"/>
@@ -584,13 +585,44 @@ body{
 .banco-copy:hover{color:#fff}
 .banco-copy:focus-visible{outline:2px solid #7fa3d4;outline-offset:3px;border-radius:2px}
 .banco-copy.is-copied{color:#a3d9a5;text-decoration:none}
+#regalo .banco-cedula,
+#regalo .banco-iban-code,
+#regalo .banco-cedula *,
+#regalo .banco-iban-code *,
+#regalo .banco-copy *{
+  color:inherit !important;
+  -webkit-text-fill-color:currentColor !important;
+  text-decoration:none !important;
+}
 #regalo .venue-btn{
   display:block;width:fit-content;
   margin:1.8rem 0 0;
   min-width:0;
 }
 @media(max-width:1023px){
-  .banco-grid{grid-template-columns:1fr;gap:1.6rem}
+  .banco-grid{grid-template-columns:1fr;gap:3rem}
+  .banco-name{font-size:.95rem;letter-spacing:.15em;margin-bottom:.6rem}
+  .banco-info{font-size:.92rem;line-height:1.85;margin-bottom:.45rem}
+  .banco-info b{
+    color:var(--lav-lt);
+    font-size:1.08em;font-weight:700;letter-spacing:.04em;
+  }
+  .banco-copy{
+    display:inline-block;
+    padding:.55rem .3rem;
+    margin:-.55rem -.3rem;
+  }
+  .banco-iban-label{
+    display:block;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;
+    color:rgba(255,255,255,.55);
+    margin-bottom:.15rem;
+  }
+  .banco-iban-code{
+    display:block;
+    white-space:nowrap;
+    font-size:.85rem;letter-spacing:.01em;
+  }
 }
 
 /* ── GALERÍA ── */
@@ -1691,14 +1723,14 @@ body{
           <p class="banco-name">Jesús Moronta</p>
           <p class="banco-info">Scotiabank · Ahorros · <b>RD$</b></p>
           <p class="banco-info">Cuenta <button type="button" class="banco-copy" data-copy="03208004962">03208004962</button></p>
-          <p class="banco-info">Cédula 092-0010480-1</p>
+          <p class="banco-info">Cédula <span class="banco-cedula">092-0010480-1</span></p>
         </div>
         <div class="banco-col">
           <p class="banco-name">Nieves Almonte</p>
           <p class="banco-info">Banco BHD · Ahorros · <b>US$</b></p>
           <p class="banco-info">Cuenta <button type="button" class="banco-copy" data-copy="31634080020">31634080020</button></p>
-          <p class="banco-info">Cédula 097-0021247-6</p>
-          <p class="banco-info">Interbancaria DO83BCBH0000000031634080020</p>
+          <p class="banco-info">Cédula <span class="banco-cedula">097-0021247-6</span></p>
+          <p class="banco-info"><span class="banco-iban-label">Interbancaria</span> <span class="banco-iban-code">DO83BCBH0000000031634080020</span></p>
         </div>
       </div>
       <a class="venue-btn" href="https://listaderegalos.casacuesta.com/Event/NievesDayiris-Jes%C3%BAsMaria?utm_source=share" target="_blank" rel="noopener noreferrer" aria-label="Ver lista de regalos en Casa Cuesta">REGALOS → LISTA</a>
