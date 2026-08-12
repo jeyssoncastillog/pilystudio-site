@@ -36,18 +36,10 @@ body{
 /* ── BACKGROUND ── */
 .bg-photo{
   position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-}
-.bg-photo::before{
-  content:'';
-  position:absolute;inset:-6%;
-  background:url('./fotos/foto-01.jpg') center 35%/cover no-repeat;
-  filter:blur(6px) saturate(.28) brightness(1.3);
-  opacity:.6;
-}
-.bg-photo::after{
-  content:'';
-  position:absolute;inset:0;
-  background:rgba(245,240,230,.91);
+  background:
+    radial-gradient(ellipse at top left, rgba(212,216,232,.4), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(184,189,207,.3), transparent 55%),
+    var(--cream);
 }
 
 /* All page layers above bg */
@@ -64,10 +56,6 @@ body{
 .header-title{
   font-family:var(--cinzel);font-size:.78rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--mid);
-}
-.header-monogram{
-  font-family:var(--script);font-size:2.4rem;
-  color:var(--lav-dk);opacity:.78;line-height:1;
 }
 .back-link{
   display:flex;align-items:center;gap:.45rem;
@@ -193,6 +181,11 @@ body{
 }
 .stat-num.green{color:var(--green)}
 .stat-num.red{color:var(--red)}
+.stat-num-wrap{display:flex;align-items:baseline;justify-content:center;gap:.4rem;flex-wrap:wrap}
+.stat-num-total{
+  font-family:var(--cinzel);font-size:1rem;font-weight:400;
+  color:var(--mid);letter-spacing:.02em;
+}
 .stat-divider{
   width:28px;height:1px;
   background:linear-gradient(to right,transparent,var(--lav),transparent);
@@ -201,6 +194,22 @@ body{
 .stat-label{
   font-family:var(--cinzel);font-size:.55rem;
   letter-spacing:.26em;text-transform:uppercase;color:var(--mid);
+}
+
+/* ── RESTRICTIONS SUMMARY ── */
+.restrictions-summary{
+  display:none;flex-wrap:wrap;align-items:center;gap:.6rem;
+  margin:-1.6rem 0 2.6rem;
+}
+.restrictions-summary .rs-label{
+  font-family:var(--cinzel);font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--dark);
+  margin-right:.2rem;
+}
+.restrictions-summary .rs-item{
+  background:rgba(255,255,252,.9);border:1px solid rgba(184,189,207,.4);
+  border-radius:20px;padding:.35rem 1rem;
+  font-family:var(--body);font-size:.85rem;color:var(--mid);
 }
 
 /* ── FILTER / SEARCH ── */
@@ -288,6 +297,15 @@ tbody td{
 .td-wrap{max-width:200px;word-break:break-word}
 .td-muted{color:var(--mid);font-style:italic;font-size:.88rem}
 .td-date{white-space:nowrap;font-size:.88rem;color:var(--mid)}
+.pases-over{color:var(--red);font-weight:600}
+.tag-outside{
+  display:inline-block;margin-left:.45rem;
+  font-family:var(--cinzel);font-size:.46rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lav-dk);background:rgba(184,189,207,.18);
+  border:1px solid rgba(184,189,207,.42);
+  padding:.16rem .55rem;border-radius:10px;
+  vertical-align:middle;white-space:nowrap;
+}
 
 /* ── STATE CELLS (empty/loading) ── */
 .tbl-state{
@@ -338,6 +356,7 @@ tbody td{
   color:var(--mid);background:rgba(184,189,207,.18);
   padding:.18rem .55rem;border-radius:10px;white-space:nowrap;
 }
+.rc-pases.pases-over{color:var(--red);background:rgba(155,58,58,.12);font-weight:600}
 .rc-fields{
   display:flex;flex-direction:column;gap:.55rem;
   margin-bottom:.85rem;
@@ -375,6 +394,22 @@ tbody td{
   letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
 }
 
+/* ── PENDING LIST ── */
+.pending-heading{margin-top:3.2rem}
+.pending-list{display:flex;flex-wrap:wrap;gap:.65rem}
+.pending-chip{
+  display:flex;align-items:center;gap:.6rem;
+  background:rgba(255,255,252,.92);border:1px solid rgba(184,189,207,.4);
+  border-radius:20px;padding:.55rem 1.1rem;
+  box-shadow:var(--sh-sm);
+}
+.pending-chip .pc-name{font-family:var(--body);font-size:.88rem;color:var(--dark)}
+.pending-chip .pc-pases{
+  font-family:var(--cinzel);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--lav-dk);background:rgba(184,189,207,.18);
+  padding:.18rem .55rem;border-radius:10px;white-space:nowrap;
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   #dashboard{padding:2.5rem 1.8rem 5rem}
@@ -397,7 +432,6 @@ tbody td{
 }
 @media(max-width:480px){
   .page-header{padding:1rem}
-  .header-monogram{font-size:2rem}
   .pin-card{padding:2.8rem 1.4rem}
   .pin-monogram{font-size:3.5rem}
   .stats-grid{gap:.75rem}
@@ -417,7 +451,6 @@ tbody td{
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Invitación
   </a>
-  <span class="header-monogram">NJ</span>
   <div class="header-right">
     <span class="header-title">Respuestas</span>
     <button class="salir-btn" id="salir-btn">Salir</button>
@@ -449,9 +482,14 @@ tbody td{
 
   <div class="stats-grid">
     <div class="stat-card">
-      <span class="stat-num" id="s-total">—</span>
+      <span class="stat-num-wrap"><span class="stat-num" id="s-grupos">—</span><span class="stat-num-total" id="s-grupos-total"></span></span>
       <div class="stat-divider"></div>
-      <p class="stat-label">Respuestas</p>
+      <p class="stat-label">Grupos que respondieron</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num-wrap"><span class="stat-num" id="s-pases">—</span><span class="stat-num-total" id="s-pases-total"></span></span>
+      <div class="stat-divider"></div>
+      <p class="stat-label">Pases confirmados</p>
     </div>
     <div class="stat-card">
       <span class="stat-num green" id="s-conf">—</span>
@@ -463,12 +501,9 @@ tbody td{
       <div class="stat-divider"></div>
       <p class="stat-label">No asistirán</p>
     </div>
-    <div class="stat-card">
-      <span class="stat-num" id="s-pases">—</span>
-      <div class="stat-divider"></div>
-      <p class="stat-label">Total pases</p>
-    </div>
   </div>
+
+  <div class="restrictions-summary" id="restrictions-summary"></div>
 
   <div class="filter-row">
     <div class="search-wrap">
@@ -510,6 +545,12 @@ tbody td{
 
   <!-- Mobile cards (hidden on desktop via CSS) -->
   <div class="cards-list" id="cards-list"></div>
+
+  <div class="actions-row pending-heading">
+    <span class="section-label">Pendientes de respuesta</span>
+    <span class="result-count" id="pending-count"></span>
+  </div>
+  <div class="pending-list" id="pending-list"></div>
 </div>
 
 <script>
@@ -582,6 +623,20 @@ function badge(val) {
     ? '<span class="badge badge-yes">Sí</span>'
     : '<span class="badge badge-no">No</span>';
 }
+function fueraTag(r) {
+  return r.fuera_de_lista ? '<span class="tag-outside" title="No estaba en la lista de invitados — nombre escrito libremente">fuera de lista</span>' : '';
+}
+function pasesText(r) {
+  if (r.pases == null) return null;
+  if (r.pases_asignados == null) return { text: String(r.pases), over: false };
+  const over = r.pases > r.pases_asignados;
+  return { text: `${r.pases} / ${r.pases_asignados}`, over };
+}
+function pasesCell(r) {
+  const p = pasesText(r);
+  if (!p) return '<span class="td-muted">—</span>';
+  return p.over ? `<span class="pases-over">${esc(p.text)}</span>` : esc(p.text);
+}
 
 function renderTable(rows) {
   const tbody = document.getElementById('resp-tbody');
@@ -591,10 +646,10 @@ function renderTable(rows) {
   }
   tbody.innerHTML = rows.map((r, i) => `<tr>
     <td class="td-num">${i+1}</td>
-    <td class="td-name">${fmt(r.nombre)}</td>
+    <td class="td-name">${fmt(r.nombre)}${fueraTag(r)}</td>
     <td>${fmt(r.telefono)}</td>
     <td>${badge(r.asistencia)}</td>
-    <td style="text-align:center">${r.pases != null ? esc(String(r.pases)) : '<span class="td-muted">—</span>'}</td>
+    <td style="text-align:center">${pasesCell(r)}</td>
     <td class="td-wrap">${fmt(r.restricciones)}</td>
     <td class="td-wrap">${fmt(r.cancion)}</td>
     <td class="td-wrap">${fmt(r.mensaje)}</td>
@@ -614,15 +669,16 @@ function renderCards(rows) {
     const hasR = r.restricciones && r.restricciones.trim();
     const hasC = r.cancion && r.cancion.trim();
     const hasM = r.mensaje && r.mensaje.trim();
+    const p = pasesText(r);
     return `<div class="${cls}">
       <div class="rc-top">
         <div>
-          <strong class="rc-name">${esc(r.nombre || '—')}</strong>
+          <strong class="rc-name">${esc(r.nombre || '—')}${fueraTag(r)}</strong>
           <span class="rc-phone">${esc(r.telefono || '—')}</span>
         </div>
         <div class="rc-badges">
           ${badge(r.asistencia)}
-          ${r.pases != null ? `<span class="rc-pases">${esc(String(r.pases))} ${r.pases == 1 ? 'pase' : 'pases'}</span>` : ''}
+          ${p ? `<span class="rc-pases${p.over ? ' pases-over' : ''}">${esc(p.text)}</span>` : ''}
         </div>
       </div>
       ${(hasR||hasC||hasM) ? `<div class="rc-fields">
@@ -655,9 +711,9 @@ function filter(q) {
 
 function exportCSV() {
   if (!allData.length) return;
-  const cols  = ['nombre','telefono','asistencia','pases','restricciones','cancion','mensaje','fecha_rsvp'];
-  const heads = ['Nombre','Teléfono','Asistencia','Pases','Restricciones','Canción','Mensaje','Fecha'];
-  const rows = allData.map(r => cols.map(c => JSON.stringify(r[c] ?? '')).join(','));
+  const cols  = ['nombre','telefono','asistencia','pases','pases_asignados','grupo_id','fuera_de_lista','restricciones','cancion','mensaje','fecha_rsvp'];
+  const heads = ['Nombre','Teléfono','Asistencia','Pases','Pases Asignados','Grupo ID','Fuera de Lista','Restricciones','Canción','Mensaje','Fecha'];
+  const rows = allData.map(r => cols.map(c => JSON.stringify(r[c] == null ? '' : r[c])).join(','));
   const csv = [heads.join(','), ...rows].join('\n');
   const blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
@@ -675,18 +731,83 @@ function apiFetch(pin) {
   });
 }
 
-function populateDashboard(json) {
-  document.getElementById('s-total').textContent = json.total_respuestas;
+/* ── GUEST LIST (assets/invitados.json) ── */
+let guestGroups = [];
+let guestGroupsLoaded = false;
+async function loadGuestGroups() {
+  if (guestGroupsLoaded) return guestGroups;
+  try {
+    const res = await fetch('./assets/invitados.json');
+    const data = await res.json();
+    guestGroups = Array.isArray(data) ? data : [];
+  } catch(_) {
+    guestGroups = [];
+  }
+  guestGroupsLoaded = true;
+  return guestGroups;
+}
+
+function renderMissingGroups(groups, rows) {
+  const listEl  = document.getElementById('pending-list');
+  const countEl = document.getElementById('pending-count');
+  if (!listEl) return;
+  if (!groups.length) {
+    listEl.innerHTML = '';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  const respondedIds = new Set(rows.filter(r => r.grupo_id != null).map(r => r.grupo_id));
+  const missing = groups.filter(g => !respondedIds.has(g.id));
+  if (countEl) countEl.textContent = missing.length === 0 ? 'Todos respondieron' : `${missing.length} de ${groups.length}`;
+  if (!missing.length) {
+    listEl.innerHTML = '<div class="cards-empty"><span class="ce-script">NJ</span><span class="ce-msg">Todos los grupos han respondido</span></div>';
+    return;
+  }
+  listEl.innerHTML = missing.map(g =>
+    `<div class="pending-chip"><span class="pc-name">${esc(g.n)}</span><span class="pc-pases">${g.p} ${g.p === 1 ? 'pase' : 'pases'}</span></div>`
+  ).join('');
+}
+
+function renderRestrictionsSummary(rows) {
+  const el = document.getElementById('restrictions-summary');
+  if (!el) return;
+  const counts = {};
+  rows.filter(r => r.asistencia && r.asistencia.startsWith('Sí')).forEach(r => {
+    const key = (r.restricciones || 'Ninguna').trim() || 'Ninguna';
+    if (key === 'Ninguna') return;
+    counts[key] = (counts[key] || 0) + 1;
+  });
+  const keys = Object.keys(counts);
+  if (!keys.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = 'flex';
+  el.innerHTML = '<span class="rs-label">Restricciones</span>' +
+    keys.map(k => `<span class="rs-item">${esc(k)}: ${counts[k]}</span>`).join('');
+}
+
+async function populateDashboard(json) {
+  allData = json.respuestas || [];
+
+  const groups = await loadGuestGroups();
+  const totalGroups = groups.length;
+  const totalPasesAllotted = groups.reduce((sum, g) => sum + (Number(g.p) || 0), 0);
+  const respondedGrupoIds = new Set(allData.filter(r => r.grupo_id != null).map(r => r.grupo_id));
+
+  document.getElementById('s-grupos').textContent = respondedGrupoIds.size;
+  document.getElementById('s-grupos-total').textContent = totalGroups ? `de ${totalGroups}` : '';
+  document.getElementById('s-pases').textContent = json.total_pases;
+  document.getElementById('s-pases-total').textContent = totalPasesAllotted ? `de ${totalPasesAllotted}` : '';
   document.getElementById('s-conf').textContent  = json.total_confirmados;
   document.getElementById('s-no').textContent    = json.total_no_asisten;
-  document.getElementById('s-pases').textContent = json.total_pases;
+
   const now = new Date();
   document.getElementById('dash-date').textContent =
     `Actualizado: ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  allData = json.respuestas || [];
+
   renderTable(allData);
   renderCards(allData);
   setCount(allData.length, allData.length);
+  renderRestrictionsSummary(allData);
+  renderMissingGroups(groups, allData);
 }
 
 /* ── LOAD FROM PIN GATE ── */
@@ -710,7 +831,7 @@ async function loadDashboard(pin) {
 
     saveSession(pin);
     showDashboard();
-    populateDashboard(json);
+    await populateDashboard(json);
 
   } catch(_) {
     err.textContent   = 'Error de conexión. Intenta de nuevo.';
@@ -741,7 +862,7 @@ async function autoLoad(pin) {
       return;
     }
 
-    populateDashboard(json);
+    await populateDashboard(json);
 
   } catch(_) {
     document.getElementById('resp-tbody').innerHTML =
@@ -755,11 +876,16 @@ function logout() {
   allData = [];
   document.getElementById('pin-input').value = '';
   document.getElementById('search-input').value = '';
-  ['s-total','s-conf','s-no','s-pases'].forEach(id => { document.getElementById(id).textContent = '—'; });
+  ['s-grupos','s-conf','s-no','s-pases'].forEach(id => { document.getElementById(id).textContent = '—'; });
+  ['s-grupos-total','s-pases-total'].forEach(id => { document.getElementById(id).textContent = ''; });
   document.getElementById('dash-date').textContent = '';
   document.getElementById('result-count').textContent = '';
   document.getElementById('resp-tbody').innerHTML = '<tr><td colspan="9" class="tbl-state">Cargando respuestas…</td></tr>';
   document.getElementById('cards-list').innerHTML = '';
+  document.getElementById('pending-list').innerHTML = '';
+  document.getElementById('pending-count').textContent = '';
+  const rs = document.getElementById('restrictions-summary');
+  if (rs) { rs.innerHTML = ''; rs.style.display = 'none'; }
   showPinGate();
 }
 

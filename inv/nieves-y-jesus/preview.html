@@ -865,7 +865,11 @@ body{
   font-size:.82rem;color:var(--mid);font-style:italic;
   margin-top:.4rem;line-height:1.6;
 }
-.rsvp-guest-clear[hidden],.rsvp-guest-toggle[hidden],.rsvp-radio-group[hidden]{display:none}
+.rsvp-already-confirmed{
+  font-size:.85rem;color:var(--mid);
+  margin-top:.4rem;line-height:1.7;
+}
+.rsvp-guest-clear[hidden],.rsvp-guest-toggle[hidden],.rsvp-radio-group[hidden],.rsvp-already-confirmed[hidden],.rsvp-label[hidden]{display:none}
 
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
@@ -1579,6 +1583,7 @@ body{
               <label class="rsvp-label" id="rsvp-pases-label">¿Cuántos pases confirmas? *</label>
               <p class="rsvp-pases-hint" id="rsvp-pases-hint">Selecciona tu nombre para ver tus pases disponibles.</p>
               <div class="rsvp-radio-group" id="rsvp-pases-options" hidden></div>
+              <p class="rsvp-already-confirmed" id="rsvp-already-confirmed" hidden>Este grupo ya confirmó su asistencia. Si necesitas hacer algún cambio, escríbenos directamente y con gusto te ayudamos.</p>
             </div>
             <div class="rsvp-field">
               <label class="rsvp-label">Restricciones alimenticias o alergias</label>
@@ -1651,6 +1656,7 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   const pasesLabel=document.getElementById('rsvp-pases-label')
   const pasesHint=document.getElementById('rsvp-pases-hint')
   const pasesOptions=document.getElementById('rsvp-pases-options')
+  const alreadyConfirmedEl=document.getElementById('rsvp-already-confirmed')
 
   const NO_ASISTE='Lamentablemente no podré asistir'
 
@@ -1658,6 +1664,36 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   let guestListLoaded=false
   let selectedGroup=null
   let usingFallback=false
+  let alreadyConfirmed=false
+  let checkingConfirmation=false
+
+  function refreshSubmitDisabled(){
+    submitBtn.disabled=checkingConfirmation||alreadyConfirmed
+  }
+
+  async function checkGroupConfirmation(grupoId){
+    checkingConfirmation=true
+    refreshSubmitDisabled()
+    let confirmado=false
+    try{
+      const res=await fetch('/api/rsvp-check',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({invitacion:'nieves-y-jesus',grupo_id:grupoId})
+      })
+      if(res.ok){
+        const json=await res.json()
+        confirmado=!!(json&&json.confirmado)
+      }
+    }catch(_){
+      confirmado=false
+    }
+    if(!selectedGroup||selectedGroup.id!==grupoId) return
+    checkingConfirmation=false
+    alreadyConfirmed=confirmado
+    refreshSubmitDisabled()
+    updatePasesSection()
+  }
 
   function normalizeText(s){
     return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim()
@@ -1725,6 +1761,8 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   function selectGroup(g){
     selectedGroup=g
     usingFallback=false
+    alreadyConfirmed=false
+    checkingConfirmation=false
     searchInput.value=g.n
     searchInput.readOnly=true
     clearBtn.hidden=false
@@ -1733,11 +1771,15 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
     fallbackWrap.hidden=true
     fallbackInput.value=''
     updatePasesSection()
+    refreshSubmitDisabled()
+    checkGroupConfirmation(g.id)
   }
 
   function clearSelection(){
     selectedGroup=null
     usingFallback=false
+    alreadyConfirmed=false
+    checkingConfirmation=false
     searchInput.value=''
     searchInput.readOnly=false
     clearBtn.hidden=true
@@ -1746,17 +1788,21 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
     fallbackWrap.hidden=true
     fallbackInput.value=''
     updatePasesSection()
+    refreshSubmitDisabled()
     searchInput.focus()
   }
 
   function enterFallback(){
     usingFallback=true
     selectedGroup=null
+    alreadyConfirmed=false
+    checkingConfirmation=false
     searchWrap.hidden=true
     fallbackToggle.hidden=true
     fallbackWrap.hidden=false
     resultsEl.hidden=true; resultsEl.innerHTML=''
     updatePasesSection()
+    refreshSubmitDisabled()
     fallbackInput.focus()
   }
 
@@ -1782,6 +1828,17 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   }
 
   function updatePasesSection(){
+    if(alreadyConfirmed){
+      pasesField.hidden=false
+      pasesLabel.hidden=true
+      pasesHint.hidden=true
+      pasesOptions.hidden=true
+      pasesOptions.innerHTML=''
+      alreadyConfirmedEl.hidden=false
+      return
+    }
+    alreadyConfirmedEl.hidden=true
+    pasesLabel.hidden=false
     const asistencia=getChecked('asistencia')
     if(asistencia===NO_ASISTE){
       pasesField.hidden=true
@@ -1856,7 +1913,7 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
     const validPases=noAsiste||(pases!=null)
     const withinAllotment=pasesAsignados==null||pases==null||pases<=pasesAsignados
 
-    if(!hasIdentity||!telefono||!asistencia||!validPases||!withinAllotment){
+    if(alreadyConfirmed||!hasIdentity||!telefono||!asistencia||!validPases||!withinAllotment){
       errorEl.style.display='block'
       return
     }
@@ -1875,9 +1932,16 @@ const db=supabase.createClient(SUPA_URL,SUPA_KEY)
       if(error)throw error
       formEl.style.display='none';successEl.style.display='block'
     }catch(e){
-      submitBtn.disabled=false;submitBtn.textContent='Confirmar asistencia →'
-      errorEl.textContent='Ocurrió un error. Por favor intenta de nuevo.'
-      errorEl.style.display='block'
+      submitBtn.textContent='Confirmar asistencia →'
+      if(e&&e.code==='23505'){
+        alreadyConfirmed=true
+        errorEl.style.display='none'
+        updatePasesSection()
+      }else{
+        errorEl.textContent='Ocurrió un error. Por favor intenta de nuevo.'
+        errorEl.style.display='block'
+      }
+      refreshSubmitDisabled()
     }
   })
 
