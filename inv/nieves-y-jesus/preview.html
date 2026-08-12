@@ -716,12 +716,29 @@ body{
   font-size:.8rem;color:var(--mid);max-width:380px;
   margin:0 auto 2.5rem;font-style:italic;line-height:1.75;
 }
+.rsvp-adults-notice{
+  max-width:420px;margin:0 auto 1.1rem;padding-top:.85rem;
+  border-top:1px solid rgba(181,196,221,.35);
+}
+.rsvp-adults-notice__title{
+  font-family:var(--cinzel);font-size:clamp(.76rem,2.6vw,.88rem);
+  font-weight:500;letter-spacing:.03em;color:var(--dark);
+  line-height:1.4;margin-bottom:.45rem;
+}
+.rsvp-adults-notice__text{
+  font-size:.82rem;color:var(--mid);line-height:1.6;
+  margin-bottom:.35rem;
+}
+.rsvp-adults-notice__text:last-child{margin-bottom:0}
 .rsvp-box{
   max-width:500px;margin:0 auto;
   background:rgba(255,255,252,.7);
   border-radius:4px;
   padding:2.5rem 2rem;
   box-shadow:0 1px 3px rgba(42,42,62,.04),0 4px 24px rgba(42,42,62,.06),0 0 0 1px rgba(184,189,207,.2);
+}
+@media(min-width:1024px){
+  .rsvp-box{padding-top:5rem}
 }
 .rsvp-field{margin-bottom:1.4rem;text-align:left}
 .rsvp-label{
@@ -1518,6 +1535,11 @@ body{
         <p class="rsvp-note">
           Por favor, confirma únicamente la cantidad de pases asignados en tu invitación.
         </p>
+        <div class="rsvp-adults-notice">
+          <p class="rsvp-adults-notice__title">Celebración exclusiva para adultos, con excepción del cortejo.</p>
+          <p class="rsvp-adults-notice__text">Nuestra celebración está reservada para adultos. Los únicos niños presentes serán aquellos que forman parte del cortejo nupcial.</p>
+          <p class="rsvp-adults-notice__text">Agradecemos mucho su comprensión y esperamos celebrar este día tan especial junto a ustedes.</p>
+        </div>
         <div class="rsvp-box">
           <div id="rsvp-form">
             <div class="rsvp-field">
